@@ -62,8 +62,9 @@ You have two ways to consider the distance travelled by flows :
 
 -`flowreduct()` is to perform the reduction of the flow dataset according to another matrice (especially a matrice distance)
 
-# 3. Flow mapping
+## 3. Flow mapping
 -`flowmap()` is to create a layer of lines and plot them, using a flow dataset and a spatial shape.
+
 
 ---
 References : this comes after Bahoken, Françoise (2016), _Contribution à la cartographie d'une matrice de flux_, Thèse en Géographie - Siences des territoires, URL : https://halshs.archives-ouvertes.fr/tel-01273776. 
