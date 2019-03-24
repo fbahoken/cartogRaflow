@@ -1,0 +1,31 @@
+Package: cartograflow
+Title: thematic cartography of flows and movements
+Version: 0.0.0.9000
+Author: c(person("Françoise", "Bahoken", email = "francoise.bahoken@ifsttar.fr", role = c("cre","aut")),
+           person("Sylvain", "Blondeau", email = "blondeau.sylvain@yahoo.fr", role = c("aut"))
+Maintainer: cartogRaflow <cartograflow@gmail.com>
+Description: Functions for plotting for flowmapping from an origin-destination matrix. Compute (symmetric, skew symmetric, asymmetric) matrix, apply various criteria of flow thresholding (global,local, spatial, territorial) in order to filter map. Some additional tips are included such as matrix transformation and cartographic presentation.
+Depends: R (>= 3.4.0)
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 6.1.1
+Suggests:
+    knitr,
+    rmarkdown,
+    testthat,
+    cartography
+VignetteBuilder: knitr
+Imports: 
+    reshape2,
+    g.data,
+    maptools,
+    rgdal,
+    rgeos,
+    sp,
+    graphics,
+    utils,
+    ggplot2,
+    plotly,
+    dplyr,
+    rlang
