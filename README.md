@@ -1,8 +1,8 @@
 # Cartograflow
-Making thematic flowmap in R - Dealing with "spaghetti-effect"
+Filtering Matrices for Thematic Cartography in R - Dealing with "spaghetti-effect"
 
-This package is designed to create the so-called **flowmaps**, thematic origin-destination (OD) maps by filtering flow values.
-It is based on different functions that are mainly used to prepare the flow dataset . The spatial objects processing are those of `{sp}` and the mapping elements are often those of `{Cartography}` except particular cases.
+This package is designed to create the so-called **flowmaps**, thematic origin-destination (OD) maps by filtering matrices.
+It is based on different functions that are mainly used to prepare the flow dataset . The spatial objects processing are those of `{sp}``{sf}` and the mapping elements are often those of `{Cartography}` except particular cases.
 
 # List of functions
 
@@ -34,7 +34,7 @@ Computes _Gini coefficient_ and plot _Lorenz curve_
 
 -`flowanalysis()` is to be used after `flowgini()` for computing a flow filter based on _a double criterion for selecting flows_ before mapping :
 
-- level of flow thresholding, and the corresponding ;
+- level of flow thresholding, and the corresponding filter ;
 - desired threshold level of flow's information significativity (% of total of flow information) ;
 or
 - desired threshold level of flow's features density (% of total features). 
@@ -64,7 +64,6 @@ You have two ways to consider the distance travelled by flows :
 
 ## 3. Flow mapping
 -`flowmap()` is to create a layer of lines and plot them, using a flow dataset and a spatial shape.
-
 
 ---
 References : this comes after Bahoken, Françoise (2016), _Contribution à la cartographie d'une matrice de flux_, Thèse en Géographie - Siences des territoires, URL : https://halshs.archives-ouvertes.fr/tel-01273776. 
