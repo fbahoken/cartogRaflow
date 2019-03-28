@@ -30,6 +30,7 @@ flowjointure<-function(tab,fdc,code){
   carte <- readOGR(fdc,verbose = FALSE)
 
   pt <- cbind(carte@data[, code], as.data.frame(coordinates(carte)))
+
   colnames(pt) <- c(code, "X", "Y")
 
   tab = data.frame(tab, pt[match(tab[, "i"], pt[, code]), 2:3])
