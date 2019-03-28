@@ -15,7 +15,7 @@
 #' For a matrice (n*n) output form: format ="M"
 #' For a list output form: format ="L"
 #' @examples
-#' ## Example 1 : transform a non squared flowdata matrice to a closed and squared matrice
+#' ## Example 1 : transform a non squared flow dataset to a closed and squared matrice
 #' #library(cartograflow)
 #' #code<-read.csv2("file1.csv",header=TRUE,sep=";",stringsAsFactors=FALSE,
 #' #encoding="UTF-8",dec=".",check.names=FALSE)

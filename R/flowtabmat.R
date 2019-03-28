@@ -1,7 +1,7 @@
 #' Transform a matrice format to a long format and vice versa
 #'
-#' @param tab dasaset matrice or list
-#' @param matlist choise of matice or list
+#' @param tab flow dasaset in matrice or list format
+#' @param matlist choose matrice or list
 #' @return matrice or list
 #' @export
 #' @details
