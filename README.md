@@ -68,5 +68,10 @@ You have two ways to consider the distance travelled by flows :
 ---
 References : this comes after Bahoken, Françoise (2016), _Contribution à la cartographie d'une matrice de flux_, Thèse en Géographie - Siences des territoires, URL : https://halshs.archives-ouvertes.fr/tel-01273776. 
 
+Bahoken Francoise (2016), « La cartographie d’une sélection globale de flux, entre ‘significativité’ et ‘densité’ »,
+Netcom [On ligne], 30-3/4 | URL : http://journals.openedition.org/netcom/2565 ; DOI : 10.4000/netcom.2565
 
+Bahoken Francoise (2016), « Chapitre 8 Propositions de solutions liées au choix d’un critère de sélection global : la cartographie de flux significatifs (Fij>α) » in Bahoken, F. Contribution à la cartographie d'une matrice de flux, Thèse de doctorant, Université Paris 7, pp. 325-346.
+
+Grasland Claude (2011, 2014), « Flows analysis carto », unpublished R functions.
                 
