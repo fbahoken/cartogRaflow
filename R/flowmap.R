@@ -17,27 +17,15 @@
 #' @details
 #' The flow dataset must be converted to a dataframe for optimal performance (troubles remains with tibble format)
 #'
-#' filter allows to choose theoretical or empirical links to draw.
-#' If filter = FALSE, all the matrice values are plot [(n*(n-1)] cells, i.e. all links out of the main diagonal.
+#' #' If filter = FALSE, all the matrice values are plot [(n*(n-1)] cells, i.e. all links out of the main diagonal.
 #' If filter = TRUE only non-zero values are plotted, i.e. existing links with or without threshold.
 #' The default threshold is set to 1.
 #'
-#' varf = "True" draw arrows, unless it draw links
-#'
-#' If varf="true", an arrows parameter is set.
-#' code=0 : the link has no head.
+#' a.head is for applying an arrow or not
+#' code=0 : the link has no head - no arrow
 #' code=1 : an arrow is draw at (x0[i], y0[i]).
 #' code=2 : an arrow is draw at (x1[j], y1[j])
 #' code=3 : an arrow is draw at both nodes.
-#' @examples
-#' ## Example 1 : flowmapping a network - draw non valued links
-#' #library(cartograflow)
-#' #flowmap(tabflow,format = "L",filter = FALSE, carte = "file.shp",code = "geoID",varf = FALSE)
-#' ## Example 2 : flowmapping - draw valued and oriented links or arrows
-#' #library(cartograflow)
-#' #flowmap(tabflow,format = "L",fdc = "file.shp",filter = TRUE,
-#' #threshold = (user value),taille = (user value),code = "geoID",
-#' #a.head = 1 ,a.length = 0.2,a.angle=45,a.col="blue")
 #' @importFrom graphics segments
 #' @importFrom graphics arrows
 #' @import rgdal
