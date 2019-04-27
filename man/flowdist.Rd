@@ -2,27 +2,28 @@
 % Please edit documentation in R/flowdist.R
 \name{flowdist}
 \alias{flowdist}
-\title{Compute the distance}
+\title{Compute continous distance matrice from geographical background}
 \usage{
 flowdist(tab, dist.method, result)
 }
 \arguments{
-\item{tab}{is the input flowdata set.}
+\item{tab}{the input flow dataset.}
 
 \item{dist.method}{euclidian calculation}
 
 \item{result}{take the vallue "flowdist" or "dist"allows to parameter the resulting distance dataset (flows filtered by a distance criterion or not)}
 }
 \value{
-(1) A flowdata set with continuous euclidian distances calculations, see dist parameter
+(1) A flowdata set with continuous euclidian distances calculations, see dist.method parameter
 
 (2) A flowdata set with movement from euclidian distances calculations.
 
-(3) A flow map filtered by a global distance criterion.
+(3) A flowmap filtered by a global distance criterion.
 }
 \description{
-Calculates and threshold a distance matrix in order to filter a flowdata set before flowmapping. Compute also geographic movement.
+From a geographical backhround computes (and threshold) a distance matrice.
 }
 \details{
-This function allows to create a continous distance (see \link{flowcontig} for ordinal distance).
+-- result = "flowdist" is tab with all calculation
+-- result = "dist" is tab of the distance
 }

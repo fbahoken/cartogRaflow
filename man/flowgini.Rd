@@ -7,21 +7,21 @@
 flowgini(tab, origin, dest, valflow, format, fdc, code, lorenz.plot)
 }
 \arguments{
-\item{tab}{dataset is a matrix or list}
+\item{tab}{dataset is a matrice or long format}
 
-\item{origin}{origin is variable of your dataset to be used with the list format}
+\item{origin}{origin place to be used with the long format}
 
-\item{dest}{dest is variable of your dataset to be used with the list format}
+\item{dest}{destination place to be used with the list format}
 
-\item{valflow}{valflow is variable of your dataset to be used with the list format}
+\item{valflow}{to be used with the list format}
 
-\item{format}{is a variable that identify the data : matrice or list}
+\item{format}{is a variable that identify the data : matrice or long format}
 
 \item{fdc}{is the map background file, ie. a shapefile.}
 
 \item{code}{is the map background IDs code}
 
-\item{lorenz.plot}{this variable allows to represent the graph of gini coefficient}
+\item{lorenz.plot}{allows to plot the Lorenz curve associate to the gini coefficient}
 }
 \value{
 plot Lorenz curve for the cumulated flow and links : flowgini(...,gini.plot = TRUE),warning : the function must be not assign a variable
@@ -30,17 +30,17 @@ value of the Gini's coefficent and the table : table<-flowgini(...,missing(gini.
 }
 \description{
 Calculates Gini coefficient, plot Lorenz curve and
-threshold the matrix according to an overall double criterion of intensity or density
+threshold the matrice according to an overall double criterion (flow intensity or density).
 To be use before \link{flowanalysis}
 }
 \details{
-flowgini(...,gini.plot = TRUE) for ploting Lorenz curve from cumulated flows and links (features),
-Warning : the function must be not assign a variable
+flowgini(...,lorenz.plot = TRUE) for ploting Lorenz curve from cumulated flows and links.
 }
 \references{
-Bahoken Francoise (2016), « La cartographie d’une sélection globale de flux, entre ‘significativité’ et ‘densité’ »,
+Bahoken Francoise (2016), "La cartographie d’une sélection globale de flux, entre ‘significativité’ et ‘densité’ ",
 Netcom [En ligne], 30-3/4 | URL : http://journals.openedition.org/netcom/2565 ; DOI : 10.4000/netcom.2565
-Bahoken Francoise (2016), « Chapitre 8 Propositions de solutions liées au choix d’un critère de
-sélection global : la cartographie de flux significatifs (Fij>α)» in Bahoken, F. Contribution à la cartographie d'une matrice de flux, Thèse de doctorant, Université Paris 7, pp. 325-346.
-Grasland Claude (2011, 2014), « Flows analysis carto », unpublished R functions.
+Bahoken Francoise (2016), " Chapitre 8 Propositions de solutions liées au choix d’un critère de
+sélection global : la cartographie de flux significatifs Fij up to a" in Bahoken, F. Contribution à la cartographie d'une matrice de flux,
+Thèse de doctorant, Université Paris 7, pp. 325-346.
+Grasland Claude (2011, 2014), "Flows analysis carto", unpublished R functions.
 }

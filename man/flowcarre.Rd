@@ -2,43 +2,44 @@
 % Please edit documentation in R/flowcarre.R
 \name{flowcarre}
 \alias{flowcarre}
-\title{Create a square matrice from IDs}
+\title{Create a square matrice from geographical ID}
 \usage{
 flowcarre(liste, tab, origin, dest, valflow, format, diagonale, empty.sq)
 }
 \arguments{
-\item{liste}{list or all the spatial units IDs, on a single column}
+\item{liste}{list or all the geographical ID as a single vector flow dataset}
 
-\item{tab}{is the non squared input flowdata table with three column : origin, destination, flow)}
+\item{tab}{the non squared input flow dataset with three column : origin, destination, flow value}
 
-\item{origin}{identify the origin nodes column (which contains IDs)}
+\item{origin}{origin place ID}
 
-\item{dest}{identify the destination nodes column (which contains IDs)}
+\item{dest}{destination place ID}
 
-\item{valflow}{identify tne flow value column}
+\item{valflow}{flow value}
 
-\item{format}{indicates the squared flow data output format : "M" or "L"for matrice (n*n) or "L" for list}
+\item{format}{the squared flow dataset output format : see details}
 
-\item{diagonale}{tttt}
+\item{diagonale}{see details}
 
 \item{empty.sq}{TRUE : to allows to have an matrice empty with only the ID of background map ; FALSE or missing}
 }
 \description{
-Create a closed square matrice from a list of geographic IDs (CODE)
+Create a closed and square matrice from a list of geographic ID (CODE)
 }
 \details{
-The table listing all the spatial geometry IDs involved (origin and/or destination)
-must have been prepared in advance.
-For a matrice (n*n) output form: format ="M"
-For a list output form: format ="L"
+- format is "M" for matrice format
+- format is "L" for long format
+- diagonal is TRUE to zero main diagonal
 }
 \examples{
-## Example 1 : transform a non squared flowdata matrice to a closed and squared matrice
-#library(cartograflow)
-#code<-read.csv2("file1.csv",header=TRUE,sep=";",stringsAsFactors=FALSE,
-#encoding="UTF-8",dec=".",check.names=FALSE)
-#flow<-read.csv2("file2.csv",header=TRUE,sep=";",stringsAsFactors=FALSE,
-#encoding="UTF-8",dec=".",check.names=FALSE)
-#mat<-flowcarre(tab="file1",tab="file2",origin="COMMUNE_O",dest="COMMUNE_D",
-#valflow="COUNT",format="L")
+\dontrun{
+transform a non squared flow dataset to a closed and squared matrice
+library(cartograflow)
+code<-read.csv2("file1.csv",header=TRUE,sep=";",stringsAsFactors=FALSE,
+encoding="UTF-8",dec=".",check.names=FALSE)
+flow<-read.csv2("file2.csv",header=TRUE,sep=";",stringsAsFactors=FALSE,
+                 encoding="UTF-8",dec=".",check.names=FALSE)
+mat<-flowcarre(liste="code",tab="flow",origin="COMMUNE_O",dest="COMMUNE_D",
+               valflow="COUNT",format="L")
+}
 }

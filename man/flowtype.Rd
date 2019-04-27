@@ -7,10 +7,9 @@
 flowtype(tab, format, x)
 }
 \arguments{
-\item{tab}{is the input flowdata table}
+\item{tab}{the input flow dataset}
 
-\item{format}{specify the flowdata format : M = square matrix [n*n] or L=list [i,j,data]
-i= origin and y=destination and data=relationnal data}
+\item{format}{specify the flow dataset format : M = square matrix [n*n] or L=lng [i,j,data]}
 
 \item{x}{enter the computation type : "flux", "transpose", "bivolum" and "bisold".}
 }
@@ -18,19 +17,23 @@ i= origin and y=destination and data=relationnal data}
 Compute gross and net flows from initial asymetric flow values
 }
 \details{
-The matrix must be squared (if not, see flowcarre.R).
+The matrix must be squared (if not, see \link{flowcarre}).
 This function compute for all (i,j) index involved in an asymetric flow matrix (Fij) several matrix.
 "flux" for initial flow (Fij) - "transpose" for reverse flow value (Fji) - "bivolum" for bilateral gross flow Vij=(Fij+Fji) -
 "bisold" for bilateral net flow Sij=(Fij-Fji).
 }
 \examples{
+\dontrun{
 ## Example 1 : compute bivolum
-#library(cartograflow)
-#y<-flowtype(tab,format="M","bivolum")
+library(cartograflow)
+y<-flowtype(tab,format="M","bivolum")
 #Then use flowmap.R for mapping gross flow with non valued links
-#flowmap(y,format = "M",filtre= TRUE,seuil = 100, taille = 20,
-#fdc = "isere_com.shp",code = "INSEE_COM",varf=FALSE)
+flowmap(y,format = "M",fdc = "file.shp",code = "IDcode",
+         filtre= TRUE,threshold= 100, taille = 20)
+}
 }
 \references{
-Bahoken Francoise, 2016, L'approche cartographique de la décomposition des matrices de flux », Mappemonde, Revue sur l'image géographique et les formes du territoire, n°116, URL : https://mappemonde-archive.mgm.fr/num44/articles/art14404.html
+Bahoken Francoise, 2016, L'approche cartographique de la décomposition des matrices de flux,
+Mappemonde, Revue sur l'image géographique et les formes du territoire,
+number 116, URL : https://mappemonde-archive.mgm.fr/num44/articles/art14404.html
 }

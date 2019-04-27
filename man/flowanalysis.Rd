@@ -2,7 +2,7 @@
 % Please edit documentation in R/flowanalysis.R
 \name{flowanalysis}
 \alias{flowanalysis}
-\title{Computation of a global selection criterion for flowmapping}
+\title{Computation of a global selection criterion for thresholding flow values and/or flow features}
 \usage{
 flowanalysis(tab, critflow, critlink, result)
 }
@@ -13,25 +13,16 @@ flowanalysis(tab, critflow, critlink, result)
 
 \item{critlink}{level of features density. See Details.}
 
-\item{result}{resulting criterion value. See Details}
+\item{result}{resulting filtering criterion value. See Details}
 }
 \description{
-Computation of a global selection criterion for thresholding flow  information or features before mapping
-To be use after \link{flowgini}
+To be use after \link{flowgini}.
+Computation of a global selection criterion for thresholding flow information and/or features before mapping.
 }
 \details{
-Computes a double criterion for selecting flows before mapping :
--- critflow =  desired level of flow's information significativity, as a % of total of flow information ;
--- critlink = desired level of flow's features density, as a % of total of flow features.
+-- critflow =  desired level of flow's information significativity (e.g. 80% of the total information) ;
+-- critlink = desired level of flow's features density (e.g. 20% of the flow features that represents "more significant information).
 
-Return resuts :
 -- result="density" returns the desired level of features density as a % of total features ;
 -- result = "significativity" returns the level of flow significativity as a % of total of flow information ;
-}
-\references{
-Bahoken Francoise (2016), « La cartographie d’une sélection globale de flux, entre ‘significativité’ et ‘densité’ »,
-Netcom [On ligne], 30-3/4 | URL : http://journals.openedition.org/netcom/2565 ; DOI : 10.4000/netcom.2565
-Bahoken Francoise (2016), « Chapitre 8 Propositions de solutions liées au choix d’un critère de
-sélection global : la cartographie de flux significatifs (Fij>α)» in Bahoken, F. Contribution à la cartographie d'une matrice de flux, Thèse de doctorant, Université Paris 7, pp. 325-346.
-Grasland Claude (2011, 2014), « Flows analysis carto », unpublished R functions.
 }

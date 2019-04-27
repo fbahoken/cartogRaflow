@@ -7,9 +7,9 @@
 flowtabmat(tab, matlist)
 }
 \arguments{
-\item{tab}{dasaset matrice or list}
+\item{tab}{flow dasaset in matrice or list format}
 
-\item{matlist}{choise of matice or list}
+\item{matlist}{choose matrice or list as the result format. See details.}
 }
 \value{
 matrice or list
@@ -18,18 +18,20 @@ matrice or list
 Transform a matrice format to a long format and vice versa
 }
 \details{
-From list to matrice: matlist="M" ;
-From matrice to list: matlist="L".
+-- From long to matrice format : matlist="M" ;
+-- From matrice to long format : matlist="L".
 }
 \examples{
+\dontrun{
 ## Example 1 : from list to matrix (n*m)
-#library(cartograflow)
-#tabFlow<-read.csv2("flowdataset.csv",header=TRUE,sep=";",stringsAsFactors=FALSE,
-#encoding="UTF-8",dec=".",check.names=FALSE)
-#matFlow<-flowtabmat(tabFlow,matlist="M")
+library(cartograflow)
+tabFlow<-read.csv2("flowdataset.csv",header=TRUE,sep=";",stringsAsFactors=FALSE,
+encoding="UTF-8",dec=".",check.names=FALSE)
+matFlow<-flowtabmat(tabFlow,matlist="M")
 ## Example 2 : from matrix to list [i,j,Fij]
-#library(cartograflow)
+library(cartograflow)
 #matFlow<-read.csv2("flowdataset.csv",header=TRUE,sep=";",stringsAsFactors=FALSE,
-#encoding="UTF-8",dec=".",check.names=FALSE)
-#tabFlow<-flowtabmat(matFlow,matlist="L")
+         encoding="UTF-8",dec=".",check.names=FALSE)
+tabFlow<-flowtabmat(matFlow,matlist="L")
+}
 }

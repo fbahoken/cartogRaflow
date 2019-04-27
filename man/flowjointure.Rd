@@ -2,38 +2,34 @@
 % Please edit documentation in R/flowjointure.R
 \name{flowjointure}
 \alias{flowjointure}
-\title{Create a spatial joint between a flowdata table and a map background
-Performs an attribute spatial join between a flow data table and XY map background}
+\title{Create a spatial joint between a flow dataset table and a map background}
 \usage{
 flowjointure(tab, fdc, code)
 }
 \arguments{
-\item{tab}{is the input flowdata table in the form of a list}
+\item{tab}{the input flow dataset table in long format}
 
 \item{fdc}{the map background file, ie. a shapefile}
 
-\item{code}{is the IDs of the spatial units in the map background}
+\item{code}{the ID of the spatial units in the map background}
 }
 \value{
-Resulting jointure table between flowdata and map background
+Resulting jointure table between flow dataset and map background
 }
 \description{
-Create a spatial joint between a flowdata table and a map background
-Performs an attribute spatial join between a flow data table and XY map background
+Performs an attribute spatial join between a flow dataset table and a map background
 }
 \examples{
-## Example 1 : from a matrix
-#library(cartograflow)
-#tab<- read.csv2("mflowdataset.csv",header=TRUE,sep=";",stringsAsFactors=FALSE,
-#encoding="UTF-8",dec=".",check.names=FALSE)
-#tabflow<-flowstructmat(tab) #paste and transposes the columns ID to the rows ID
-#tabflow<-flowtabmat(tabflow,matlist="L") #transform the flowdataset from
-#matrix to list format
-#tab<-flowjointure(tabflow,"file.shp","ID_map")
-## Example 2 : from a list
-#library(cartograflow)
-#tabflow<- read.csv2("flowdataset.csv",header=TRUE,sep=";",stringsAsFactors=FALSE,
-#encoding="UTF-8",dec=".",check.names=FALSE)
-#tab<-flowjointure(tabflow,"file.shp","ID_map")
-
+\dontrun{
+library(cartograflow)
+data<-read.csv2("flowdataset.csv",
+                 header=TRUE,
+                 sep=";",
+                 stringsAsFactors=FALSE,
+                 encoding="UTF-8",
+                 dec=".",
+                 check.names=FALSE)
+tab<-data \%>\% select(i,j,Fij)
+tabflow<-flowjointure(tab,"bkg.shp","code")
+}
 }

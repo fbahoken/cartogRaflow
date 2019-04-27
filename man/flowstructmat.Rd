@@ -2,7 +2,7 @@
 % Please edit documentation in R/flowstructmat.R
 \name{flowstructmat}
 \alias{flowstructmat}
-\title{Fixes an ID shift of IDs (use with cartograflow::flowjointure() and cartograflow::flowtabmat())}
+\title{structure matrice}
 \usage{
 flowstructmat(z)
 }
@@ -13,17 +13,18 @@ flowstructmat(z)
 A flowdataset with an usable format
 }
 \description{
-Fixes an ID shift in the flowdata matrice (use with cartograflow::flowjointure() and cartograflow::flowtabmat())
+Fixes an ID shift in the flow dataset matrice (to bo use with \link{flowjointure} and \link{flowtabmat})
 }
 \examples{
-## Example 1 : preparing a matrice
-#library(cartograflow)
-#tab<- read.csv2("flowdataset.csv",header=TRUE,sep=";",stringsAsFactors=FALSE,
-#encoding="UTF-8",dec=".",check.names=FALSE)
+\dontrun{
+preparing a matrice
+library(cartograflow)
+tab<- read.csv2("flowdataset.csv",header=TRUE,sep=";",stringsAsFactors=FALSE,
+encoding="UTF-8",dec=".",check.names=FALSE)
 #Transforms the first colunm (which contain the IDs code of the background map)
 #into matrix ID colunm.
-#tabflow<-flowstructmat(tab)
+tabflow<-flowstructmat(tab)
 ##transform the flowdataset from matrix to list format
-#tabflow<-flowtabmat(tabflow,matlist="L")
-
+tabflow<-flowtabmat(tabflow,matlist="L")
+}
 }
