@@ -1,29 +1,28 @@
-#' Create a spatial joint between a flowdata table and a map background
-#' Performs an attribute spatial join between a flow data table and XY map background
-#'
-#' @param tab is the input flowdata table in the form of a list
+#' @title Create a spatial joint between a flow dataset table and a map background
+#' @description Performs an attribute spatial join between a flow dataset table and a map background
+#' @param tab the input flow dataset table in long format
 #' @param fdc the map background file, ie. a shapefile
-#' @param code is the IDs of the spatial units in the map background
-#' @return Resulting jointure table between flowdata and map background
+#' @param code the ID of the spatial units in the map background
+#' @return Resulting jointure table between flow dataset and map background
 #' @export
 #' @importFrom maptools readShapeSpatial
 #' @importFrom rlang .data
 #' @import sp
 #' @examples
-#' ## Example 1 : from a matrix
-#' #library(cartograflow)
-#' #tab<- read.csv2("mflowdataset.csv",header=TRUE,sep=";",stringsAsFactors=FALSE,
-#' #encoding="UTF-8",dec=".",check.names=FALSE)
-#' #tabflow<-flowstructmat(tab) #paste and transposes the columns ID to the rows ID
-#' #tabflow<-flowtabmat(tabflow,matlist="L") #transform the flowdataset from
-#' #matrix to list format
-#' #tab<-flowjointure(tabflow,"file.shp","ID_map")
-#' ## Example 2 : from a list
-#' #library(cartograflow)
-#' #tabflow<- read.csv2("flowdataset.csv",header=TRUE,sep=";",stringsAsFactors=FALSE,
-#' #encoding="UTF-8",dec=".",check.names=FALSE)
-#' #tab<-flowjointure(tabflow,"file.shp","ID_map")
-#'
+#' \dontrun{
+#' library(cartograflow)
+#' data<-read.csv2("flowdataset.csv",
+#'                  header=TRUE,
+#'                  sep=";",
+#'                  stringsAsFactors=FALSE,
+#'                  encoding="UTF-8",
+#'                  dec=".",
+#'                  check.names=FALSE)
+#'tab<-data %>% select(i,j,Fij)
+#'tabflow<-flowjointure(tab,"bkg.shp","code")
+#'}
+#'@export
+
 
 flowjointure<-function(tab,fdc,code){
 

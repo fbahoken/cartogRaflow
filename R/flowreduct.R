@@ -1,22 +1,22 @@
-#' Flow matrice reduction according to another matrice
-#'
+#' @title Flow matrice reduction according to another matrice
+#' @description
 #' Reduces a flow dataset according to an external matrice (eg. distance travelled)
-#' Calculates geographical movements - weights a flow dataset according to a distance criterion
+#' Computes geographical movements (by weighting a flow dataset according to a distance criterion)
 #' @param tab is the input flowdata set.
 #' @param tab.metric is the table of distance (continuous dataset) or contiguity (ordinal dataset)
 #' @param metric  See Details.
 #' @param select is the continuous distance thresholding parameter. See Details.
-#' @param d is the map background IDs.
+#' @param d distance thresholds criterion.
 #' @return A flow dataset with continuous euclidian distances calculations
 #' @details
 #' This function allows to reduce a flow dataset from a matrice distance.
-#' - Metric is 'continous" for distance as euclidian, maximum, manhattan, etc.
+#' -- Metric is 'continous" for distance as euclidian, maximum, manhattan, etc.
 #' See \link{flowdist} for computing neighbourhood ordinal distance matrix.
 #'
 #' select ="dmin" is for reducing flow dataset to values that are up or equal to the dmin distance parameter.
 #' select ="dmax" is for reducing flow dataset to values that are less or equal to the dmax distance.
 #'
-#' - Metric is 'ordinal' for neighbourhood ordinal distance so-called k contiguity.
+#' Metric is 'ordinal' for neighbourhood ordinal distance so-called k contiguity.
 #' See \link{flowcontig} for computing continuous distance matrix
 #' @import dplyr
 #' @importFrom rlang .data

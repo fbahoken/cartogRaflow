@@ -1,18 +1,15 @@
-#' Computation of a global selection criterion for flowmapping
-#'
-#' Computation of a global selection criterion for thresholding flow  information or features before mapping
-#' To be use after \link{flowgini}
-#'
+#' @title Computation of a global selection criterion for thresholding flow values and/or flow features
+#' @description
+#' To be use after \link{flowgini}.
+#' Computation of a global selection criterion for thresholding flow information and/or features before mapping.
 #' @param tab flow dataset from \link{flowgini}
 #' @param critflow level of flow significativity. See Details.
 #' @param critlink level of features density. See Details.
-#' @param result resulting criterion value. See Details
+#' @param result resulting filtering criterion value. See Details
 #' @details
-#' Computes a double criterion for selecting flows before mapping :
-#' -- critflow =  desired level of flow's information significativity, as a % of total of flow information ;
-#' -- critlink = desired level of flow's features density, as a % of total of flow features.
+#' -- critflow =  desired level of flow's information significativity (e.g. 80% of the total information) ;
+#' -- critlink = desired level of flow's features density (e.g. 20% of the flow features that represents "more significant information).
 #'
-#' Return resuts :
 #' -- result="density" returns the desired level of features density as a % of total features ;
 #' -- result = "significativity" returns the level of flow significativity as a % of total of flow information ;
 #' @export
