@@ -1,12 +1,18 @@
 ---
 title: "Cartograflow"
 subtitle: "Filtering Matrices for Thematic Cartography - Flow Mapping"
-author: "Françoise Bahoken"
+author: "Françoise Bahoken, Sylvain Blondeau"
 date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
+output: html_vignette
 vignette: >
+  \usepackage[ps2pdf,
+              bookmarks=true,
+              dvipsone=pdftex,                                
+              backref,
+              ]{hyperref}
   %\VignetteIndexEntry{Vignette Title}
   %\VignetteEncoding{UTF-8}
+  %\SweaveUTF8
   %\VignetteEngine{knitr::rmarkdown}
 editor_options: 
   chunk_output_type: inline
@@ -16,7 +22,7 @@ editor_options:
 
 `Cartograflow` is designed to filter origin-destination (OD) flow values before their thematic cartography.
 
-This Vignette presents a selection of possible functions for filtering flows (see 5. Reference) that can be easily used to prepare the flowdata set. The spatial objects processing are those of `{sf}` (embedded) and the mapping elements are those of `{Cartography}`.
+This Vignette presents a selection of possible functions for filtering flows (see 5. Reference) that can be easily used to prepare the flow dataset. The spatial objects processing are those of `{sf}` (embedded) and the mapping elements are those of `{Cartography}`.
 
 
 **Matrice format available**
@@ -66,7 +72,7 @@ In the case you only have a list of spatial units (code,X,Y), you can also gener
 
 -- `flowtabmat()` is to transform a "M" matrice format to a "L" format and vice versa
 
--- `flowstructmat()` fixes an unpreviously ID shift in the flow dataset "M" format. If necessary this function is to be used with `flowjointure()` and `flowtabmat`.
+-- `flowstructmat()` fixes an unpreviously ID shift in the flow dataset "M" format. If necessary this function is to be used with `flowjointure` and `flowtabmat`.
 
 ### 1-2. Computing flows
 
@@ -74,7 +80,7 @@ It is to decide firstly to zero or not the diagonal, see `{base::diag}`.
 
 -- `flowtype()` is to compute the main types of flows from an asymmetric flow dataset (matrice or list format). The result is a bilateral gross or net flows matrice.
 
-It is also possible to compute the matrice's margins in order to calculate probabilities of sending and receiving flows or all kinds of indicators. Use for that the R `{base}` or `{dplyr}`
+It is also possible to compute the matrice's margins in order to calculate probabilities of sending and receiving flows or all kinds of indicators. Use for that the R `{base}` or `{dplyr}`.
 
 
 ## 2. Flow analysis
@@ -195,13 +201,13 @@ Use `flowtabmat()` for setting graphic parameters for arrows
 
 ### 4.1 Load packages
 
-```{r load packages, message=FALSE}
+```{r include=FALSE, message=FALSE}
 
 rm(list=ls())
 
 library(dplyr)
-library(cartography)
 library(cartograflow)
+library(cartography)
 
 ```
 
@@ -220,7 +226,6 @@ library(cartograflow)
 - geographical ID : INSEE, 2016.
 
 - Citations : IGN, APUR, UMS 2414 RIATE, 2018.
-
 
 ### 4.2.1 Load Statistical information
 
@@ -254,8 +259,7 @@ ID_CODE<-read.csv2("./data/COD_GEO_EPT.csv",
                    check.names=FALSE)
 head(ID_CODE)
 
-CODE<-ID_CODE%>%
-  select(COD_GEO_EPT)
+CODE<-ID_CODE%>% dplyr::select(COD_GEO_EPT)
 
 colnames(CODE)<-c("CODGEO")
 
@@ -265,17 +269,14 @@ head(CODE)
 
 ### 4.2.2 Pre-processing flow dataset
 
-
 ```{r pre-processing, fig.show='hold'}
 
-tabflow<-data%>%
-  select(i,j,Fij)
+tabflow<-data%>%select(i,j,Fij)
 
 # Change matrice format (if necessary)
 matflow <-flowtabmat(tabflow,matlist="M")
 head(matflow[1:4,1:4])
 dim(matflow)
-
 
 ```
 
@@ -568,15 +569,15 @@ legendPropLines(pos="topleft",
                 )
 
 layoutLayer(title = "Professional mobility in Greater Paris",
-            coltitle ="black",
-            author = "Cartograflow, 2019",
-            sources = "Sources : data : INSEE, RP, MOBPRO, 2017 ; basemap : IGN, APUR, UMS 2414 RIATE, 2018.",
-            scale = 0.2,
-            tabtitle = TRUE,
-            frame = TRUE,
-            north(pos = "topright"),
-            col = "grey"
-                        )
+           coltitle ="black",
+           author = "Cartograflow, 2019",
+           sources = "Sources : data : INSEE, RP, MOBPRO, 2017 ; basemap : IGN, APUR, UMS 2414 RIATE, 2018.",
+           scale = 2,
+           tabtitle = TRUE,
+           frame = TRUE,
+           #north(pos = "topright"),
+           col = "grey"
+            )
 
 ```
 
@@ -639,16 +640,16 @@ legendPropLines(pos="topleft",
                 values.rnd = 0
                 )
 # Habillage
-
 layoutLayer(title = "Professional mobility in Greater Paris : short distance travelled",
             author = "Cartograflow, 2019",
             sources = "Sources : data : INSEE, RP, MOBPRO, 2017 ; basemap : IGN, APUR, UMS 2414 RIATE, 2018",
             scale = 5,
             tabtitle = TRUE,
             frame = TRUE,
-            north(pos = "topright"),
+            #north(pos = "topright"),
             col = "grey",
-            coltitle ="black")
+            coltitle ="black"
+            )
 
 ```
 
@@ -704,14 +705,13 @@ legendPropLines(pos="topleft",
                 values.rnd = 0
                 )
 # Habillage
-
 layoutLayer(title = "Professional mobility in Greater Paris : mean distance travelled",
             author = "Cartograflow, 2019",
             sources = "Sources : data : INSEE, RP, MOBPRO, 2017 ; basemap : IGN, APUR, UMS 2414 RIATE, 2018",
             scale = 5,
             tabtitle = TRUE,
             frame = TRUE,
-            north(pos = "topright"),
+            #north(pos = "topright"),
             col = "grey",
             coltitle ="black")
 
@@ -719,7 +719,6 @@ layoutLayer(title = "Professional mobility in Greater Paris : mean distance trav
 
 
 ### 4.6.2  Ordinal distance 
-
 
 ```{r echo=TRUE, fig.show='hold'}
 
@@ -776,14 +775,13 @@ legendPropLines(pos="topleft",
                 values.rnd = 0
                 )
 # Habillage
-
 layoutLayer(title = "Professional mobility in Greater Paris between neighbouring municipalities",
             author = "Cartograflow, 2019",
             sources = "Sources : data : INSEE, RP, MOBPRO, 2017 ; basemap : IGN, APUR, UMS 2414 RIATE, 2018",
             scale = 5,
             tabtitle = TRUE,
             frame = TRUE,
-            north(pos = "topright"),
+            #north(pos = "topright"),
             col = "grey",
             coltitle ="black")
 
