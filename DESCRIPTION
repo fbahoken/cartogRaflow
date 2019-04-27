@@ -1,10 +1,8 @@
 Package: cartograflow
 Title: Filtering Matrices for Thematic Cartography - Flow Mapping
-Version: 0.0.0.1
-Authors@R: c(
-            person("Francoise", "Bahoken", email = "francoise.bahoken@ifsttar.fr", role = c("cre","aut")),
-            person("Sylvain", "Blondeau", email = "blondeau.sylvain@yahoo.fr", role = c("aut")))
-Maintainer: Sylvain Blondeau <blondeau.sylvain@yahoo.fr>
+Version: 1.0.0.0
+Authors@R: c(person("Sylvain", "Blondeau", email = "blondeau.sylvain@yahoo.fr",role = c("aut","cre")),
+             person("Francoise", "Bahoken", email = "francoise.bahoken@ifsttar.fr", role = "aut"))
 Description: Functions to prepare and filter an origin-destination matrix for thematic flow mapping purposes.
 Depends: R (>= 3.4.0)
 License: GPL-3
@@ -18,15 +16,15 @@ Suggests:
     cartography
 VignetteBuilder: knitr
 Imports: 
-    reshape2,
+    dplyr,
     g.data,
+    graphics,
+    ggplot2,
     maptools,
+    plotly,
     rgdal,
     rgeos,
+    reshape2,
+    rlang,
     sp,
-    graphics,
-    utils,
-    ggplot2,
-    plotly,
-    dplyr,
-    rlang
+    utils
