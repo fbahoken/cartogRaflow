@@ -1,21 +1,19 @@
-#' Computes ordinal distance matrixes based on contiguity
-#'
-#' From a spatial basemap, compute an ordinal distance matrix based on a k-contiguity matrix.
-#' The resulting neighbourhood graph can be map using \link{flowmap}
-#' @param fdc is the map background file, ie. a shapefile of polygons
-#' @param code identifiant in shape file
-#' @param ordre ordre est à 1, 2 ou 4
-#' @return a (k) contiguity matrice with the k contiguity measures
+#' @title Computes an ordinal distance matrices based on geographical background
+#' @description
+#' From a geographical background, compute an ordinal distance matrice based on a k-contiguity.
+#' The result is a neighbourhood graph that can be used for filtering flow values beor flow mapping (\link{flowmap})
+#' @param fdc is the map background file (ie. a shapefile of polygons)
+#' @param code identifiant
+#' @param ordre number of borders to cross between origin and destination place. See details.
+#' @return a (k) contiguity matrice with the (k) contiguity measures
 #' @details
-#' Contiguity is in terms of the (k=1,2,4) numberof spatial boundaries to be crossed between
+#' Contiguity is in terms of the (k=1,2,4) number of spatial boundaries to be crossed between
 #' a place of origin and a place of destination
-#' ordre=1 is when the flow have to cross only 1 boundary, that is to say the corresponding origin and destination places are
-#' contiguous, adjacent
-#' ordre=2 is when the origin-destinations places are distant from 2 borders
-#' ordre=4 is when the origin-destinations places are distant from 4 borders
+#' -- ordre=1 is when the flow have to cross only 1 boundary
+#' -- ordre=2 is when the origin-destinations places are distant from 2 borders
+#' -- ordre=4 is when the origin-destinations places are distant from 4 borders
 #' @export
 #' @importFrom rgeos gIntersects
-
 
 flowcontig<-function(fdc,code,ordre){
             ordre1<-function(fdc,code){

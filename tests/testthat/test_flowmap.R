@@ -1,13 +1,12 @@
-#' Plot a layer of origin-destination flows values
-#'
-#' @param tab is the input flowdata table
-#' @param format is the flowdata table format : M=matrix [n*n] or L=list [, i,j, Fij].
-#' @param filter allows you to filter (or not) the flow dataset.
+#' @title Plot a layer of origin-destination flows values
+#' @param tab the input flowdata table
+#' @param format the flowdata table format : M=matrice [n*n] or L=long [, i,j, Fij].
+#' @param filter allows you to filter (or not) the flow dataset. See details
 #' @param threshold is the value of the threshold criterion used to filter the values. The default threshold is set to 1
 #' @param taille is a graphical parameter for modifying the width of the flow feature
-#' @param fdc is the geometry or the geographical background file .shp composed of spatial units
+#' @param fdc the geographical background file .shp
 #' @param code is the column with the spatial units ID code
-#' @param a.head  integer code, determining the kind of arrows to be drawn.
+#' @param a.head  integer code, determining the kind of arrows to be drawn. See details
 #' @param a.length length of the edges of the arrow head (in inches).
 #' @param a.angle angle from the shaft of the arrow to the edge of the arrow head.
 #' @param a.col color of the arrows
@@ -17,27 +16,15 @@
 #' @details
 #' The flow dataset must be converted to a dataframe for optimal performance (troubles remains with tibble format)
 #'
-#' filter allows to choose theoretical or empirical links to draw.
 #' If filter = FALSE, all the matrice values are plot [(n*(n-1)] cells, i.e. all links out of the main diagonal.
 #' If filter = TRUE only non-zero values are plotted, i.e. existing links with or without threshold.
 #' The default threshold is set to 1.
 #'
-#' varf = "True" draw arrows, unless it draw links
-#'
-#' If varf="true", an arrows parameter is set.
-#' code=0 : the link has no head.
-#' code=1 : an arrow is draw at (x0[i], y0[i]).
-#' code=2 : an arrow is draw at (x1[j], y1[j])
-#' code=3 : an arrow is draw at both nodes.
-#' @examples
-#' ## Example 1 : flowmapping a network - draw non valued links
-#' #library(cartograflow)
-#' #flowmap(tabflow,format = "L",filter = FALSE, carte = "file.shp",code = "geoID",varf = FALSE)
-#' ## Example 2 : flowmapping - draw valued and oriented links or arrows
-#' #library(cartograflow)
-#' #flowmap(tabflow,format = "L",fdc = "file.shp",filter = TRUE,
-#' #threshold = (user value),taille = (user value),code = "geoID",
-#' #a.head = 1 ,a.length = 0.2,a.angle=45,a.col="blue")
+#' a.head is for applying an arrow or not
+#' -- code=0 : the link has no head - no arrow
+#' -- code=1 : an arrow is draw at (x0[i], y0[i]).
+#' -- code=2 : an arrow is draw at (x1[j], y1[j])
+#' -- code=3 : an arrow is draw at both nodes.
 #' @importFrom graphics segments
 #' @importFrom graphics arrows
 #' @import rgdal

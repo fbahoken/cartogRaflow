@@ -1,21 +1,20 @@
-#' Analysis of flow concentration (Gini coefficient)
-#'
+#' @title Analysis of flow concentration (Gini coefficient)
+#' @description
 #' Calculates Gini coefficient, plot Lorenz curve and
-#' threshold the matrix according to an overall double criterion of intensity or density
+#' threshold the matrice according to an overall double criterion (flow intensity or density).
 #' To be use before \link{flowanalysis}
-#' @param tab dataset is a matrix or list
-#' @param format is a variable that identify the data : matrice or list
-#' @param origin origin is variable of your dataset to be used with the list format
-#' @param dest dest is variable of your dataset to be used with the list format
-#' @param valflow valflow is variable of your dataset to be used with the list format
+#' @param tab dataset is a matrice or long format
+#' @param format is a variable that identify the data : matrice or long format
+#' @param origin origin place to be used with the long format
+#' @param dest destination place to be used with the list format
+#' @param valflow to be used with the list format
 #' @param fdc is the map background file, ie. a shapefile.
 #' @param code is the map background IDs code
-#' @param lorenz.plot this variable allows to represent the graph of gini coefficient
+#' @param lorenz.plot allows to plot the Lorenz curve associate to the gini coefficient
 #' @return plot Lorenz curve for the cumulated flow and links : flowgini(...,gini.plot = TRUE),warning : the function must be not assign a variable
 #' @return value of the Gini's coefficent and the table : table<-flowgini(...,missing(gini.plot) or gini.plot = FALSE )
 #' @details
-#' flowgini(...,gini.plot = TRUE) for ploting Lorenz curve from cumulated flows and links (features),
-#' Warning : the function must be not assign a variable
+#' flowgini(...,lorenz.plot = TRUE) for ploting Lorenz curve from cumulated flows and links.
 #' @export
 #' @rawNamespace import(plotly, except = last_plot)
 #' @importFrom ggplot2 ggplot
@@ -29,11 +28,12 @@
 #' @importFrom ggplot2 element_line
 #' @importFrom ggplot2 element_text
 #' @references
-#' Bahoken Francoise (2016), « La cartographie d’une sélection globale de flux, entre ‘significativité’ et ‘densité’ »,
+#' Bahoken Francoise (2016), "La cartographie d’une sélection globale de flux, entre ‘significativité’ et ‘densité’ ",
 #' Netcom [En ligne], 30-3/4 | URL : http://journals.openedition.org/netcom/2565 ; DOI : 10.4000/netcom.2565
-#' Bahoken Francoise (2016), « Chapitre 8 Propositions de solutions liées au choix d’un critère de
-#' sélection global : la cartographie de flux significatifs (Fij>α)» in Bahoken, F. Contribution à la cartographie d'une matrice de flux, Thèse de doctorant, Université Paris 7, pp. 325-346.
-#' Grasland Claude (2011, 2014), « Flows analysis carto », unpublished R functions.
+#' Bahoken Francoise (2016), " Chapitre 8 Propositions de solutions liées au choix d’un critère de
+#' sélection global : la cartographie de flux significatifs Fij up to a" in Bahoken, F. Contribution à la cartographie d'une matrice de flux,
+#' Thèse de doctorant, Université Paris 7, pp. 325-346.
+#' Grasland Claude (2011, 2014), "Flows analysis carto", unpublished R functions.
 #' @import dplyr
 #' @import sp
 #' @importFrom rlang .data

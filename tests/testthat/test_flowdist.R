@@ -1,14 +1,15 @@
-#' Compute the distance
-#'
-#' Calculates and threshold a distance matrix in order to filter a flowdata set before flowmapping. Compute also geographic movement.
-#' @param tab is the input flowdata set.
+#' @title Compute continous distance matrice from geographical background
+#' @description
+#' From a geographical backhround computes (and threshold) a distance matrice.
+#' @param tab the input flow dataset.
 #' @param dist.method euclidian calculation
 #' @param result take the vallue "flowdist" or "dist"allows to parameter the resulting distance dataset (flows filtered by a distance criterion or not)
-#' @return (1) A flowdata set with continuous euclidian distances calculations, see dist parameter
+#' @return (1) A flowdata set with continuous euclidian distances calculations, see dist.method parameter
 #' @return (2) A flowdata set with movement from euclidian distances calculations.
-#' @return (3) A flow map filtered by a global distance criterion.
+#' @return (3) A flowmap filtered by a global distance criterion.
 #' @details
-#' This function allows to create a continous distance (see \link{flowcontig} for ordinal distance).
+#' -- result = "flowdist" is tab with all calculation
+#' -- result = "dist" is tab of the distance
 #' @import dplyr
 #' @importFrom rlang .data
 #' @importFrom utils tail
