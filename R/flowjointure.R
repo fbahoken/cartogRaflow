@@ -1,5 +1,5 @@
-#' @title Create a spatial joint between a flow dataset table and a map background
-#' @description Performs an attribute spatial join between a flow dataset table and a map background
+#' @title Create a spatial join with flow
+#' @description Create an attribute spatial join between a flow dataset table and a map background
 #' @param tab the input flow dataset table in long format
 #' @param fdc the map background file, ie. a shapefile
 #' @param code the ID of the spatial units in the map background
@@ -9,18 +9,11 @@
 #' @importFrom rlang .data
 #' @import sp
 #' @examples
-#' \dontrun{
 #' library(cartograflow)
-#' data<-read.csv2("flowdataset.csv",
-#'                  header=TRUE,
-#'                  sep=";",
-#'                  stringsAsFactors=FALSE,
-#'                  encoding="UTF-8",
-#'                  dec=".",
-#'                  check.names=FALSE)
-#'tab<-data %>% select(i,j,Fij)
-#'tabflow<-flowjointure(tab,"bkg.shp","code")
-#'}
+#' data(flowdata)
+#' bkg<- system.file("shape/MGP_TER.shp", package="cartograflow",
+#'                    lib.loc = NULL, mustWork = TRUE)
+#' tabflow<-flowjointure(MOBPRO_ETP,bkg,"EPT_NUM")
 #'@export
 
 

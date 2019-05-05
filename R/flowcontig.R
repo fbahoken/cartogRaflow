@@ -12,8 +12,17 @@
 #' -- ordre=1 is when the flow have to cross only 1 boundary
 #' -- ordre=2 is when the origin-destinations places are distant from 2 borders
 #' -- ordre=4 is when the origin-destinations places are distant from 4 borders
-#' @export
+#' @examples
+#' library(cartograflow)
+#' data(flowdata)
+#' bkg<- system.file("shape/MGP_TER.shp", package="cartograflow",
+#'                    lib.loc = NULL, mustWork = TRUE)
+#' graph_ckij_1<-flowcontig(bkg,"EPT_NUM",ordre =1)
+#' \donttest{
+#' flowmap(graph_ckij_1,format="L",bkg,"EPT_NUM",
+#'         filter = TRUE, taille = 0.5)}
 #' @importFrom rgeos gIntersects
+#' @export
 
 flowcontig<-function(fdc,code,ordre){
             ordre1<-function(fdc,code){

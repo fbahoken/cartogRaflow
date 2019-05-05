@@ -1,20 +1,18 @@
-#' @title structure matrice
-#' @description Fixes an ID shift in the flow dataset matrice (to bo use with \link{flowjointure} and \link{flowtabmat})
-#' @param z is the flowdataset in the matrix format where the first column is filled with the IDs
+#' @title Structuring a matrice
+#' @description Fixes an ID shift in the flow  matrice (to bo use with \link{flowjointure} if necessary and \link{flowtabmat})
+#' @param z The flow dataset is in the matrice format where the first column is filled with the ID
 #' @return A flowdataset with an usable format
 #' @export
 #' @examples
-#' \dontrun{
-#' preparing a matrice
 #' library(cartograflow)
-#' tab<- read.csv2("flowdataset.csv",header=TRUE,sep=";",stringsAsFactors=FALSE,
-#' encoding="UTF-8",dec=".",check.names=FALSE)
-#' #Transforms the first colunm (which contain the IDs code of the background map)
-#' #into matrix ID colunm.
-#' tabflow<-flowstructmat(tab)
-#' ##transform the flowdataset from matrix to list format
-#' tabflow<-flowtabmat(tabflow,matlist="L")
-#'}
+#' data(flowdata)
+#'
+#' dim(mat_ex) # dimension fo the original matrice
+#' ### 10 11  # first colum is fill with the ID
+#'
+#' tab<-flowstructmat(mat_ex)
+#' dim(tab)
+#' ## 10 10 # dimension fo the resulting matrice
 
 flowstructmat<-function(z){
   m <- as.matrix(z[,-1])
@@ -22,3 +20,7 @@ flowstructmat<-function(z){
   class(m)
   resul<-m
 }
+
+
+
+

@@ -1,7 +1,7 @@
 #' @title Analysis of flow concentration (Gini coefficient)
 #' @description
 #' Calculates Gini coefficient, plot Lorenz curve and
-#' threshold the matrice according to an overall double criterion (flow intensity or density).
+#' threshold the matrice according to a global concentration criterion for mapping flow intensity or flow density).\cr
 #' To be use before \link{flowanalysis}
 #' @param tab dataset is a matrice or long format
 #' @param format is a variable that identify the data : matrice or long format
@@ -15,7 +15,6 @@
 #' @return value of the Gini's coefficent and the table : table<-flowgini(...,missing(gini.plot) or gini.plot = FALSE )
 #' @details
 #' flowgini(...,lorenz.plot = TRUE) for ploting Lorenz curve from cumulated flows and links.
-#' @export
 #' @rawNamespace import(plotly, except = last_plot)
 #' @importFrom ggplot2 ggplot
 #' @importFrom ggplot2 aes
@@ -28,16 +27,27 @@
 #' @importFrom ggplot2 element_line
 #' @importFrom ggplot2 element_text
 #' @references
-#' Bahoken Francoise (2016), "La cartographie d’une sélection globale de flux, entre ‘significativité’ et ‘densité’ ",
-#' Netcom [En ligne], 30-3/4 | URL : http://journals.openedition.org/netcom/2565 ; DOI : 10.4000/netcom.2565
-#' Bahoken Francoise (2016), " Chapitre 8 Propositions de solutions liées au choix d’un critère de
-#' sélection global : la cartographie de flux significatifs Fij up to a" in Bahoken, F. Contribution à la cartographie d'une matrice de flux,
-#' Thèse de doctorant, Université Paris 7, pp. 325-346.
-#' Grasland Claude (2011, 2014), "Flows analysis carto", unpublished R functions.
+#' Bahoken Françoise, 2016,« La cartographie d’une sélection globale de flux, entre ‘significativité’ et ‘densité’ »,
+#' Netcom Online, 30-3/4 | 2016, Online since 23 March 2017, connection on 05 May 2019. URL : http://journals.openedition.org/netcom/2565 ;
+#' DOI : 10.4000/netcom.2565. \cr
+#' Grasland Claude, 2014, "Flows analysis carto", unpublished R functions.
 #' @import dplyr
 #' @import sp
 #' @importFrom rlang .data
 #' @importFrom utils tail
+#' @examples
+#' library(cartograflow)
+#' data(flowdata)
+#' bkg<- system.file("shape/MGP_TER.shp", package="cartograflow",
+#'                   lib.loc = NULL, mustWork = TRUE)
+#' #Computes Gini's coefficent
+#' tab_gini<-flowgini(MOBPRO_ETP,format="L",origin="i",dest="j",valflow="Fij",
+#'           bkg,code="EPT_NUM",lorenz.plot = FALSE)
+#' #Plot Lorenz curve
+#' flowgini(tab_gini,format="L",origin="i",dest="j",valflow="ydata",
+#'           bkg,code="EPT_NUM",lorenz.plot = TRUE)
+#' #See \link{flowanalysis} for viewing the tab_gini table
+#' @export
 
 flowgini<-function(tab, origin, dest, valflow,format,
                    fdc,code,lorenz.plot){

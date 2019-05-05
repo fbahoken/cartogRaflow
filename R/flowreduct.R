@@ -9,18 +9,31 @@
 #' @param d distance thresholds criterion.
 #' @return A flow dataset with continuous euclidian distances calculations
 #' @details
-#' This function allows to reduce a flow dataset from a matrice distance.
-#' -- Metric is 'continous" for distance as euclidian, maximum, manhattan, etc.
+#' -- Metric is 'continous" for distance as euclidian, maximum, manhattan, etc.\cr
 #' See \link{flowdist} for computing neighbourhood ordinal distance matrix.
 #'
-#' select ="dmin" is for reducing flow dataset to values that are up or equal to the dmin distance parameter.
-#' select ="dmax" is for reducing flow dataset to values that are less or equal to the dmax distance.
+#' select ="dmin" for reducing flow dataset to values that are up or equal to the dmin distance parameter ;\cr
+#' select ="dmax" for reducing flow dataset to values that are less or equal to the dmax distance.
 #'
-#' Metric is 'ordinal' for neighbourhood ordinal distance so-called k contiguity.
+#' -- Metric is 'ordinal' for neighbourhood ordinal distance so-called k contiguity.\cr
 #' See \link{flowcontig} for computing continuous distance matrix
 #' @import dplyr
 #' @importFrom rlang .data
 #' @importFrom utils tail
+#' @examples
+#' library(cartograflow)
+#' data(flowdata)
+#' bkg<- system.file("shape/MGP_TER.shp", package="cartograflow",
+#'                   lib.loc = NULL, mustWork = TRUE)
+#' tab<-flowjointure(MOBPRO_ETP,bkg,"EPT_NUM")
+#'
+#' #Example for reducing a flow matrice with a distance matrice, in long format (i,j, distance)
+#' ##1/2: Computes the matrice distances
+#' tab.distance<-flowdist(tab, dist.method = "euclidian",result = "dist")
+#' ##2/2/: Reduce the flow matrice
+#' tab.flow<-flowreduct(tab,tab.distance, metric = "continous",
+#'                      select = "dmax", #maximum distance travelled criterion
+#'                      d = 8567) #maximum distance value
 #' @export
 
 flowreduct<-function(tab,tab.metric,metric,select,d){

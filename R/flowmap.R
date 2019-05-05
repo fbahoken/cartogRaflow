@@ -1,4 +1,4 @@
-#' @title Plot a layer of origin-destination flows values
+#' @title Mapping a flow matrice origin-destination
 #' @param tab the input flowdata table
 #' @param format the flowdata table format : M=matrice [n*n] or L=long [, i,j, Fij].
 #' @param filter allows you to filter (or not) the flow dataset. See details
@@ -12,7 +12,7 @@
 #' @param a.col color of the arrows
 #' @return a matrix or a list with the correct tabflow ID code
 #' @return The resulting flowmap
-#' @export
+
 #' @details
 #' The flow dataset must be converted to a dataframe for optimal performance (troubles remains with tibble format)
 #'
@@ -28,7 +28,15 @@
 #' @importFrom graphics segments
 #' @importFrom graphics arrows
 #' @import rgdal
+#' @examples
+#' library(cartograflow)
+#' data(flowdata)
+#' bkg<- system.file("shape/MGP_TER.shp", package="cartograflow",
+#'                   lib.loc = NULL, mustWork = TRUE)
+#' flowmap(MOBPRO_ETP,format="L",bkg,code = "EPT_NUM",filter = TRUE,
+#'          threshold = 20,taille = 5,a.head = 1,a.length = 0.05)
 #' @seealso \code{arrows}
+#' @export
 
 flowmap <- function(tab,format,fdc,code,filter,threshold,taille,
                     a.head,a.length,a.angle,a.col){
