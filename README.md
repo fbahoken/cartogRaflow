@@ -1,5 +1,5 @@
-# Cartograflow
-Filtering Matrices for Thematic Flowmapping - Dealing with "spaghetti-effect"
+# Cartograflow <img src="doc/Logo_cartograflow.png" align="right" alt="" width="120" />
+Filtering Matrices for Thematic Flowmapping - Dealing with "spaghetti-effect"  
 
 [![](https://www.r-pkg.org/badges/version/cartograflow)](https://cran.r-project.org/package=cartograflow)
 [![](https://cranlogs.r-pkg.org/badges/cartograflow?color=brightgreen)](https://cran.r-project.org/package=cartograflow)
