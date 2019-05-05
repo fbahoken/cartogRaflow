@@ -2,36 +2,30 @@
 % Please edit documentation in R/flowtabmat.R
 \name{flowtabmat}
 \alias{flowtabmat}
-\title{Transform a matrice format to a long format and vice versa}
+\title{Changing the format of a flow dataset}
 \usage{
 flowtabmat(tab, matlist)
 }
 \arguments{
-\item{tab}{flow dasaset in matrice or list format}
+\item{tab}{flow dasaset, in matrice or long format}
 
-\item{matlist}{choose matrice or list as the result format. See details.}
+\item{matlist}{choose matrice or long as the result format. See details.}
 }
 \value{
-matrice or list
+matrice or long
 }
 \description{
-Transform a matrice format to a long format and vice versa
+Transform a flow dataset from long to matrice format, and vice versa
 }
 \details{
--- From long to matrice format : matlist="M" ;
+-- From long to matrice format : matlist="M";\cr
 -- From matrice to long format : matlist="L".
 }
 \examples{
-\dontrun{
-## Example 1 : from list to matrix (n*m)
 library(cartograflow)
-tabFlow<-read.csv2("flowdataset.csv",header=TRUE,sep=";",stringsAsFactors=FALSE,
-encoding="UTF-8",dec=".",check.names=FALSE)
-matFlow<-flowtabmat(tabFlow,matlist="M")
-## Example 2 : from matrix to list [i,j,Fij]
-library(cartograflow)
-#matFlow<-read.csv2("flowdataset.csv",header=TRUE,sep=";",stringsAsFactors=FALSE,
-         encoding="UTF-8",dec=".",check.names=FALSE)
-tabFlow<-flowtabmat(matFlow,matlist="L")
-}
+data(flowdata)
+#1: From long to matrix format (n*m)
+matFlow<-flowtabmat(MOBPRO_ETP,matlist="M")
+#2: From matrix to long format [i,j,Fij]
+listflow<-flowtabmat(matFlow,matlist="L")
 }

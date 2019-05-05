@@ -2,7 +2,7 @@
 % Please edit documentation in R/flowjointure.R
 \name{flowjointure}
 \alias{flowjointure}
-\title{Create a spatial joint between a flow dataset table and a map background}
+\title{Create a spatial join with flow}
 \usage{
 flowjointure(tab, fdc, code)
 }
@@ -17,19 +17,12 @@ flowjointure(tab, fdc, code)
 Resulting jointure table between flow dataset and map background
 }
 \description{
-Performs an attribute spatial join between a flow dataset table and a map background
+Create an attribute spatial join between a flow dataset table and a map background
 }
 \examples{
-\dontrun{
 library(cartograflow)
-data<-read.csv2("flowdataset.csv",
-                 header=TRUE,
-                 sep=";",
-                 stringsAsFactors=FALSE,
-                 encoding="UTF-8",
-                 dec=".",
-                 check.names=FALSE)
-tab<-data \%>\% select(i,j,Fij)
-tabflow<-flowjointure(tab,"bkg.shp","code")
-}
+data(flowdata)
+bkg<- system.file("shape/MGP_TER.shp", package="cartograflow",
+                   lib.loc = NULL, mustWork = TRUE)
+tabflow<-flowjointure(MOBPRO_ETP,bkg,"EPT_NUM")
 }

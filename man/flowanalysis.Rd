@@ -2,21 +2,21 @@
 % Please edit documentation in R/flowanalysis.R
 \name{flowanalysis}
 \alias{flowanalysis}
-\title{Computation of a global selection criterion for thresholding flow values and/or flow features}
+\title{Computation of a global concentration criterion of flows values or features}
 \usage{
 flowanalysis(tab, critflow, critlink, result)
 }
 \arguments{
 \item{tab}{flow dataset from \link{flowgini}}
 
-\item{critflow}{level of flow significativity. See Details.}
+\item{critflow}{level of flow significativity. See Details.?}
 
 \item{critlink}{level of features density. See Details.}
 
 \item{result}{resulting filtering criterion value. See Details}
 }
 \description{
-To be use after \link{flowgini}.
+To be use after \link{flowgini} and before \link{flowmap}
 Computation of a global selection criterion for thresholding flow information and/or features before mapping.
 }
 \details{
@@ -25,4 +25,36 @@ Computation of a global selection criterion for thresholding flow information an
 
 -- result="density" returns the desired level of features density as a % of total features ;
 -- result = "significativity" returns the level of flow significativity as a % of total of flow information ;
+}
+\examples{
+library(cartograflow)
+data(flowdata)
+bkg<- system.file("shape/MGP_TER.shp", package="cartograflow",
+                  lib.loc = NULL, mustWork = TRUE)
+
+#1/4: Computes Gini's coefficent
+tab_gini<-flowgini(MOBPRO_ETP,format="L",origin="i",dest="j",valflow="Fij",
+          bkg,code="EPT_NUM",lorenz.plot = FALSE)
+### [1] Gini's coefficent = 73.16 \%
+\donttest{
+#2/4: Plot Lorenz curve
+flowgini(tab_gini,format="L",origin="i",dest="j",valflow="ydata",
+          bkg,code="EPT_NUM",lorenz.plot = TRUE)
+}
+#3/4: Compute critflow filtering parameter
+#critflow = 0.8 #selected criterion
+flowanalysis(tab_gini,critflow = 0.8,result = "signif")
+### [1] "threshold =  11238  ---  flows =  80 \% ---  links =  22.94 \%"
+
+#4/4: Plot the flowmap
+\donttest{
+flowmap(MOBPRO_ETP,format="L",bkg,code = "EPT_NUM",filter = TRUE,
+         threshold = 11238,taille = 8,a.head = 1,a.length = 0.11,
+         a.angle = 30,a.col="#3f4247")}
+
+}
+\references{
+Bahoken Françoise, 2016,« La cartographie d’une sélection globale de flux, entre ‘significativité’ et ‘densité’ »,
+Netcom Online, 30-3/4 | 2016, Online since 23 March 2017, connection on 05 May 2019. URL : http://journals.openedition.org/netcom/2565 ;
+DOI : 10.4000/netcom.2565
 }

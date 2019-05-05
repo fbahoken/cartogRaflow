@@ -17,19 +17,34 @@ flowtype(tab, format, x)
 Compute gross and net flows from initial asymetric flow values
 }
 \details{
-The matrix must be squared (if not, see \link{flowcarre}).
+The matrice must be squared (if not, see \link{flowcarre}).
 This function compute for all (i,j) index involved in an asymetric flow matrix (Fij) several matrix.
 "flux" for initial flow (Fij) - "transpose" for reverse flow value (Fji) - "bivolum" for bilateral gross flow Vij=(Fij+Fji) -
 "bisold" for bilateral net flow Sij=(Fij-Fji).
 }
 \examples{
-\dontrun{
-## Example 1 : compute bivolum
 library(cartograflow)
-y<-flowtype(tab,format="M","bivolum")
-#Then use flowmap.R for mapping gross flow with non valued links
-flowmap(y,format = "M",fdc = "file.shp",code = "IDcode",
-         filtre= TRUE,threshold= 100, taille = 20)
+data(flowdata)
+bkg<- system.file("shape/MGP_TER.shp", package="cartograflow",
+                  lib.loc = NULL, mustWork = TRUE)
+
+##1a:Computes flowtypes: Matrice format
+matflow<-flowtabmat(MOBPRO_ETP,matlist = "M")
+m<-flowtype(matflow,format ="M",x="flux")
+m<-flowtype(matflow,format ="M",x="transpose")
+m<-flowtype(matflow,format ="M",x="bivolum")
+m<-flowtype(matflow,format ="M",x="bisold")
+
+##1b:Computes flowtypes: Long format
+list<-flowtabmat(matflow,matlist="L")
+colnames(list)<-c("i","j","Fij")
+l_all<-flowtype(list,format ="L",x="all")
+l_sold<-flowtype(list,format ="L",x="bisold")
+
+\donttest{
+#2:flowmapping: example of bisold
+flowmap(l_sold,format = "L",bkg,code = "EPT_NUM",
+         filter= TRUE,threshold= 20, taille = 5)
 }
 }
 \references{

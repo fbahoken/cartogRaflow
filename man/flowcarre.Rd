@@ -4,7 +4,7 @@
 \alias{flowcarre}
 \title{Create a square matrice from geographical ID}
 \usage{
-flowcarre(liste, tab, origin, dest, valflow, format, diagonale, empty.sq)
+flowcarre(liste, tab, origin, dest, valflow, empty.sq, format, diagonale)
 }
 \arguments{
 \item{liste}{list or all the geographical ID as a single vector flow dataset}
@@ -17,29 +17,39 @@ flowcarre(liste, tab, origin, dest, valflow, format, diagonale, empty.sq)
 
 \item{valflow}{flow value}
 
+\item{empty.sq}{TRUE : to allows to have an matrice empty with only the ID of background map ; FALSE or missing}
+
 \item{format}{the squared flow dataset output format : see details}
 
 \item{diagonale}{see details}
-
-\item{empty.sq}{TRUE : to allows to have an matrice empty with only the ID of background map ; FALSE or missing}
 }
 \description{
 Create a closed and square matrice from a list of geographic ID (CODE)
 }
 \details{
 - format is "M" for matrice format
+
 - format is "L" for long format
-- diagonal is TRUE to zero main diagonal
+
+- diagonal is "TRUE" to zero the main diagonal
 }
 \examples{
-\dontrun{
-transform a non squared flow dataset to a closed and squared matrice
 library(cartograflow)
-code<-read.csv2("file1.csv",header=TRUE,sep=";",stringsAsFactors=FALSE,
-encoding="UTF-8",dec=".",check.names=FALSE)
-flow<-read.csv2("file2.csv",header=TRUE,sep=";",stringsAsFactors=FALSE,
-                 encoding="UTF-8",dec=".",check.names=FALSE)
-mat<-flowcarre(liste="code",tab="flow",origin="COMMUNE_O",dest="COMMUNE_D",
-               valflow="COUNT",format="L")
-}
+data(flowdata)
+var1<-COD_GEO_EPT
+var2<-MOBPRO_ETP
+
+#1/2 Compute an empty square matrice with ID code, and sets the value to zero
+#Example for matrice format (same procedure for the long format)
+
+mat<-flowcarre(var1,var2,origin="i",dest="j",valflow="Fij",
+               format="M",empty.sq=TRUE)
+
+#2/2 Fill in the matrice with external flow values
+mat<-flowcarre(var1,var2,origin="i",dest="j",valflow="Fij",
+               format="M",empty.sq=FALSE)
+
+#Square a matrice and zero the main diagonal
+mat<-flowcarre(var1,var2,origin="i",dest="j",valflow="Fij",format="M",
+               empty.sq=FALSE,diagonale = FALSE)
 }

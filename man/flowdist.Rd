@@ -11,7 +11,7 @@ flowdist(tab, dist.method, result)
 
 \item{dist.method}{euclidian calculation}
 
-\item{result}{take the vallue "flowdist" or "dist"allows to parameter the resulting distance dataset (flows filtered by a distance criterion or not)}
+\item{result}{take the vallue "flowdist" or "dist" allows to parameter the resulting distance dataset (flows filtered by a distance criterion or not)}
 }
 \value{
 (1) A flowdata set with continuous euclidian distances calculations, see dist.method parameter
@@ -24,6 +24,17 @@ flowdist(tab, dist.method, result)
 From a geographical backhround computes (and threshold) a distance matrice.
 }
 \details{
--- result = "flowdist" is tab with all calculation
--- result = "dist" is tab of the distance
+-- result = "dist" is the resulting tab of the distance\cr
+-- result = "flowdist" with all the calculated parameters
+}
+\examples{
+library(cartograflow)
+data(flowdata)
+bkg<- system.file("shape/MGP_TER.shp", package="cartograflow",
+                  lib.loc = NULL, mustWork = TRUE)
+tab<-flowjointure(MOBPRO_ETP,bkg,"EPT_NUM")
+#Format long with only origin, destination and distance parameters:
+tab.distance<-flowdist(tab, dist.method = "euclidian",result = "dist")
+#Format long with with all parameters: coordinates, distance, mouvement
+tab.distance<-flowdist(tab, dist.method = "euclidian",result = "flowdist")
 }

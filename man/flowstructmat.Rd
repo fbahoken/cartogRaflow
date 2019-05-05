@@ -2,29 +2,27 @@
 % Please edit documentation in R/flowstructmat.R
 \name{flowstructmat}
 \alias{flowstructmat}
-\title{structure matrice}
+\title{Structuring a matrice}
 \usage{
 flowstructmat(z)
 }
 \arguments{
-\item{z}{is the flowdataset in the matrix format where the first column is filled with the IDs}
+\item{z}{The flow dataset is in the matrice format where the first column is filled with the ID}
 }
 \value{
 A flowdataset with an usable format
 }
 \description{
-Fixes an ID shift in the flow dataset matrice (to bo use with \link{flowjointure} and \link{flowtabmat})
+Fixes an ID shift in the flow  matrice (to bo use with \link{flowjointure} if necessary and \link{flowtabmat})
 }
 \examples{
-\dontrun{
-preparing a matrice
 library(cartograflow)
-tab<- read.csv2("flowdataset.csv",header=TRUE,sep=";",stringsAsFactors=FALSE,
-encoding="UTF-8",dec=".",check.names=FALSE)
-#Transforms the first colunm (which contain the IDs code of the background map)
-#into matrix ID colunm.
-tabflow<-flowstructmat(tab)
-##transform the flowdataset from matrix to list format
-tabflow<-flowtabmat(tabflow,matlist="L")
-}
+data(flowdata)
+
+dim(mat_ex) # dimension fo the original matrice
+### 10 11  # first colum is fill with the ID
+
+tab<-flowstructmat(mat_ex)
+dim(tab)
+## 10 10 # dimension fo the resulting matrice
 }

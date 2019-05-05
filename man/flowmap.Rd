@@ -2,7 +2,7 @@
 % Please edit documentation in R/flowmap.R
 \name{flowmap}
 \alias{flowmap}
-\title{Plot a layer of origin-destination flows values}
+\title{Mapping a flow matrice origin-destination}
 \usage{
 flowmap(tab, format, fdc, code, filter, threshold, taille, a.head,
   a.length, a.angle, a.col)
@@ -36,7 +36,7 @@ a matrix or a list with the correct tabflow ID code
 The resulting flowmap
 }
 \description{
-Plot a layer of origin-destination flows values
+Mapping a flow matrice origin-destination
 }
 \details{
 The flow dataset must be converted to a dataframe for optimal performance (troubles remains with tibble format)
@@ -50,6 +50,14 @@ a.head is for applying an arrow or not
 -- code=1 : an arrow is draw at (x0[i], y0[i]).
 -- code=2 : an arrow is draw at (x1[j], y1[j])
 -- code=3 : an arrow is draw at both nodes.
+}
+\examples{
+library(cartograflow)
+data(flowdata)
+bkg<- system.file("shape/MGP_TER.shp", package="cartograflow",
+                  lib.loc = NULL, mustWork = TRUE)
+flowmap(MOBPRO_ETP,format="L",bkg,code = "EPT_NUM",filter = TRUE,
+         threshold = 20,taille = 5,a.head = 1,a.length = 0.05)
 }
 \seealso{
 \code{arrows}
