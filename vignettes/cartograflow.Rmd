@@ -1,6 +1,6 @@
 ---
 title: "Cartograflow"
-subtitle: "Filtering Matrices for Thematic Cartography - Flow Mapping"
+subtitle: "Filtering Matrices for Thematic Flow Mapping"
 author: "Françoise Bahoken, Sylvain Blondeau"
 date: "`r Sys.Date()`"
 output: html_vignette
@@ -10,12 +10,12 @@ vignette: >
               dvipsone=pdftex,                                
               backref,
               ]{hyperref}
-  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteIndexEntry{CartogRaflow}
   %\VignetteEncoding{UTF-8}
   %\SweaveUTF8
   %\VignetteEngine{knitr::rmarkdown}
-editor_options: 
-  chunk_output_type: inline
+#editor_options: 
+#chunk_output_type: inline
 ---
 
 ## Introduction
@@ -305,7 +305,7 @@ colnames(tabflow)<-c("i","j","Fij")
 
 Compute bilateral flow volume and bilateral flow balance from a matrice or a list format of observed flows, 
 
-```{r types of flow}
+```{r types of flow, echo=TRUE}
 
 # Compute bilateral flow volume - from a "M" format
 matflow_vol<-flowtype(matflow,
@@ -347,13 +347,13 @@ tabflow_all$FAsy<-(tabflow_all$FDij / tabflow_all$FDij)*100
 
 Plot all origin-destination links without any filtering criterion.
 
-```{r, ECHO=FALSE,fig.width=7, maps_all,fig.show='hold', message=TRUE, warning=FALSE}
+```{r maps_all, ECHO=FALSE,fig.width=7, fig.show='hold', message=TRUE, warning=FALSE}
 
 knitr::opts_chunk$set(fig.width=6, fig.height=6)
 
 par(mar=c(0,0,1,0))
 extent <- c(2800000, 1340000, 6400000, 4800000)
-resolution<-300
+resolution<-190
 
 # Plot all theoretical OD links 
 flowmap(tab = tabflow,
@@ -390,8 +390,7 @@ mtext("Flows up to 1000 commuters (~ 50%)",side = 3)
 
 ### 4.5 Mapping a robust flow selection
 
-### 4.5.0 Statistical parameter
-
+### 4.5.1 Statistical parameter
 
 ```{r lecho=TRUE, fig.show='hold'}
 
@@ -399,7 +398,7 @@ mtext("Flows up to 1000 commuters (~ 50%)",side = 3)
 
 par(mar=c(0,0,1,0))
 extent <- c(2800000, 1340000, 6400000, 4800000)
-resolution<-300
+resolution<-190
 
 # Mapping filtered observed commuters
 flowmap(tab = tabflow,
@@ -446,7 +445,7 @@ mtext("Bilateral flow balance of commuters up to mean (8547 commuters)",side = 3
 
 ```
 
-### 4.5.1 Concentration analysis
+### 4.5.2 Concentration analysis
 
 ```{r analysis, fig.show='hold',message = TRUE , warning=FALSE}
 
@@ -478,8 +477,13 @@ flowgini(tab_gini,
          code="EPT_NUM",
          lorenz.plot = TRUE)
 
-# 3- Compute critflow parameter and flowmap
-#-------------------------------
+```
+
+
+### 4.5.3 Compute critflow parameter and flowmap 
+
+```{r echo=TRUE, fig.show='hold'}
+
 #critflow = 0.8
 flowanalysis(tab_gini,
              critflow = 0.8,
@@ -503,9 +507,11 @@ flowmap(tabflow,
         a.col="#3f4247")
 
 mtext("Significative flowmap : values up to 11238 - 80% flow information - 22.9% total links",side = 3)
+```
 
-# 4- Compute critlink parameter and flowmap 
-#-------------------------------
+### 4.5.4 Compute critlink parameter and flowmap 
+
+```{r fig.show='hold', include=FALSE}
 
 flowanalysis(tab_gini,
              critlink = 0.02,
@@ -533,13 +539,13 @@ mtext("Low density flowmap : values up to 73743 - 14.5% flow information  - 2%  
 
 ```
 
-### 4.5.3 Concentration's Flowmap  
+### 4.5.5 Final concentration's Flowmap  
 
 ```{r echo=TRUE, fig.show='hold'}
 
 par(mar=c(0,0,1,0))
 extent <- c(2800000, 1340000, 6400000, 4800000)
-resolution<-300
+resolution<-190
 
 # Final flowmap customized
 flowmap(tabflow,
@@ -617,7 +623,7 @@ flow.d<-tab.flow%>%
 par(mar=c(0,0,1,0))
 
 extent <- c(2800000, 1340000, 6400000, 4800000)
-resolution<-300
+resolution<-190
 
 flowmap(flow.d,format="L",
        "./data/MGP_TER.shp",
@@ -682,7 +688,7 @@ flow.d<-tab.flow%>%
 par(mar=c(0,0,1,0))
 
 extent <- c(2800000, 1340000, 6400000, 4800000)
-resolution<-300
+resolution<-190
 
 flowmap(flow.d,format="L",
        "./data/MGP_TER.shp",
@@ -750,7 +756,7 @@ flow.c<-reduc %>%
 #Plot adjacent flowmap 
 par(mar=c(0,0,1,0))
 extent <- c(2800000, 1340000, 6400000, 4800000)
-resolution<-300
+resolution<-190
 
 flowmap(flow.c,
         format="L",

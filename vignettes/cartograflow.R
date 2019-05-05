@@ -67,7 +67,7 @@ head(tabflow)
 colnames(tabflow)<-c("i","j","Fij")
 
 
-## ----types of flow-------------------------------------------------------
+## ----types of flow, echo=TRUE--------------------------------------------
 
 # Compute bilateral flow volume - from a "M" format
 matflow_vol<-flowtype(matflow,
@@ -100,13 +100,13 @@ head(tabflow_all)
 tabflow_all$FAsy<-(tabflow_all$FDij / tabflow_all$FDij)*100
 
 
-## ---- ECHO=FALSE,fig.width=7, maps_all,fig.show='hold', message=TRUE, warning=FALSE----
+## ----maps_all, ECHO=FALSE,fig.width=7, fig.show='hold', message=TRUE, warning=FALSE----
 
 knitr::opts_chunk$set(fig.width=6, fig.height=6)
 
 par(mar=c(0,0,1,0))
 extent <- c(2800000, 1340000, 6400000, 4800000)
-resolution<-300
+resolution<-190
 
 # Plot all theoretical OD links 
 flowmap(tab = tabflow,
@@ -143,7 +143,7 @@ mtext("Flows up to 1000 commuters (~ 50%)",side = 3)
 
 par(mar=c(0,0,1,0))
 extent <- c(2800000, 1340000, 6400000, 4800000)
-resolution<-300
+resolution<-190
 
 # Mapping filtered observed commuters
 flowmap(tab = tabflow,
@@ -219,8 +219,9 @@ flowgini(tab_gini,
          code="EPT_NUM",
          lorenz.plot = TRUE)
 
-# 3- Compute critflow parameter and flowmap
-#-------------------------------
+
+## ----echo=TRUE, fig.show='hold'------------------------------------------
+
 #critflow = 0.8
 flowanalysis(tab_gini,
              critflow = 0.8,
@@ -245,8 +246,7 @@ flowmap(tabflow,
 
 mtext("Significative flowmap : values up to 11238 - 80% flow information - 22.9% total links",side = 3)
 
-# 4- Compute critlink parameter and flowmap 
-#-------------------------------
+## ----fig.show='hold', include=FALSE--------------------------------------
 
 flowanalysis(tab_gini,
              critlink = 0.02,
@@ -277,7 +277,7 @@ mtext("Low density flowmap : values up to 73743 - 14.5% flow information  - 2%  
 
 par(mar=c(0,0,1,0))
 extent <- c(2800000, 1340000, 6400000, 4800000)
-resolution<-300
+resolution<-190
 
 # Final flowmap customized
 flowmap(tabflow,
@@ -294,28 +294,28 @@ flowmap(tabflow,
         )
 
 # Legend
-#legendPropLines(pos="topleft",
-#                title.txt="Number of commuters up to 11238 (the 80% largest flows)",
-#                title.cex=1,   
-#                cex=0.8,
-#                values.cex= 0.7,  
-#                var=c(11238,max(tabflow$Fij)), 
-#                lwd=5, 
-#                frame = FALSE,
-#                col="#138913",
-#                values.rnd = 0
-#                )
+legendPropLines(pos="topleft",
+                title.txt="Number of commuters up to 11238 (the 80% largest flows)",
+                title.cex=1,   
+                cex=0.8,
+                values.cex= 0.7,  
+                var=c(11238,max(tabflow$Fij)), 
+                lwd=5, 
+                frame = FALSE,
+                col="#138913",
+                values.rnd = 0
+                )
 
-#layoutLayer(title = "Professional mobility in Greater Paris",
-#           coltitle ="black",
-#           author = "Cartograflow, 2019",
-#            sources = "Sources : data : INSEE, RP, MOBPRO, 2017 ; basemap : IGN, APUR, UMS 2414 RIATE, 2018.",
-#            scale = 0.2,
-#            tabtitle = TRUE,
-#            frame = TRUE,
-#            north(pos = "topright"),
-#            col = "grey"
-#                        )
+layoutLayer(title = "Professional mobility in Greater Paris",
+           coltitle ="black",
+           author = "Cartograflow, 2019",
+           sources = "Sources : data : INSEE, RP, MOBPRO, 2017 ; basemap : IGN, APUR, UMS 2414 RIATE, 2018.",
+           scale = 2,
+           tabtitle = TRUE,
+           frame = TRUE,
+           #north(pos = "topright"),
+           col = "grey"
+            )
 
 
 ## ----echo=TRUE, fig.show='hold'------------------------------------------
@@ -350,7 +350,7 @@ flow.d<-tab.flow%>%
 par(mar=c(0,0,1,0))
 
 extent <- c(2800000, 1340000, 6400000, 4800000)
-resolution<-300
+resolution<-190
 
 flowmap(flow.d,format="L",
        "./data/MGP_TER.shp",
@@ -361,28 +361,28 @@ flowmap(flow.d,format="L",
         a.length = 0.11,
         a.head =1)
 
-#legendPropLines(pos="topleft",
-#                title.txt="Number of commuters (distance travelled less than 8,5 km)",
-#                title.cex=1,    
-#                cex=0.8,
-#                values.cex= 0.8,  
-#                var=c(min(flow.d$flowfilter),8567), 
-#                col="#138913",
-#                lwd=5,
-#                frame = FALSE,
-#                values.rnd = 0
-#                )
+legendPropLines(pos="topleft",
+                title.txt="Number of commuters (distance travelled less than 8,5 km)",
+                title.cex=1,    
+                cex=0.8,
+                values.cex= 0.8,  
+                var=c(min(flow.d$flowfilter),8567), 
+                col="#138913",
+                lwd=5,
+                frame = FALSE,
+                values.rnd = 0
+                )
 # Habillage
-
-#layoutLayer(title = "Professional mobility in Greater Paris : short distance travelled",
-#            author = "Cartograflow, 2019",
-#            sources = "Sources : data : INSEE, RP, MOBPRO, 2017 ; basemap : IGN, APUR, UMS 2414 RIATE, 2018",
-#            scale = 5,
-#            tabtitle = TRUE,
-#            frame = TRUE,
-#            north(pos = "topright"),
-#            col = "grey",
-#            coltitle ="black")
+layoutLayer(title = "Professional mobility in Greater Paris : short distance travelled",
+            author = "Cartograflow, 2019",
+            sources = "Sources : data : INSEE, RP, MOBPRO, 2017 ; basemap : IGN, APUR, UMS 2414 RIATE, 2018",
+            scale = 5,
+            tabtitle = TRUE,
+            frame = TRUE,
+            #north(pos = "topright"),
+            col = "grey",
+            coltitle ="black"
+            )
 
 
 ## ----echo=TRUE, fig.show='hold'------------------------------------------
@@ -414,7 +414,7 @@ flow.d<-tab.flow%>%
 par(mar=c(0,0,1,0))
 
 extent <- c(2800000, 1340000, 6400000, 4800000)
-resolution<-300
+resolution<-190
 
 flowmap(flow.d,format="L",
        "./data/MGP_TER.shp",
@@ -425,28 +425,27 @@ flowmap(flow.d,format="L",
         a.length = 0.11,
         a.head =1)
 
-#legendPropLines(pos="topleft",
-#                title.txt="Number of commuters (distance travelled more than 14.5 km)",
-#                title.cex=1,    
-#                cex=0.8,
-##                values.cex= 0.8,  
-#                var=c(14518, max(flow.d$flowfilter)), 
-#                col="#138913",
-#                lwd=5, 
-#                frame = FALSE,
-#                values.rnd = 0
-#                )
+legendPropLines(pos="topleft",
+                title.txt="Number of commuters (distance travelled more than 14.5 km)",
+                title.cex=1,    
+                cex=0.8,
+                values.cex= 0.8,  
+                var=c(14518, max(flow.d$flowfilter)), 
+                col="#138913",
+                lwd=5, 
+                frame = FALSE,
+                values.rnd = 0
+                )
 # Habillage
-
-#layoutLayer(title = "Professional mobility in Greater Paris : mean distance travelled",
-#            author = "Cartograflow, 2019",
-#            sources = "Sources : data : INSEE, RP, MOBPRO, 2017 ; basemap : IGN, APUR, UMS 2414 RIATE, 2018",
-#            scale = 5,
-#            tabtitle = TRUE,
-#            frame = TRUE,
-#            north(pos = "topright"),
-#            col = "grey",
-#            coltitle ="black")
+layoutLayer(title = "Professional mobility in Greater Paris : mean distance travelled",
+            author = "Cartograflow, 2019",
+            sources = "Sources : data : INSEE, RP, MOBPRO, 2017 ; basemap : IGN, APUR, UMS 2414 RIATE, 2018",
+            scale = 5,
+            tabtitle = TRUE,
+            frame = TRUE,
+            #north(pos = "topright"),
+            col = "grey",
+            coltitle ="black")
 
 
 ## ----echo=TRUE, fig.show='hold'------------------------------------------
@@ -479,7 +478,7 @@ flow.c<-reduc %>%
 #Plot adjacent flowmap 
 par(mar=c(0,0,1,0))
 extent <- c(2800000, 1340000, 6400000, 4800000)
-resolution<-300
+resolution<-190
 
 flowmap(flow.c,
         format="L",
@@ -492,28 +491,27 @@ flowmap(flow.c,
         a.head =1)
 
 # Legend
-#legendPropLines(pos="topleft",
-#                title.txt="Number of commuters (one border distance)",
-#                title.cex=1,    
-#                cex=0.8,
-#                values.cex= 0.8,  
-#                var=c(min(flow.c$flux),max(flow.c$flux)), 
-#                col="#138913",
-#                lwd=5, 
-#                frame = FALSE,
-#                values.rnd = 0
-#                )
+legendPropLines(pos="topleft",
+                title.txt="Number of commuters (one border distance)",
+                title.cex=1,    
+                cex=0.8,
+                values.cex= 0.8,  
+                var=c(min(flow.c$flux),max(flow.c$flux)), 
+                col="#138913",
+                lwd=5, 
+                frame = FALSE,
+                values.rnd = 0
+                )
 # Habillage
-
-#layoutLayer(title = "Professional mobility in Greater Paris between neighbouring municipalities",
-#            author = "Cartograflow, 2019",
-#            sources = "Sources : data : INSEE, RP, MOBPRO, 2017 ; basemap : IGN, APUR, UMS 2414 RIATE, 2018",
-#            scale = 5,
-#            tabtitle = TRUE,
-#            frame = TRUE,
-#            north(pos = "topright"),
-#            col = "grey",
- #           coltitle ="black")
+layoutLayer(title = "Professional mobility in Greater Paris between neighbouring municipalities",
+            author = "Cartograflow, 2019",
+            sources = "Sources : data : INSEE, RP, MOBPRO, 2017 ; basemap : IGN, APUR, UMS 2414 RIATE, 2018",
+            scale = 5,
+            tabtitle = TRUE,
+            frame = TRUE,
+            #north(pos = "topright"),
+            col = "grey",
+            coltitle ="black")
 
 
 ## ----lecho=TRUE, fig.show='hold'-----------------------------------------
