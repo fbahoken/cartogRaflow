@@ -1,11 +1,11 @@
 # Cartograflow
-Filtering Matrices for Thematic Cartography in R - Dealing with "spaghetti-effect"
+Filtering Matrices for Thematic Flowmapping - Dealing with "spaghetti-effect"
 
 [![](https://www.r-pkg.org/badges/version/cartograflow)](https://cran.r-project.org/package=cartograflow)
 [![](https://cranlogs.r-pkg.org/badges/cartograflow?color=brightgreen)](https://cran.r-project.org/package=cartograflow)
 
 This package is designed to create the so-called **flowmaps**, thematic origin-destination (OD) maps by filtering matrices.
-It is based on different functions that are mainly used to prepare the flow dataset . The spatial objects processing are those of `{sp}` or `{sf}` and the mapping elements are often those of `{Cartography}` except particular cases.
+It is based on different functions that are mainly used to prepare the flow dataset. Complementary packages are for the spatial objects processing with`{sp}` or `{sf}` and for the mapping purposes from`{Cartography}` except particular cases.
 
 # List of functions
 
