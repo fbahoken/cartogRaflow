@@ -48,7 +48,7 @@ head(CODE)
 
 tabflow<-data%>%select(i,j,Fij)
 
-# Change matrice format (if necessary)
+# Change matrix format (if necessary)
 matflow <-flowtabmat(tabflow,matlist="M")
 head(matflow[1:4,1:4])
 dim(matflow)
@@ -56,11 +56,11 @@ dim(matflow)
 
 ## ----diag, fig.show='hold', echo=TRUE------------------------------------
 
-# Zero the diagonal of matrice format (if necessary)
+# Zero the diagonal of matrix format (if necessary)
 diag(matflow) <- 0
 head(matflow[1:4,1:4])
 
-# Change matrice to list format
+# Change matrix to list format
 tabflow<-flowtabmat(tab=matflow,
                     matlist="L")
 head(tabflow)
@@ -90,7 +90,7 @@ tabflow_net<-flowtype(tabflow,
                       "bisold")
 head(tabflow_net)
   
-# Compute all types of bilateral flows, in one 6 columns "L"format matrice
+# Compute all types of bilateral flows, in one 6 columns "L"format matrix
 tabflow_all<-flowtype(tabflow, 
                       format="L", 
                       x="all")
@@ -456,17 +456,17 @@ graph_ckij_1<-flowcontig("./data/MGP_TER.shp",
                          "EPT_NUM",
                          ordre =1)
 
-flowmap(graph_ckij_1,
-        format="L",
-        "./data/MGP_TER.shp",
-        "EPT_NUM",
-        filter = TRUE, 
-        taille = 0.5)
-
+  flowmap(graph_ckij_1,
+          format="L",
+          "./data/MGP_TER.shp",
+          "EPT_NUM",
+          filter = TRUE, 
+          taille = 0.5)
+  
 mtext("Neighbouring graph (order 1)",
       side=3)
 
-## Reducing flow matrice by the neighbouring graph (order= 1)
+## Reducing flow matrix by the neighbouring graph (order= 1)
 reduc<-flowreduct(tabflow,
                   graph_ckij_1,
                   metric = "ordinal")
