@@ -9,22 +9,26 @@ flowanalysis(tab, critflow, critlink, result)
 \arguments{
 \item{tab}{flow dataset from \link{flowgini}}
 
-\item{critflow}{level of flow significativity. See Details.?}
+\item{critflow}{level of flow significativity. See Details.}
 
 \item{critlink}{level of features density. See Details.}
 
-\item{result}{resulting filtering criterion value. See Details}
+\item{result}{resulting filtering criterion value. See Details.}
 }
 \description{
-To be use after \link{flowgini} and before \link{flowmap}
-Computation of a global selection criterion for thresholding flow information and/or features before mapping.
+\code{Computation of a global selection criterion for thresholding flow information and/or features before mapping.}\cr
+To be use after \link{flowgini} and before \link{flowmap}.
 }
 \details{
--- critflow =  desired level of flow's information significativity (e.g. 80% of the total information) ;
--- critlink = desired level of flow's features density (e.g. 20% of the flow features that represents "more significant information).
+-critflow =  desired level of flow's information significativity (e.g. 80%)
+ of the total information ;\cr
+-critlink = desired level of flow's features density (e.g. 20%) of the flow
+       features that represents "more significant information.
 
--- result="density" returns the desired level of features density as a % of total features ;
--- result = "significativity" returns the level of flow significativity as a % of total of flow information ;
+-result="density" returns the desired level of features density as
+       a % of total features ;\cr
+-result = "significativity" returns the level of flow significativity as a
+       % of total of flow information ;
 }
 \examples{
 library(cartograflow)
@@ -33,7 +37,7 @@ bkg<- system.file("shape/MGP_TER.shp", package="cartograflow",
                   lib.loc = NULL, mustWork = TRUE)
 
 #1/4: Computes Gini's coefficent
-tab_gini<-flowgini(MOBPRO_ETP,format="L",origin="i",dest="j",valflow="Fij",
+tab_gini<-flowgini(flows,format="L",origin="i",dest="j",valflow="Fij",
           bkg,code="EPT_NUM",lorenz.plot = FALSE)
 ### [1] Gini's coefficent = 73.16 \%
 \donttest{
@@ -48,7 +52,7 @@ flowanalysis(tab_gini,critflow = 0.8,result = "signif")
 
 #4/4: Plot the flowmap
 \donttest{
-flowmap(MOBPRO_ETP,format="L",bkg,code = "EPT_NUM",filter = TRUE,
+flowmap(flows,format="L",bkg,code = "EPT_NUM",filter = TRUE,
          threshold = 11238,taille = 8,a.head = 1,a.length = 0.11,
          a.angle = 30,a.col="#3f4247")}
 

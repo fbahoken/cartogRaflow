@@ -2,7 +2,7 @@
 % Please edit documentation in R/flowdist.R
 \name{flowdist}
 \alias{flowdist}
-\title{Compute continous distance matrice from geographical background}
+\title{Compute continous distance matrix from geographical background}
 \usage{
 flowdist(tab, dist.method, result)
 }
@@ -21,7 +21,7 @@ flowdist(tab, dist.method, result)
 (3) A flowmap filtered by a global distance criterion.
 }
 \description{
-From a geographical backhround computes (and threshold) a distance matrice.
+From a geographical background computes (and threshold) a distance matrix.
 }
 \details{
 -- result = "dist" is the resulting tab of the distance\cr
@@ -32,7 +32,7 @@ library(cartograflow)
 data(flowdata)
 bkg<- system.file("shape/MGP_TER.shp", package="cartograflow",
                   lib.loc = NULL, mustWork = TRUE)
-tab<-flowjointure(MOBPRO_ETP,bkg,"EPT_NUM")
+tab<-flowjointure(flows,bkg,"EPT_NUM")
 #Format long with only origin, destination and distance parameters:
 tab.distance<-flowdist(tab, dist.method = "euclidian",result = "dist")
 #Format long with with all parameters: coordinates, distance, mouvement

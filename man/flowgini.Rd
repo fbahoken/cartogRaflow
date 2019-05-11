@@ -42,7 +42,7 @@ data(flowdata)
 bkg<- system.file("shape/MGP_TER.shp", package="cartograflow",
                   lib.loc = NULL, mustWork = TRUE)
 #Computes Gini's coefficent
-tab_gini<-flowgini(MOBPRO_ETP,format="L",origin="i",dest="j",valflow="Fij",
+tab_gini<-flowgini(flows,format="L",origin="i",dest="j",valflow="Fij",
           bkg,code="EPT_NUM",lorenz.plot = FALSE)
 #Plot Lorenz curve
 flowgini(tab_gini,format="L",origin="i",dest="j",valflow="ydata",

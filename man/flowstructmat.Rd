@@ -2,7 +2,7 @@
 % Please edit documentation in R/flowstructmat.R
 \name{flowstructmat}
 \alias{flowstructmat}
-\title{Structuring a matrice}
+\title{Structuring a matrix}
 \usage{
 flowstructmat(z)
 }
@@ -13,7 +13,7 @@ flowstructmat(z)
 A flowdataset with an usable format
 }
 \description{
-Fixes an ID shift in the flow  matrice (to bo use with \link{flowjointure} if necessary and \link{flowtabmat})
+Fixes an ID shift in the flow  matrix (to bo use with \link{flowjointure} if necessary and \link{flowtabmat})
 }
 \examples{
 library(cartograflow)

@@ -11,20 +11,20 @@ flowcarre(liste, tab, origin, dest, valflow, empty.sq, format, diagonale)
 
 \item{tab}{the non squared input flow dataset with three column : origin, destination, flow value}
 
-\item{origin}{origin place ID}
+\item{origin}{origin place}
 
-\item{dest}{destination place ID}
+\item{dest}{destination place}
 
 \item{valflow}{flow value}
 
 \item{empty.sq}{TRUE : to allows to have an matrice empty with only the ID of background map ; FALSE or missing}
 
-\item{format}{the squared flow dataset output format : see details}
+\item{format}{the squared flow dataset output format. See Details.}
 
-\item{diagonale}{see details}
+\item{diagonale}{See Details.}
 }
 \description{
-Create a closed and square matrice from a list of geographic ID (CODE)
+Create a closed and square matrice from a list of geographic ID
 }
 \details{
 - format is "M" for matrice format
@@ -36,8 +36,8 @@ Create a closed and square matrice from a list of geographic ID (CODE)
 \examples{
 library(cartograflow)
 data(flowdata)
-var1<-COD_GEO_EPT
-var2<-MOBPRO_ETP
+var1<-geoid
+var2<-flows
 
 #1/2 Compute an empty square matrice with ID code, and sets the value to zero
 #Example for matrice format (same procedure for the long format)

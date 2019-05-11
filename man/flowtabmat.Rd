@@ -9,23 +9,23 @@ flowtabmat(tab, matlist)
 \arguments{
 \item{tab}{flow dasaset, in matrice or long format}
 
-\item{matlist}{choose matrice or long as the result format. See details.}
+\item{matlist}{choose matrice or long as the result format. See Details.}
 }
 \value{
-matrice or long
+flow data in matrice or long format
 }
 \description{
 Transform a flow dataset from long to matrice format, and vice versa
 }
 \details{
--- From long to matrice format : matlist="M";\cr
--- From matrice to long format : matlist="L".
+-- From long to matrice format [n*n]: matlist="M";\cr
+-- From matrice to long format [i,j,Fij]: matlist="L".
 }
 \examples{
 library(cartograflow)
 data(flowdata)
 #1: From long to matrix format (n*m)
-matFlow<-flowtabmat(MOBPRO_ETP,matlist="M")
+matFlow<-flowtabmat(flows,matlist="M")
 #2: From matrix to long format [i,j,Fij]
 listflow<-flowtabmat(matFlow,matlist="L")
 }

@@ -2,27 +2,27 @@
 % Please edit documentation in R/flowmap.R
 \name{flowmap}
 \alias{flowmap}
-\title{Mapping a flow matrice origin-destination}
+\title{Mapping a flow matrix origin-destination}
 \usage{
 flowmap(tab, format, fdc, code, filter, threshold, taille, a.head,
   a.length, a.angle, a.col)
 }
 \arguments{
-\item{tab}{the input flowdata table}
+\item{tab}{the input flow dataset .csv}
 
-\item{format}{the flowdata table format : M=matrice [n*n] or L=long [, i,j, Fij].}
+\item{format}{the flow dataset format : M=matrice or L=long.}
 
 \item{fdc}{the geographical background file .shp}
 
-\item{code}{is the column with the spatial units ID code}
+\item{code}{is the column with the spatial units ID}
 
 \item{filter}{allows you to filter (or not) the flow dataset. See details}
 
-\item{threshold}{is the value of the threshold criterion used to filter the values. The default threshold is set to 1}
+\item{threshold}{is the value of the threshold criterion used to filter the values. The default is 1.}
 
-\item{taille}{is a graphical parameter for modifying the width of the flow feature}
+\item{taille}{is a graphical parameter for modifying the width of the feature}
 
-\item{a.head}{integer code, determining the kind of arrows to be drawn. See details}
+\item{a.head}{integer code, determining the kind of arrows to be drawn. See Details}
 
 \item{a.length}{length of the edges of the arrow head (in inches).}
 
@@ -36,7 +36,7 @@ a matrix or a list with the correct tabflow ID code
 The resulting flowmap
 }
 \description{
-Mapping a flow matrice origin-destination
+Mapping a flow matrix origin-destination
 }
 \details{
 The flow dataset must be converted to a dataframe for optimal performance (troubles remains with tibble format)
@@ -56,9 +56,6 @@ library(cartograflow)
 data(flowdata)
 bkg<- system.file("shape/MGP_TER.shp", package="cartograflow",
                   lib.loc = NULL, mustWork = TRUE)
-flowmap(MOBPRO_ETP,format="L",bkg,code = "EPT_NUM",filter = TRUE,
+flowmap(flows,format="L",bkg,code = "EPT_NUM",filter = TRUE,
          threshold = 20,taille = 5,a.head = 1,a.length = 0.05)
-}
-\seealso{
-\code{arrows}
 }
