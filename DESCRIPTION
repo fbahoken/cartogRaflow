@@ -1,25 +1,26 @@
 Package: cartograflow
-Title: Filtering Matrices for Thematic Cartography - Flow Mapping
+Title: Filtering Matrix for Flow Mapping
 Version: 1.0.0
 Authors@R: c(person("Sylvain", "Blondeau", email = "blondeau.sylvain@yahoo.fr",role = c("aut","cre")),
              person("Francoise", "Bahoken", email = "francoise.bahoken@ifsttar.fr", role = "aut"))
-Description: Functions to prepare and filter an origin-destination matrice for thematic flow mapping purposes.
+Description: Functions to prepare and filter an origin-destination matrix for thematic flow mapping purposes.   
+             This comes after Bahoken, Francoise (2016), Mapping flow matrix a contribution, PhD in Geography - Territorial sciences. See Bahoken (2017) <doi:10.4000/netcom.2565>.
 Depends: R (>= 3.4.0)
 License: GPL-3
-URL: https://halshs.archives-ouvertes.fr/tel-01273776 , http://journals.openedition.org/netcom/2565
+URL: https://halshs.archives-ouvertes.fr/tel-01273776 , http://journals.openedition.org/netcom/2565 , https://mappemonde-archive.mgm.fr/num44/articles/art14404.html
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.1.1
 Suggests:
-    knitr,
-    rmarkdown,
-    testthat,
+    knitr,      
+    rmarkdown,      
+    testthat,   
     cartography
 VignetteBuilder: knitr
 Imports: 
     dplyr,
     g.data,
-    graphics,
+    graphics,   
     ggplot2,
     maptools,
     plotly,
