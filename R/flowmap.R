@@ -1,12 +1,12 @@
-#' @title Mapping a flow matrice origin-destination
-#' @param tab the input flowdata table
-#' @param format the flowdata table format : M=matrice [n*n] or L=long [, i,j, Fij].
+#' @title Mapping a flow matrix origin-destination
+#' @param tab the input flow dataset .csv
+#' @param format the flow dataset format : M=matrice or L=long.
 #' @param filter allows you to filter (or not) the flow dataset. See details
-#' @param threshold is the value of the threshold criterion used to filter the values. The default threshold is set to 1
-#' @param taille is a graphical parameter for modifying the width of the flow feature
+#' @param threshold is the value of the threshold criterion used to filter the values. The default is 1.
+#' @param taille is a graphical parameter for modifying the width of the feature
 #' @param fdc the geographical background file .shp
-#' @param code is the column with the spatial units ID code
-#' @param a.head  integer code, determining the kind of arrows to be drawn. See details
+#' @param code is the column with the spatial units ID
+#' @param a.head  integer code, determining the kind of arrows to be drawn. See Details
 #' @param a.length length of the edges of the arrow head (in inches).
 #' @param a.angle angle from the shaft of the arrow to the edge of the arrow head.
 #' @param a.col color of the arrows
@@ -33,9 +33,8 @@
 #' data(flowdata)
 #' bkg<- system.file("shape/MGP_TER.shp", package="cartograflow",
 #'                   lib.loc = NULL, mustWork = TRUE)
-#' flowmap(MOBPRO_ETP,format="L",bkg,code = "EPT_NUM",filter = TRUE,
+#' flowmap(flows,format="L",bkg,code = "EPT_NUM",filter = TRUE,
 #'          threshold = 20,taille = 5,a.head = 1,a.length = 0.05)
-#' @seealso \code{arrows}
 #' @export
 
 flowmap <- function(tab,format,fdc,code,filter,threshold,taille,

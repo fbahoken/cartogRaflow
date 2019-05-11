@@ -1,5 +1,5 @@
-#' @title Structuring a matrice
-#' @description Fixes an ID shift in the flow  matrice (to bo use with \link{flowjointure} if necessary and \link{flowtabmat})
+#' @title Structuring a matrix
+#' @description Fixes an ID shift in the flow  matrix (to bo use with \link{flowjointure} if necessary and \link{flowtabmat})
 #' @param z The flow dataset is in the matrice format where the first column is filled with the ID
 #' @return A flowdataset with an usable format
 #' @export

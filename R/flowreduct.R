@@ -1,6 +1,6 @@
-#' @title Flow matrice reduction according to another matrice
+#' @title Flow matrice reduction according to another matrix
 #' @description
-#' Reduces a flow dataset according to an external matrice (eg. distance travelled)
+#' Reduces a flow dataset according to an external matrix (eg. distance travelled)
 #' Computes geographical movements (by weighting a flow dataset according to a distance criterion)
 #' @param tab is the input flowdata set.
 #' @param tab.metric is the table of distance (continuous dataset) or contiguity (ordinal dataset)
@@ -25,12 +25,12 @@
 #' data(flowdata)
 #' bkg<- system.file("shape/MGP_TER.shp", package="cartograflow",
 #'                   lib.loc = NULL, mustWork = TRUE)
-#' tab<-flowjointure(MOBPRO_ETP,bkg,"EPT_NUM")
+#' tab<-flowjointure(flows,bkg,"EPT_NUM")
 #'
 #' #Example for reducing a flow matrice with a distance matrice, in long format (i,j, distance)
 #' ##1/2: Computes the matrice distances
 #' tab.distance<-flowdist(tab, dist.method = "euclidian",result = "dist")
-#' ##2/2/: Reduce the flow matrice
+#' ##2/2: Reduce the flow matrice
 #' tab.flow<-flowreduct(tab,tab.distance, metric = "continous",
 #'                      select = "dmax", #maximum distance travelled criterion
 #'                      d = 8567) #maximum distance value

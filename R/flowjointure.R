@@ -13,7 +13,7 @@
 #' data(flowdata)
 #' bkg<- system.file("shape/MGP_TER.shp", package="cartograflow",
 #'                    lib.loc = NULL, mustWork = TRUE)
-#' tabflow<-flowjointure(MOBPRO_ETP,bkg,"EPT_NUM")
+#' tabflow<-flowjointure(flows,bkg,"EPT_NUM")
 #'@export
 
 

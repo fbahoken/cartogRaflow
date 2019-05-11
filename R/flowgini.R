@@ -41,7 +41,7 @@
 #' bkg<- system.file("shape/MGP_TER.shp", package="cartograflow",
 #'                   lib.loc = NULL, mustWork = TRUE)
 #' #Computes Gini's coefficent
-#' tab_gini<-flowgini(MOBPRO_ETP,format="L",origin="i",dest="j",valflow="Fij",
+#' tab_gini<-flowgini(flows,format="L",origin="i",dest="j",valflow="Fij",
 #'           bkg,code="EPT_NUM",lorenz.plot = FALSE)
 #' #Plot Lorenz curve
 #' flowgini(tab_gini,format="L",origin="i",dest="j",valflow="ydata",
@@ -106,7 +106,7 @@ flowgini<-function(tab, origin, dest, valflow,format,
   indice<-gini(tabgini$flowcum,tabgini$linkcum)
 
   if(missing(lorenz.plot) || lorenz.plot == FALSE){
-    cat("Gini's coefficent =",paste(round(indice*100,2),"%"),"\n")
+    message("Gini's coefficent =",paste(round(indice*100,2),"%"),"\n")
     return(tabgini)}
   if (lorenz.plot == TRUE){ginigraph(tabgini,indice)}
 

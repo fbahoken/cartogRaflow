@@ -1,6 +1,6 @@
-#' @title Compute continous distance matrice from geographical background
+#' @title Compute continous distance matrix from geographical background
 #' @description
-#' From a geographical backhround computes (and threshold) a distance matrice.
+#' From a geographical background computes (and threshold) a distance matrix.
 #' @param tab the input flow dataset.
 #' @param dist.method euclidian calculation
 #' @param result take the vallue "flowdist" or "dist" allows to parameter the resulting distance dataset (flows filtered by a distance criterion or not)
@@ -18,7 +18,7 @@
 #' data(flowdata)
 #' bkg<- system.file("shape/MGP_TER.shp", package="cartograflow",
 #'                   lib.loc = NULL, mustWork = TRUE)
-#' tab<-flowjointure(MOBPRO_ETP,bkg,"EPT_NUM")
+#' tab<-flowjointure(flows,bkg,"EPT_NUM")
 #' #Format long with only origin, destination and distance parameters:
 #' tab.distance<-flowdist(tab, dist.method = "euclidian",result = "dist")
 #' #Format long with with all parameters: coordinates, distance, mouvement

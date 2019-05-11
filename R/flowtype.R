@@ -4,9 +4,11 @@
 #' @param format specify the flow dataset format : M = square matrix [n*n] or L=lng [i,j,data]
 #' @param x enter the computation type : "flux", "transpose", "bivolum" and "bisold".
 #' @details The matrice must be squared (if not, see \link{flowcarre}).
-#' This function compute for all (i,j) index involved in an asymetric flow matrix (Fij) several matrix.
-#' "flux" for initial flow (Fij) - "transpose" for reverse flow value (Fji) - "bivolum" for bilateral gross flow Vij=(Fij+Fji) -
-#' "bisold" for bilateral net flow Sij=(Fij-Fji).
+#' This function compute for all (i,j) involved in an asymetric flow matrix (Fij) several matrix.
+#' - x = "flux" for initial flow (Fij)\cr
+#' - x = "transpose" for reverse flow value (Fji)\cr
+#' - x = "bivolum" for bilateral gross flow Vij=(Fij+Fji)\cr
+#' - x = "bisold" for bilateral net flow Sij=(Fij-Fji)\cr
 #' @examples
 #' library(cartograflow)
 #' data(flowdata)
@@ -14,7 +16,7 @@
 #'                   lib.loc = NULL, mustWork = TRUE)
 #'
 #' ##1a:Computes flowtypes: Matrice format
-#' matflow<-flowtabmat(MOBPRO_ETP,matlist = "M")
+#' matflow<-flowtabmat(flows,matlist = "M")
 #' m<-flowtype(matflow,format ="M",x="flux")
 #' m<-flowtype(matflow,format ="M",x="transpose")
 #' m<-flowtype(matflow,format ="M",x="bivolum")

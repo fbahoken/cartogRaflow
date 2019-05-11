@@ -9,9 +9,9 @@
 #' @details
 #' Contiguity is in terms of the (k=1,2,4) number of spatial boundaries to be crossed between
 #' a place of origin and a place of destination
-#' -- ordre=1 is when the flow have to cross only 1 boundary
-#' -- ordre=2 is when the origin-destinations places are distant from 2 borders
-#' -- ordre=4 is when the origin-destinations places are distant from 4 borders
+#' -\code{ordre=1 is when the flow have to cross only 1 boundary}\cr
+#' -\code{ordre=2 is when the origin-destinations places are distant from 2 borders}\cr
+#' -\code{ordre=4 is when the origin-destinations places are distant from 4 borders}
 #' @examples
 #' library(cartograflow)
 #' data(flowdata)

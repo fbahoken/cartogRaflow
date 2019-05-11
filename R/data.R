@@ -1,5 +1,5 @@
 #' @title MOBPRO: professional commuting flows in 2015
-#' @name MOBPRO_ETP
+#' @name flows
 #' @source \url{https://www.insee.fr/fr/statistiques/fichier/3566008/rp2015_mobpro_txt.zip}
 #' @description
 #' Statistical dataset in .csv:
@@ -14,14 +14,17 @@
 NULL
 
 #' @title Geographical ID
-#' @name COD_GEO_EPT
+#' @name geoid
 #' @description
+#' \code{One column dataframe in.csv.}\cr
 #' \code{Variable (COD_GEO_EPT) is the geographical code of the territory}\cr
+#' \code{citation : APUR, 2018}
 #' @source \url{https://www.insee.fr/fr/statistiques/fichier/3566008/rp2015_mobpro_txt.zip}
 #' @docType data
 NULL
 
-#' @title Example of a small flow data, in matrice format
+#' @title Example of a small flow data matrix
 #' @name mat_ex
+#' @description Example of a small data, in format matrice
 #' @docType data
 NULL
