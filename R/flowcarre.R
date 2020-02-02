@@ -1,5 +1,5 @@
-#' @title Create a square matrice from geographical ID
-#' @description Create a closed and square matrice from a list of geographic ID
+#' @title Builds a square matrice from geographic codes
+#' @description Create a closed and square matrice from a dataframe of geographic codes
 #' @param liste list or all the geographical ID as a single vector flow dataset
 #' @param tab the non squared input flow dataset with three column : origin, destination, flow value
 #' @param origin origin place
@@ -7,13 +7,13 @@
 #' @param valflow flow value
 #' @param empty.sq TRUE : to allows to have an matrice empty with only the ID of background map ; FALSE or missing
 #' @param format the squared flow dataset output format. See Details.
-#' @param diagonale See Details.
+#' @param diagonale zero or not the main diagonal. See Details.
 #' @details
 #' - format is "M" for matrice format
 #'
 #' - format is "L" for long format
 #'
-#' - diagonal is "TRUE" to zero the main diagonal
+#' - diagonal is "TRUE" to zero the main diagonal, else "FALSE"
 #' @examples
 #' library(cartograflow)
 #' data(flowdata)
