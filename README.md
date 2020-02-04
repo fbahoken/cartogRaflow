@@ -1,19 +1,26 @@
 # Cartograflow <img src="doc/Logo_cartograflow.png" align="right" alt="" width="120" />
-Filtering Matrices for Thematic Flowmapping - Dealing with graphic complexity ("spaghetti-effect")  
+**Filtering origin-destination Matrices for Thematic Flowmapping**
 
 [![](https://www.r-pkg.org/badges/version/cartograflow)](https://cran.r-project.org/package=cartograflow)
 [![](https://cranlogs.r-pkg.org/badges/cartograflow?color=brightgreen)](https://cran.r-project.org/package=cartograflow)
 
-This package is designed to filter origin-destination matrices for flow mapping purposes. It is based on different functions that are mainly used to prepare the flow dataset (links) relatively to geography (spatial shapes of nodes or areas).
+This package is designed to filter origin-destination matrices for flow mapping purposes. It is based on different functions that are mainly used to prepare the flow dataset (links) relatively to geography (spatial shapes of nodes or areas) in order to reduce the flowmap graphic complexity.
 
-Major changes have been made. Functions have been rewritten with `{sf}` in addition to `{sp}`if necessary.
+# Installation
 
-In particular, the **flowmap function is more flexible**. It requires at least a nodes .csv file (XY) and a link .csv file listing origin, destination and flow value.
+Installing cartograflow package from CRAN as follows:<br/>
+`install.packages("cartograflow")`
 
-**Installing CRAN version** 
-install.packages("cartograflow")
-library("cartograflow")
+To upgrade to the development version of cartograflow:<br/>
+`install.packages("devtools")`<br/>
+`devtools::install_github("fbahoken/cartograflow")`
 
+# Follow-up of updates
+
+[1.0.1] (under development) updating functions to `sf` and solves overlay problems with `cartography`. <br/>
+Makes especially `flowmap()` more flexible.
+
+[1.0.0] `cartograflow` initial CRAN version
 
 # List of functions
 
