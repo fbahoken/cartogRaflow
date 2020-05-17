@@ -18,7 +18,7 @@ To upgrade to the development version of cartograflow:<br/>
 # Follow-up of updates
 
 [17 mai] 
-- Package being updated on the cran
+- Package being updated on the CRAN
 - compatibiliy with `sf` seems ok for all functions
 - `flowmap()` resulting plot allow overlays with other spatial features
 
