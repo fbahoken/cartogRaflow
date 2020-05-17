@@ -1,0 +1,441 @@
+---
+title: "Cartograflow"
+subtitle: "Filtering Matrix with continuous distance criterion for Thematic Flow Mapping"
+author: "Cartograflow, 2020"
+date: "`r Sys.Date()`"
+output: html_vignette
+vignette: >
+  \usepackage[ps2pdf,
+              bookmarks=true,
+              dvipsone=pdftex,                                
+              backref,
+              ]{hyperref}
+  %\VignetteIndexEntry{Cartograflow}
+  %\VignetteEncoding{UTF-8}
+  %\SweaveUTF8
+  %\VignetteEngine{knitr::rmarkdown}
+---
+
+This vignette of `Cartograflow` is dedicated to filtering an Origin-Destination matrix with a continuous distance matrix. The aim is to plot flow less than a maximum distance value, above a minimum distance travelled criterion or on a range of distances.
+
+
+## Main function
+
+**flowdist** 
+
+-- `flowdist()` computes a _continous distance_ matrix from spatial features (area or points). The result is a matrix of the distances travelled between ODs, with flows filtered or not.
+
+
+## Useful additional functions for a complete analysis
+
+**flowjointure** 
+
+-- `flowjointure()` is to performs a spatial join between a flow dataset and a spatial features layer (as a map background) or another matrix
+
+**flowreduct**
+
+-- `flowreduct()` is to reduce the flow dataset regarding another matrix, e.g. distances travelled. \cr \cr 
+
+- `metric` is the metric of the distance matrix : _continuous_ (e.g. for meters) or _ordinal_ (e.g. for adjacency). \cr
+
+If the metric is continuous (e.g for filtering flows by kilometric distances travelled), use:\cr
+
+- `d.criteria` is for selecting _dmin_ or _dmax_ distance criteria for "continuous" metric ;
+Argument `dmin` is for keeping only flows up to a _dmin_ criterion in km ;\cr
+Argument `dmax` for selecting values less than a _dmax_ criterion in km.\cr
+
+- `d` is the value of the selected _dmin_ or _dmax_ criteria.
+
+Notice that these arguments can be used as a filter criterion in `flowmap()`.
+
+**flowmap**
+
+-- `flowmap()` is to plot flows as segments or arrows, by acting on the following arguments:\cr 
+
+- `filter` is to filter or not flow's information or features \cr
+- `threshold` is used to set the filtering level of the flows when filter="True" \cr
+- `taille` is the value of the width of the flow feature \cr
+- `a.head` is the arrow head parameter (in, out, in and out) \cr
+- `a.length` is the length of the edges of the arrow head (in inches) \cr
+- `a.angle` is the angle from the shaft of the arrow to the edge of the arrow head \cr
+- `a.col` is the arrow's color \cr
+- `plota` is to add spatial features as map background to the flows's plot \cr
+- `add` is to allow to overlay flow features on external spatial features background \cr
+
+
+
+```{r include=FALSE, message=FALSE}
+
+rm(list=ls())
+
+library(sf)
+library(dplyr)
+library(cartograflow)
+library(cartography)
+
+```
+
+**1. Load datasets**
+--------------------
+
+**Flow dataset**
+
+```{r flowdata_preprocess, warning=FALSE, echo=TRUE}
+
+# Load Statistical information
+data<-read.csv2("./data/MOBPRO_ETP.csv",
+                header=TRUE,
+                sep=";",
+                stringsAsFactors=FALSE,
+                encoding="UTF-8",
+                dec=".",
+                check.names=FALSE)
+str(data)
+
+# Variable typing 
+data$i<-as.character(data$i)
+data$j<-as.character(data$j)
+data$Fij<-as.numeric(data$Fij)
+data$count<-as.numeric(data$count)
+
+# Selecting useful variables
+tabflow<-data%>%select(i,j,Fij)
+
+```
+
+**Geographical dataset**
+```{r data_preprocess, warning=FALSE, echo=TRUE}
+
+# Load a list of geo codes
+ID_CODE<-read.csv2("./data/COD_GEO_EPT.csv",
+                   header=TRUE,
+                   sep=";",
+                   stringsAsFactors=FALSE,
+                   encoding="UTF-8",
+                   dec=".",
+                   check.names=FALSE)
+#head(ID_CODE)
+
+CODE<-ID_CODE%>% dplyr::select(COD_GEO_EPT)
+
+colnames(CODE)<-c("CODGEO")
+#head(CODE)
+
+# Map Background
+map<-st_read("./data/MGP_TER.shp")
+
+```
+
+
+**2. Compute distance matrix**
+------------------------------
+
+Function aims first to compute a distance matrix then to reduce the matrix and finally to plot the (filtered) flows
+
+Example is for euclidian distance.
+
+```{r echo=TRUE, fig.show='hold'}
+
+head(tabflow)
+
+tab<-flowjointure(geom="area",DF.flow=tabflow,origin = "i",destination = "j",
+                   bkg=map,id="EPT_NUM",x="X",y="Y")
+
+tab.distance<-flowdist(tab,
+                       dist.method = "euclidian",
+                       result = "dist")
+
+tab.distance<-tab.distance %>% select(i,j,distance)
+tab<-tab %>% select(i,j,ydata)
+head(tab.distance)
+
+```
+
+
+**3. Flowmap reduction according to distance matrix**
+------------------------------
+
+**3.1. Flow reduction according to a maximum distance matrix**
+
+Using for mapping flow less than the maximum distance travelled criterion
+
+
+```{r echo=TRUE, fig.show='hold'}
+
+#reduce the flow dataset from a selected distance travelled (eg. 8.5 km)
+library(rlang)
+
+tab.flow<-flowreduct(tab,
+                     tab.distance,
+                     metric = "continous",
+                     d.criteria = "dmax", #max distance parameter 
+                     d = 8567)        #max distance value - Q1 : 8567 km
+
+#select for all i,j flow values up to 0
+flow.d<-tab.flow %>%
+        select(i,j,flowfilter) %>%
+        filter(flowfilter !=0)
+head(flow.d)
+
+```
+
+**3.2. Flowmap (filtered) according to a maximum distance travelled parameter** 
+
+Using the "dmax" distance parameter to plot flows less than the maximum distance criterion (here : 8,5 km)
+
+
+```{r echo=TRUE, fig.show='hold'}
+
+# Graphic parameters
+knitr::opts_chunk$set(fig.width=6, fig.height=6)
+par(mar=c(0,0,1,0))
+extent <- c(2800000, 1340000, 6400000, 4800000)
+resolution<-150
+
+# Overlay a spatial background 
+par(bg = "NA")
+
+# Add the corresponding background 
+plot(st_geometry(map), col = NA, border=NA, bg="#dfe6e1")
+plot(st_geometry(map), col = "light grey", add=TRUE)
+
+
+#Flowmap : flow travelled less than 8.5 km  (as the first quartile Q1)
+
+flowmap(tab=flow.d,
+        fij="flowfilter",origin.f = "i",destination.f = "j",
+        bkg = map,code="EPT_NUM",nodes.X="X",nodes.Y = "Y",
+        filter=TRUE,
+        taille=8,           
+        a.head = 1,
+        a.length = 0.11,
+        a.col="#f7714f",
+        add=TRUE)
+
+#Map legend
+legendPropLines(pos="topleft",
+                title.txt="Number of commuters\n(distance travelled less than 8,5 km)",
+                title.cex=0.8,    
+                cex=0.5,
+                values.cex= 0.7,  
+                var=c(min(flow.d$flowfilter),8567), 
+                col="#f7714f",
+                lwd=8,
+                frame = FALSE,
+                values.rnd = 0
+                )
+
+
+#Map cosmetic
+layoutLayer(title = "Professional mobility in Greater Paris : short distance travelled",
+            author = "Cartograflow, 2020",
+            sources = "Data : INSEE, 2017 ; Basemap : APUR, RIATE, 2018.",
+            scale = 2,
+            tabtitle = FALSE,
+            frame = TRUE,
+            col = "grey",
+            coltitle ="black"
+            )
+
+# north arrow
+north("topright")
+
+```
+
+
+**3.3. Flowmap (filtered) according to a minimum distance travelled parameter**
+
+Using the "dmin" distance parameter to plot flows above the minimum distance criterion (here : 20 km)
+
+
+```{r echo=FALSE, fig.show='hold', message=FALSE, warning=FALSE}
+
+#head(tabflow)
+
+tab<-flowjointure(geom="area",DF.flow=tabflow,origin = "i",destination = "j",
+                   bkg=map,id="EPT_NUM",x="X",y="Y")
+
+tab.distance<-flowdist(tab,
+                       dist.method = "euclidian",
+                       result = "dist")
+
+tab.distance<-tab.distance %>% select(i,j,distance)
+tab<-tab %>% select(i,j,ydata)
+head(tab.distance)
+
+tab.flow<-flowreduct(tab,
+                     tab.distance,
+                     metric = "continous",
+                     d.criteria = "dmin",  
+                     d = 19234)        #Q2 : 14518 km - Q3:19234 km
+
+#select for all i,j flow values above to 0
+flow.d<-tab.flow%>%
+       select(i,j,flowfilter)%>%
+        filter(flowfilter !=0)
+
+# Graphic parameters
+knitr::opts_chunk$set(fig.width=6, fig.height=6)
+par(mar=c(0,0,1,0))
+extent <- c(2800000, 1340000, 6400000, 4800000)
+resolution<-150
+
+# Overlay a spatial background 
+par(bg = "NA")
+
+# Add the corresponding background 
+plot(st_geometry(map), col = NA, border=NA, bg="#dfe6e1")
+plot(st_geometry(map), col = "light grey", add=TRUE)
+
+
+#Flowmap : flow travelled up to 20 km (as the third quartile Q3)
+
+
+par(mar=c(0,0,1,0))
+
+extent <- c(2800000, 1340000, 6400000, 4800000)
+resolution<-150
+
+flowmap(tab=flow.d,
+        fij="flowfilter",origin.f = "i",destination.f = "j",
+        bkg = map,code="EPT_NUM",nodes.X="X",nodes.Y = "Y",
+        filter=TRUE,
+        taille=8,           
+        a.head = 1,
+        a.length = 0.11,
+        a.col="#f7714f",
+        add=TRUE)
+
+# Map legend
+legendPropLines(pos="topleft",
+                title.txt="Number of commuters\n(distance travelled more than 19 km)",
+                title.cex=0.8,    
+                cex=0.5,
+                values.cex= 0.7,  
+                var=c(19234, max(flow.d$flowfilter)), 
+                col="#f7714f",
+                lwd=8, 
+                frame = FALSE,
+                values.rnd = 0
+                )
+# Map cosmetics
+layoutLayer(title = "Professional mobility in Greater Paris : long distance travelled",
+            author = "Cartograflow, 2020",
+            sources = "Data : INSEE, 2017 ; Basemap : APUR, RIATE, 2018.",
+            scale = 2,
+            tabtitle = FALSE,
+            frame = TRUE,
+            col = "grey",
+            coltitle ="black")
+
+# north arrow
+north("topright")
+
+```
+
+**4. Flowmap reduction and filtering according to distance matrix**
+------------------------------
+
+Use the **"dmax" distance parameter** in association with the **"threshold" flowmap parameter** to map flows between two values (here between the first and third quartiles [Q1 - Q3])
+
+
+```{r echo=FALSE, fig.show='hold', message=FALSE, warning=FALSE}
+
+#head(tabflow)
+
+tab<-flowjointure(geom="area",DF.flow=tabflow,origin = "i",destination = "j",
+                   bkg=map,id="EPT_NUM",x="X",y="Y")
+
+tab.distance<-flowdist(tab,
+                       dist.method = "euclidian",
+                       result = "dist")
+
+tab.distance<-tab.distance %>% select(i,j,distance)
+tab<-tab %>% select(i,j,ydata)
+head(tab.distance)
+
+tab.flow<-flowreduct(tab,
+                     tab.distance,
+                     metric = "continous",
+                     d.criteria = "dmax",  
+                     d = 19234)       #Q3:19234 km
+
+#select for all i,j flow values up to 8567  
+flow.d<-tab.flow%>%
+       select(i,j,flowfilter)%>%
+        filter(flowfilter >8567)      #Q1=8567km
+
+
+# Graphic parameters
+knitr::opts_chunk$set(fig.width=6, fig.height=6)
+par(mar=c(0,0,1,0))
+extent <- c(2800000, 1340000, 6400000, 4800000)
+resolution<-150
+
+# Overlay a spatial background 
+par(bg = "NA")
+
+# Add the corresponding background 
+plot(st_geometry(map), col = NA, border=NA, bg="#dfe6e1")
+plot(st_geometry(map), col = "light grey", add=TRUE)
+
+
+#Flowmap : flow travelled up to (Q3)
+
+flowmap(tab=flow.d,
+        fij="flowfilter",origin.f = "i",destination.f = "j",
+        bkg = map,code="EPT_NUM",nodes.X="X",nodes.Y = "Y",
+        filter=TRUE,
+        taille=8,           
+        a.head = 1,
+        a.length = 0.11,
+        a.col="#f7714f",
+        add=TRUE)
+
+# Map legend
+legendPropLines(pos="topleft",
+                title.txt="Number of commuters\n(distance travelled between 8,5 and 19 km)",
+                title.cex=0.8,    
+                cex=0.5,
+                values.cex= 0.7,  
+                var=c(8567, max(flow.d$flowfilter)), 
+                col="#f7714f",
+                lwd=8, 
+                frame = FALSE,
+                values.rnd = 0
+                )
+
+# Map cosmetic
+layoutLayer(title = "Professional mobility in Greater Paris : median distance travelled",
+            author = "Cartograflow, 2020",
+            sources = "Data : INSEE, 2017 ; Basemap : APUR, RIATE, 2018.",
+            scale = 5,
+            tabtitle = TRUE,
+            frame = TRUE,
+            col = "grey",
+            coltitle ="black")
+
+```
+
+
+## See also
+
+-- cartograflow_general.html <br/>
+-- cartograflow_concentration.html <br/>
+-- cartograflow_contiguity.hmtl <br/>
+-- cartograflow_ordinal_distance.hmtl <br/>
+
+
+## Reference
+
+
+-- Bahoken Francoise (2016), Programmes pour R/Rtudio annexés, in :  _Contribution à la cartographie d'une matrix de flux_, Thèse de doctorat, Université Paris 7, pp. 325-346. URL  : https://halshs.archives-ouvertes.fr/tel-01273776, pp. 480-520.
+
+
+## Reproducibility
+
+```{r lecho=TRUE, fig.show='hold'}
+
+sessionInfo()
+
+```

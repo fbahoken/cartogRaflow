@@ -1,0 +1,411 @@
+---
+title: "Cartograflow"
+subtitle: "Filtering Matrix with ordinal distance criterion for Thematic Flow Mapping"
+author: "Cartograflow, 2020"
+date: "`r Sys.Date()`"
+output: html_vignette
+vignette: >
+  \usepackage[ps2pdf,
+              bookmarks=true,
+              dvipsone=pdftex,                                
+              backref,
+              ]{hyperref}
+  %\VignetteIndexEntry{Cartograflow}
+  %\VignetteEncoding{UTF-8}
+  %\SweaveUTF8
+  %\VignetteEngine{knitr::rmarkdown}
+---
+
+This vignette of `Cartograflow` is dedicated to filtering an Origin-Destination matrix with an ordinal distance matrix.
+
+This matrix describes a neighborhood defined by a number (k) of boundaries to be crossed in order to reach a place of destination from a place of origin
+
+The aim is to map local flows that are either adjacent or located at low (k).
+
+
+## Main function
+
+**flowcontig**
+
+-- `flowcontig()` compute an _ordinal distance_ matrix from spatial features (area). The result is a matrix of adjacency or k-contiguity of the ODs.
+
+- `background` is the areal spatial features ;\cr
+- `code` is the spatial features codes ; \cr
+- `k` is to enter the number (k:1,2,...,k) of the contiguity matrix to be constructed : if (k=1), ODs places are adjacent, then the flow have to cross only 1 boundary, else (k=k) ODs places are distant from n borders ;\cr
+- `algo` is the algorithm to use for ordinal distance calculation (also Default is "automatic" for "Dijkstra's") ; \cr
+
+Notice that the function automatically returns the maximum (k) number of the spatial layer.
+
+## Useful additional functions for a complete analysis
+
+**flowreduct**
+
+-- `flowreduct()` is to reduce the flow dataset regarding another matrix, e.g. distances travelled. \cr \cr 
+
+- `metric` is the metric of the distance matrix : _continuous_ (e.g. for meters) or _ordinal_ (e.g. for adjacency). \cr
+
+**flowmap**
+
+-- `flowmap()` is to plot flows as segments or arrows, by acting on the following arguments:\cr 
+- `filter` is to filter or not flow's information or features \cr
+- `threshold` is used to set the filtering level of the flows when filter="True" \cr
+- `taille` is the value of the width of the flow feature \cr
+- `a.head` is the arrow head parameter (in, out, in and out) \cr
+- `a.length` is the length of the edges of the arrow head (in inches) \cr
+- `a.angle` is the angle from the shaft of the arrow to the edge of the arrow head \cr
+- `a.col` is the arrow's color \cr
+- `plota` is to add spatial features as map background to the flows's plot \cr
+- `add` is to allow to overlay flow features on external spatial features background \cr
+
+
+## Example
+
+
+```{r include=FALSE, message=FALSE}
+
+rm(list=ls())
+
+library(sf)
+library(dplyr)
+library(igraph)
+library(cartograflow)
+library(cartography)
+
+```
+
+**1. Load datasets**
+--------------------
+
+**Flow dataset**
+
+```{r flowdata_preprocess, warning=FALSE, echo=TRUE}
+
+# Load Statistical information
+
+data<-read.csv("./data/MOBPRO_ETP.csv",
+                header=TRUE,
+                sep=";",
+                stringsAsFactors=FALSE,
+                encoding="UTF-8",
+                dec=".",
+                check.names=FALSE)
+
+data$Fij<-as.numeric(data$Fij)
+tabflow<-data
+```
+
+**Geographical dataset**
+```{r data_preprocess, warning=FALSE, echo=TRUE}
+
+# Load a list of geographic codes
+CODE<-read.csv2("./data/MOBPRO_ETP.csv",
+                header=TRUE,
+                   sep=";",
+                   stringsAsFactors=FALSE,
+                   encoding="UTF-8",
+                   dec=".",
+                   check.names=FALSE
+                )
+
+# Load a spatial shape map background of geo codes
+map<-st_read("./data/MGP_TER.shp")
+
+```
+
+
+**2. Compute adjacency matrix and reduces flow matrix**
+------------------------------
+
+Example is for neighbouring areas which share a common boundary (k=1) 
+
+**2.1. Computes the neighbouring graph**
+
+```{r echo=TRUE, include=TRUE, message=FALSE, fig.show='hold', warning=FALSE}
+
+library(igraph)
+## Neighbouring graph (ordre 1)
+graph_ckij_1<-flowcontig(bkg=map, code="EPT_NUM", k=1, algo = "automatic")
+
+#ordre max = "3"
+
+```
+
+
+```{r echo=FALSE, include=FALSE, message=FALSE, fig.show='hold', warning=FALSE}
+
+# Plot Neighbouring graph (ordre 1)
+flowmap(tab=graph_ckij_1,
+        fij="ordre",origin.f = "i",destination.f = "j",
+        bkg = map,code="EPT_NUM",nodes.X="X",nodes.Y = "Y",
+        filter=FALSE)
+
+mtext("Study Area Neighbourhood Plot (k=1)", side=3)
+
+```
+
+
+**2.2. Flow reduction according to the neighbouring graph**
+
+Reducing flow matrix by the neighbouring graph (k=1)
+
+```{r echo=TRUE, fig.show='hold', message=FALSE, warning=FALSE}
+library(rlang)
+
+head(tabflow)
+head(graph_ckij_1)
+
+reduc_k1<-flowreduct(tabflow,
+                  graph_ckij_1,
+                  metric = "ordinal")
+
+
+head(reduc_k1)
+```
+
+**3. Flowmap according to a neighbouring graph**
+------------------------------------------------
+
+**3.1. flows between adjacent areas** 
+Use (k=1) parameter
+
+```{r echo=TRUE, fig.show='hold', message=FALSE, warning=FALSE}
+
+# Graphic parameters
+knitr::opts_chunk$set(fig.width=6, fig.height=6)
+par(mar=c(0,0,1,0))
+extent <- c(2800000, 1340000, 6400000, 4800000)
+resolution<-150
+
+# Overlay a spatial background 
+par(bg = "NA")
+
+# Add the corresponding background 
+plot(st_geometry(map), col = NA, border=NA, bg="#dfe6e1")
+plot(st_geometry(map), col = "light grey", add=TRUE)
+
+
+#Flowmap : flow travelled between border areas
+
+flowmap(tab=reduc_k1,
+        fij="flow",origin.f = "i",destination.f = "j",
+        bkg = map,code="EPT_NUM",nodes.X="X",nodes.Y = "Y",
+        filter=TRUE,
+        taille=8,
+        a.head = 1,
+        a.length = 0.11,
+        a.col="#0e7fe3",
+        add=TRUE
+        )
+
+# Map Legend
+legendPropLines(pos="topleft",
+                title.txt="Number of commuters in adjacent places\n(k=1)",
+                title.cex=0.8,    
+                cex=0.5,
+                values.cex= 0.7,  
+                var=c(min(reduc_k1$flow),max(reduc_k1$flow)), 
+                col="#0e7fe3",
+                lwd=8, 
+                frame = FALSE,
+                values.rnd = 0
+                )
+
+# Map cosmetic
+layoutLayer(title = "Professional mobility in Greater Paris between 1-neighbouring municipalities",
+            author = "Cartograflow, 2020",
+            sources = "Data : INSEE, 2017 ; Basemap : APUR, RIATE, 2018.",
+            scale = 2,
+            tabtitle = FALSE,
+            frame = TRUE,
+            col = "grey",
+            coltitle ="black")
+
+```
+
+**3.2. flows between non adjacent areas** 
+Use for example (k=3) parameter
+
+
+```{r echo=TRUE, fig.show='hold', message=FALSE, warning=FALSE}
+
+library(igraph)
+
+## Neighbouring graph (Max(k)=3)
+graph_ckij_3<-flowcontig(bkg=map, code="EPT_NUM",k=3)
+
+# Flow reduction
+
+head(tabflow)
+
+reduc_k3<-flowreduct(tabflow,
+                  graph_ckij_3,
+                  metric = "ordinal")
+
+head(reduc_k3)
+
+# Graphic parameters
+knitr::opts_chunk$set(fig.width=6, fig.height=6)
+par(mar=c(0,0,1,0))
+extent <- c(2800000, 1340000, 6400000, 4800000)
+resolution<-150
+
+# Overlay a spatial background 
+par(bg = "NA")
+
+# Add the corresponding background 
+plot(st_geometry(map), col = NA, border=NA, bg="#dfe6e1")
+plot(st_geometry(map), col = "light grey", add=TRUE)
+
+
+#Flowmap : flow travelled between border areas
+
+flowmap(tab=reduc_k3,
+        fij="flow",origin.f = "i",destination.f = "j",
+        bkg = map,code="EPT_NUM",nodes.X="X",nodes.Y = "Y",
+        filter=TRUE,
+        taille=8,
+        a.head = 1,
+        a.length = 0.11,
+        a.col="#0e7fe3",
+        add=TRUE 
+        )
+
+# Map Legend
+legendPropLines(pos="topleft",
+                title.txt="Number of commuters between non adjacent places\n(k=3)",
+                title.cex=0.8,    
+                cex=0.5,
+                values.cex= 0.7,  
+                var=c(min(reduc_k3$flow),max(reduc_k3$flow)), 
+                col="#0e7fe3",
+                lwd=8, 
+                frame = FALSE,
+                values.rnd = 0
+                )
+
+
+# Map cosmetic
+layoutLayer(title = "Professional mobility in Greater Paris between 3-neighbouring municipalities",
+            author = "Cartograflow, 2020",
+            sources = "Data : INSEE, 2017 ; Basemap : APUR, RIATE, 2018.",
+            scale = 2,
+            tabtitle = FALSE,
+            frame = TRUE,
+            col = "grey",
+            coltitle ="black")
+
+```
+
+**4. Flowmap reducing and filtering according to ordinal matrix**
+------------------------------
+
+Use the contiguity parameter **(k)** in association to the **threshold flowmap parameter** to map above-average flows that occur between adjacent areas
+
+**4.1 Computes filter criteria**
+Use for example (k=1) parameter and threshold = mean.
+
+```{r flows_criteria, echo=TRUE, fig.show='hold', fig.width=7, message=FALSE, warning=FALSE, ECHO=FALSE}
+
+#Computes k=1
+library(igraph)
+
+## Neighbouring graph k=1
+graph_ckij_1<-flowcontig(bkg=map, code="EPT_NUM",k=1)
+
+# Flow reduction
+reduc_k1<-flowreduct(tabflow,
+                  graph_ckij_1,
+                  metric = "ordinal")
+head(reduc_k1)
+#Extract the mean
+reduc_k1_mean<-mean(reduc_k1$flow)
+
+mean<-mean(tabflow$Fij)
+
+# mean value of reduc_k1_mean =18591
+# mean value of tabflow =13220
+
+```
+
+**4.2 Flow mapping**
+
+```{r echo=TRUE, fig.show='hold', message=FALSE, warning=FALSE}
+
+# Graphic parameters
+knitr::opts_chunk$set(fig.width=6, fig.height=6)
+par(mar=c(0,0,1,0))
+extent <- c(2800000, 1340000, 6400000, 4800000)
+resolution<-150
+
+# Overlay a spatial background 
+par(bg = "NA")
+
+# Add the corresponding background 
+plot(st_geometry(map), col = NA, border=NA, bg="#dfe6e1")
+plot(st_geometry(map), col = "light grey", add=TRUE)
+
+
+#Flowmap : flow travelled between border areas
+
+flowmap(tab=reduc_k1,
+        fij="flow",origin.f = "i",destination.f = "j",
+        bkg = map,code="EPT_NUM",nodes.X="X",nodes.Y = "Y",
+        filter=TRUE,
+        threshold = 13220, #reduc_k1 ean value is 18591 ; tabflow mean value is 13220
+        taille=8,
+        a.head = 1,
+        a.length = 0.11,
+        a.col="#0e7fe3",
+        add=TRUE 
+        )
+
+
+# Map Legend
+legendPropLines(pos="topleft",
+                title.txt="Number of above-average flows that occur between adjacent areas\n(k=1)",
+                title.cex=0.8,    
+                cex=0.5,
+                values.cex= 0.7,  
+                var=c(min(reduc_k1$flow),max(reduc_k1$flow)), 
+                col="#0e7fe3",
+                lwd=8, 
+                frame = FALSE,
+                values.rnd = 0
+                )
+
+
+# Map cosmetic
+layoutLayer(title = "Professional mobility in Greater Paris between 1-neighbouring municipalities",
+            author = "Cartograflow, 2020",
+            sources = "Data : INSEE, 2017 ; Basemap : APUR, RIATE, 2018.",
+            scale = 2,
+            tabtitle = FALSE,
+            frame = TRUE,
+            col = "grey",
+            coltitle ="black")
+
+```
+
+
+
+## See also
+
+-- cartograflow_general.html <br/>
+-- cartograflow_distance.html <br/>
+-- cartograflow_concentration.html <br/>
+-- cartograflow_contiguity.hmtl <br/>
+
+
+## Reference
+
+
+-- Bahoken Francoise (2016), Programmes pour R/Rtudio annexés, in :  _Contribution à la cartographie d'une matrix de flux_, Thèse de doctorat, Université Paris 7, pp. 325-346. URL  : https://halshs.archives-ouvertes.fr/tel-01273776, pp. 480-520.
+
+
+## Reproducibility
+
+```{r lecho=TRUE, fig.show='hold'}
+
+sessionInfo()
+
+```
