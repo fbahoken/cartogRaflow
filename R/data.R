@@ -1,4 +1,4 @@
-#' @title MOBPRO: professional commuting flows in 2015
+#' @title MOBPRO: Commuting trips in 2015
 #' @name flows
 #' @source \url{https://www.insee.fr/fr/statistiques/fichier/3566008/rp2015_mobpro_txt.zip}
 #' @description
@@ -8,7 +8,7 @@
 #' \code{Citation: INSEE - RP MOBPRO, 2015.}\cr
 #' \code{Variable (i) is the place of origin of the flow.}\cr
 #' \code{Variable (j) is the place of destination of the flow.}\cr
-#' \code{Variable (Fij) is the flow value for an (i,j) couple of origin-destination places.}\cr
+#' \code{Variable (Fij) is the flow value between (i,j).}\cr
 #' \code{Variable (count) is the frequency of the (i,j) couple of places.}\cr
 #' @docType data
 NULL
@@ -23,8 +23,8 @@ NULL
 #' @docType data
 NULL
 
-#' @title Example of a small flow data matrix
+#' @title Example of a small matrice
 #' @name mat_ex
-#' @description Example of a small data, in format matrice
+#' @description Example of a small Origin-Destination flow dataset, in a matrice format
 #' @docType data
 NULL
