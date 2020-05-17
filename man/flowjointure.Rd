@@ -2,27 +2,44 @@
 % Please edit documentation in R/flowjointure.R
 \name{flowjointure}
 \alias{flowjointure}
-\title{Create a spatial join with flow}
+\title{Builds a spatial join with a flow dataset}
 \usage{
-flowjointure(tab, fdc, code)
+flowjointure(geom, bkg, DF.flow, origin, destination, DF.point, id, x, y)
 }
 \arguments{
-\item{tab}{the input flow dataset table in long format}
+\item{geom}{the geometry of the spatial features layer: points or areas}
 
-\item{fdc}{the map background file, ie. a shapefile}
+\item{bkg}{the spatial features layer}
 
-\item{code}{the ID of the spatial units in the map background}
+\item{DF.flow}{the input flow dataset as a dataframe}
+
+\item{origin}{the place of origin code}
+
+\item{destination}{the place of destination code}
+
+\item{DF.point}{a dataframe of points or places}
+
+\item{id}{dataframe of points or places file code}
+
+\item{x}{the X coordinate of the point or places}
+
+\item{y}{the Y coordinate of the point or places}
 }
 \value{
-Resulting jointure table between flow dataset and map background
+the corresponding joint table between the flow dataset and the
+spatial feature layer
 }
 \description{
-Create an attribute spatial join between a flow dataset table and a map background
+Builds a spatial join between a flow dataset and a
+spatial features layer (as a map background)
 }
 \examples{
 library(cartograflow)
+library(sf)
 data(flowdata)
-bkg<- system.file("shape/MGP_TER.shp", package="cartograflow",
-                   lib.loc = NULL, mustWork = TRUE)
-tabflow<-flowjointure(flows,bkg,"EPT_NUM")
+map <- st_read(system.file("shape/MGP_TER.shp", package = "cartograflow"))
+tabflow <- flowjointure(
+  geom = "area", bkg = map, DF.flow = flows, origin = "i", destination = "j",
+  id = "EPT_NUM", x = "X", y = "Y"
+)
 }

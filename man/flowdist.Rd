@@ -2,39 +2,43 @@
 % Please edit documentation in R/flowdist.R
 \name{flowdist}
 \alias{flowdist}
-\title{Compute continous distance matrix from geographical background}
+\title{Builds a continuous distance matrices from a spatial features background}
 \usage{
 flowdist(tab, dist.method, result)
 }
 \arguments{
-\item{tab}{the input flow dataset.}
+\item{tab}{the input flow dataset}
 
-\item{dist.method}{euclidian calculation}
+\item{dist.method}{distance calculation algorithm, default is euclidian calculation}
 
-\item{result}{take the vallue "flowdist" or "dist" allows to parameter the resulting distance dataset (flows filtered by a distance criterion or not)}
+\item{result}{Choose Building a "flowdist" or a simple "dist" matrice. See Details}
 }
 \value{
-(1) A flowdata set with continuous euclidian distances calculations, see dist.method parameter
+(1) A flowdata set with continuous  distances calculations. See dist.method parameter
 
-(2) A flowdata set with movement from euclidian distances calculations.
-
-(3) A flowmap filtered by a global distance criterion.
+(2) A flowdata set with movement from euclidian distances calculations
 }
 \description{
-From a geographical background computes (and threshold) a distance matrix.
+From a layer of areal spatial features, compute and threshold a continuous distance matrix.
+The result is either a matrice of distances between ODs, or a flow matrix based on the distance travelled between ODs ; both can be used for filtering flow before flow mapping (\link{flowmap})
 }
 \details{
--- result = "dist" is the resulting tab of the distance\cr
--- result = "flowdist" with all the calculated parameters
+-- result = "dist" is the simple resulting distance matrice.\cr
+-- result = "flowdist" is the resulting distance matrice with additional calculated parameters.\cr
+-- It is also possible to filter flow by a level of distance travelled.
 }
 \examples{
 library(cartograflow)
+library(sf)
 data(flowdata)
-bkg<- system.file("shape/MGP_TER.shp", package="cartograflow",
-                  lib.loc = NULL, mustWork = TRUE)
-tab<-flowjointure(flows,bkg,"EPT_NUM")
-#Format long with only origin, destination and distance parameters:
-tab.distance<-flowdist(tab, dist.method = "euclidian",result = "dist")
-#Format long with with all parameters: coordinates, distance, mouvement
-tab.distance<-flowdist(tab, dist.method = "euclidian",result = "flowdist")
+map <- st_read(system.file("shape/MGP_TER.shp", package = "cartograflow"))
+tabflow <- flowjointure(
+  geom = "area", bkg = map, DF.flow = flows, origin = "i",
+  destination = "j", id = "EPT_NUM", x = "X", y = "Y"
+)
+
+# Format long with only origin, destination and distance parameters:
+tab.distance <- flowdist(tabflow, dist.method = "euclidian", result = "dist")
+# Format long with with all parameters: coordinates, distance, mouvement
+tab.distance <- flowdist(tabflow, dist.method = "euclidian", result = "flowdist")
 }

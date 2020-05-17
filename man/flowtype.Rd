@@ -2,51 +2,55 @@
 % Please edit documentation in R/flowtype.R
 \name{flowtype}
 \alias{flowtype}
-\title{Compute flowdata types}
+\title{Compute flowdata types (volum, balance)}
 \usage{
 flowtype(tab, format, x)
 }
 \arguments{
-\item{tab}{the input flow dataset}
+\item{tab}{is the input flow dataset}
 
-\item{format}{specify the flow dataset format : M = square matrix [n*n] or L=lng [i,j,data]}
+\item{format}{specify the flow dataset format, "M " for square matrix [n*n] or L for long [i,j,data]}
 
 \item{x}{enter the computation type : "flux", "transpose", "bivolum" and "bisold".}
 }
 \description{
-Compute gross and net flows from initial asymetric flow values
+Compute gross (volumn) and net (balance) flows from initial asymetric flow values
 }
 \details{
 The matrice must be squared (if not, see \link{flowcarre}).
-This function compute for all (i,j) involved in an asymetric flow matrix (Fij) several matrix.
-- x = "flux" for initial flow (Fij)\cr
+This function compute for all pairs or origin-destination places (i,j)
+involved in an asymetric flow matrix (Fij<> Fji) several matrix :\cr
+- x = "flux" for remaining initial flow (Fij)\cr
 - x = "transpose" for reverse flow value (Fji)\cr
 - x = "bivolum" for bilateral gross flow Vij=(Fij+Fji)\cr
-- x = "bisold" for bilateral net flow Sij=(Fij-Fji)\cr
+- x = "bisold" for bilateral net flow Sij=(Fij-Fji) \cr
 }
 \examples{
 library(cartograflow)
 data(flowdata)
-bkg<- system.file("shape/MGP_TER.shp", package="cartograflow",
-                  lib.loc = NULL, mustWork = TRUE)
+bkg <- system.file("shape/MGP_TER.shp",
+  package = "cartograflow",
+  lib.loc = NULL, mustWork = TRUE
+)
 
-##1a:Computes flowtypes: Matrice format
-matflow<-flowtabmat(flows,matlist = "M")
-m<-flowtype(matflow,format ="M",x="flux")
-m<-flowtype(matflow,format ="M",x="transpose")
-m<-flowtype(matflow,format ="M",x="bivolum")
-m<-flowtype(matflow,format ="M",x="bisold")
+## 1a:Computes flowtypes: Matrice format
+matflow <- flowtabmat(flows, matlist = "M")
+m <- flowtype(matflow, format = "M", x = "flux")
+m <- flowtype(matflow, format = "M", x = "transpose")
+m <- flowtype(matflow, format = "M", x = "bivolum")
+m <- flowtype(matflow, format = "M", x = "bisold")
 
-##1b:Computes flowtypes: Long format
-list<-flowtabmat(matflow,matlist="L")
-colnames(list)<-c("i","j","Fij")
-l_all<-flowtype(list,format ="L",x="all")
-l_sold<-flowtype(list,format ="L",x="bisold")
-
+## 1b:Computes flowtypes: Long format
+list <- flowtabmat(matflow, matlist = "L")
+colnames(list) <- c("i", "j", "Fij")
+l_all <- flowtype(list, format = "L", x = "all")
+l_sold <- flowtype(list, format = "L", x = "bisold")
 \donttest{
-#2:flowmapping: example of bisold
-flowmap(l_sold,format = "L",bkg,code = "EPT_NUM",
-         filter= TRUE,threshold= 20, taille = 5)
+# 2:flowmapping: example of bisold
+flowmap(l_sold,
+  format = "L", bkg, code = "EPT_NUM",
+  filter = TRUE, threshold = 20, taille = 5
+)
 }
 }
 \references{

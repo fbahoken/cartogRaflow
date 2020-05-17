@@ -2,60 +2,120 @@
 % Please edit documentation in R/flowmap.R
 \name{flowmap}
 \alias{flowmap}
-\title{Mapping a flow matrix origin-destination}
+\title{Mapping of an origin-destination flow matrix}
 \usage{
-flowmap(tab, format, fdc, code, filter, threshold, taille, a.head,
-  a.length, a.angle, a.col)
+flowmap(
+  tab,
+  fij,
+  origin.f,
+  destination.f,
+  bkg = NULL,
+  crs,
+  nodes = NULL,
+  code,
+  nodes.X,
+  nodes.Y,
+  filter,
+  plota,
+  threshold,
+  taille,
+  a.head,
+  a.length,
+  a.angle,
+  a.col,
+  add = NULL,
+  ...
+)
 }
 \arguments{
-\item{tab}{the input flow dataset .csv}
+\item{tab}{the input flow dataset in .csv format. See Details}
 
-\item{format}{the flow dataset format : M=matrice or L=long.}
+\item{fij}{the flow value between origin and destination places}
 
-\item{fdc}{the geographical background file .shp}
+\item{origin.f}{the place of origin code}
 
-\item{code}{is the column with the spatial units ID}
+\item{destination.f}{the place of destination code}
 
-\item{filter}{allows you to filter (or not) the flow dataset. See details}
+\item{bkg}{a spatial feature layer, as a map background, in .shp or .json or other format}
 
-\item{threshold}{is the value of the threshold criterion used to filter the values. The default is 1.}
+\item{crs}{the coordinate reference system (CRS)}
 
-\item{taille}{is a graphical parameter for modifying the width of the feature}
+\item{nodes}{the input points file in .csv format}
 
-\item{a.head}{integer code, determining the kind of arrows to be drawn. See Details}
+\item{code}{the spatial features code}
 
-\item{a.length}{length of the edges of the arrow head (in inches).}
+\item{nodes.X}{the X coordinate of the point or places}
 
-\item{a.angle}{angle from the shaft of the arrow to the edge of the arrow head.}
+\item{nodes.Y}{the Y coordinate of the point or places}
 
-\item{a.col}{color of the arrows}
+\item{filter}{is to filter or not the flow values. See details}
+
+\item{plota}{is to add spatial features as map background to the flows's plot}
+
+\item{threshold}{the value of the threshold criterion to filter flows. Default is 1.}
+
+\item{taille}{the value of the width of the flow feature}
+
+\item{a.head}{for arrow's head is the arrow head parameter code. 
+It allows to choose the kind of arrow. See Details}
+
+\item{a.length}{for arrow's length is the length of the edges of the arrow head (in inches)}
+
+\item{a.angle}{for arrow's angle is the angle from the shaft of the arrow to the edge of the arrow head}
+
+\item{a.col}{for arrow's color}
+
+\item{add}{is to allow to overlay flow features on external spatial features background}
+
+\item{...}{Adds the set of variables of the arrow function}
 }
 \value{
-a matrix or a list with the correct tabflow ID code
+a matrix or a list with the correct flow dataframe ID code
 
 The resulting flowmap
 }
 \description{
-Mapping a flow matrix origin-destination
+Mapping of an origin-destination flow matrix
 }
 \details{
-The flow dataset must be converted to a dataframe for optimal performance (troubles remains with tibble format)
+The input .csv flow dataset must be first converted to a dataframe
+for optimal performance (troubles remains with tibble format)\cr \cr
 
-If filter = FALSE, all the matrice values are plot [(n*(n-1)] cells, i.e. all links out of the main diagonal.
-If filter = TRUE only non-zero values are plotted, i.e. existing links with or without threshold.
-The default threshold is set to 1.
+- filter is "FALSE" means that all the flow value will be plot as segments [(n*(n-1)], 
+i.e. all the OD matrice's cells out of the main diagonal will be plot.\cr
+- filter is "TRUE" means only non-zero values will be plot,
+i.e. existing links with or without threshold.\cr
+The default threshold is set to 1.\cr
 
-a.head is for applying an arrow or not
--- code=0 : the link has no head - no arrow
--- code=1 : an arrow is draw at (x0[i], y0[i]).
--- code=2 : an arrow is draw at (x1[j], y1[j])
--- code=3 : an arrow is draw at both nodes.
+Flow features are plot as segments betwwen (x0,y0) and (x1,y1)\cr
+- a.head is for applying an arrow or not to a segment:\cr
+-- code="0" : the link has no head - no arrow\cr
+-- code="1" : an arrow is draw at (x0[i], y0[i])\cr
+-- code="2" : an arrow is draw at (x1[j], y1[j])\cr
+-- code="3" : an arrow is draw at both nodes.\cr
 }
 \examples{
 library(cartograflow)
+library(sf)
 data(flowdata)
-bkg<- system.file("shape/MGP_TER.shp", package="cartograflow",
-                  lib.loc = NULL, mustWork = TRUE)
-flowmap(flows,format="L",bkg,code = "EPT_NUM",filter = TRUE,
-         threshold = 20,taille = 5,a.head = 1,a.length = 0.05)
+# example with the background
+map <- st_read(system.file("shape/MGP_TER.shp", package = "cartograflow"))
+par(bg = "NA")
+plot(st_geometry(map), col = "blue")
+flowmap(
+  tab = flows, fij = "Fij", origin.f = "i", destination.f = "j",
+  bkg = map,add=TRUE, code = "EPT_NUM", nodes.X = "X", nodes.Y = "Y",
+  filter = FALSE
+)
+\donttest{
+# example with nodes files
+map <- st_read("MGP_territoires.json")
+pt <- read.csv2("points.csv")# points files origin destination
+flows<-red.cs2("flows.csv") # flows files 
+par(bg = "NA")
+plot(st_geometry(map), col = "blue")
+flowmap(tab = flows, fij = "d", origin.f = "a", destination.f = "b",
+        crs=4326,nodes = pt, code = "EPT_NUM", nodes.X = "X", nodes.Y = "Y",
+        filter = TRUE,add=TRUE,threshold = 10, taille = 8,arr.length = 0.1)
+}
 }

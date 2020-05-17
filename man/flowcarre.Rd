@@ -2,54 +2,59 @@
 % Please edit documentation in R/flowcarre.R
 \name{flowcarre}
 \alias{flowcarre}
-\title{Create a square matrice from geographical ID}
+\title{Builds a square matrice from geographical nodes}
 \usage{
 flowcarre(liste, tab, origin, dest, valflow, empty.sq, format, diagonale)
 }
 \arguments{
-\item{liste}{list or all the geographical ID as a single vector flow dataset}
+\item{liste}{list of all the spatial codes as a single dataframe}
 
 \item{tab}{the non squared input flow dataset with three column : origin, destination, flow value}
 
-\item{origin}{origin place}
+\item{origin}{node / place of origin of the flow}
 
-\item{dest}{destination place}
+\item{dest}{node / place of destination of the flow}
 
-\item{valflow}{flow value}
+\item{valflow}{is the flow value between origin and destination places}
 
-\item{empty.sq}{TRUE : to allows to have an matrice empty with only the ID of background map ; FALSE or missing}
+\item{empty.sq}{Builds an empty matrix or not. See Details.}
 
-\item{format}{the squared flow dataset output format. See Details.}
+\item{format}{is the desired squared flow dataset output format. See Details.}
 
-\item{diagonale}{See Details.}
+\item{diagonale}{to zero or not the main diagonal. See Details.}
 }
 \description{
-Create a closed and square matrice from a list of geographic ID
+Builds a square and closed matrice from a dataframe of spatial nodes
 }
 \details{
-- format is "M" for matrice format
-
-- format is "L" for long format
-
+- empty.sq is "TRUE" builds an empty matrix ; else is "FALSE" or missing\cr \cr
+- format is "M" for matrice format\cr
+- format is "L" for long format, as three column dataframe\cr\cr
 - diagonal is "TRUE" to zero the main diagonal
 }
 \examples{
 library(cartograflow)
 data(flowdata)
-var1<-geoid
-var2<-flows
+var1 <- geoid
+var2 <- flows
 
-#1/2 Compute an empty square matrice with ID code, and sets the value to zero
-#Example for matrice format (same procedure for the long format)
+# 1/2 Compute an empty square matrice with ID code, and sets the value to zero
+# Example for matrice format (same procedure for the long format)
 
-mat<-flowcarre(var1,var2,origin="i",dest="j",valflow="Fij",
-               format="M",empty.sq=TRUE)
+mat <- flowcarre(var1, var2,
+  origin = "i", dest = "j", valflow = "Fij",
+  format = "M", empty.sq = TRUE
+)
 
-#2/2 Fill in the matrice with external flow values
-mat<-flowcarre(var1,var2,origin="i",dest="j",valflow="Fij",
-               format="M",empty.sq=FALSE)
+# 2/2 Fill in the matrice with external flow values
+mat <- flowcarre(var1, var2,
+  origin = "i", dest = "j", valflow = "Fij",
+  format = "M", empty.sq = FALSE
+)
 
-#Square a matrice and zero the main diagonal
-mat<-flowcarre(var1,var2,origin="i",dest="j",valflow="Fij",format="M",
-               empty.sq=FALSE,diagonale = FALSE)
+# Square a matrice and zero the main diagonal
+mat <- flowcarre(var1, var2,
+  origin = "i", dest = "j", valflow = "Fij", format = "M",
+  empty.sq = FALSE, diagonale = FALSE
+)
 }

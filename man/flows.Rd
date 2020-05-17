@@ -3,7 +3,7 @@
 \docType{data}
 \name{flows}
 \alias{flows}
-\title{MOBPRO: professional commuting flows in 2015}
+\title{MOBPRO: Commuting trips in 2015}
 \source{
 \url{https://www.insee.fr/fr/statistiques/fichier/3566008/rp2015_mobpro_txt.zip}
 }
@@ -14,6 +14,6 @@ Statistical dataset in .csv:
 \code{Citation: INSEE - RP MOBPRO, 2015.}\cr
 \code{Variable (i) is the place of origin of the flow.}\cr
 \code{Variable (j) is the place of destination of the flow.}\cr
-\code{Variable (Fij) is the flow value for an (i,j) couple of origin-destination places.}\cr
+\code{Variable (Fij) is the flow value between (i,j).}\cr
 \code{Variable (count) is the frequency of the (i,j) couple of places.}\cr
 }

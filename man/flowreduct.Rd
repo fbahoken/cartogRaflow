@@ -2,50 +2,59 @@
 % Please edit documentation in R/flowreduct.R
 \name{flowreduct}
 \alias{flowreduct}
-\title{Flow matrice reduction according to another matrix}
+\title{Flow matrix reduction according to another matrix}
 \usage{
-flowreduct(tab, tab.metric, metric, select, d)
+flowreduct(tab, tab.metric, metric, d.criteria, d)
 }
 \arguments{
-\item{tab}{is the input flowdata set.}
+\item{tab}{is the input flowdata set}
 
-\item{tab.metric}{is the table of distance (continuous dataset) or contiguity (ordinal dataset)}
+\item{tab.metric}{the distance dataset}
 
-\item{metric}{See Details.}
+\item{metric}{select "continuous" or "ordinal" metric. See Details}
 
-\item{select}{is the continuous distance thresholding parameter. See Details.}
+\item{d.criteria}{is for selecting "dmin" or "dmax" distance criteria for "continuous" metric. See Details.}
 
-\item{d}{distance thresholds criterion.}
+\item{d}{is the value of the selected "dmin" or "dmax". see Details}
 }
 \value{
-A flow dataset with continuous euclidian distances calculations
+A flow dataset with distances computations and flow reduction
 }
 \description{
-Reduces a flow dataset according to an external matrix (eg. distance travelled)
-Computes geographical movements (by weighting a flow dataset according to a distance criterion)
+Reduces a flow dataset according to an external matrix, eg. a matrix of travelled distance.\cr 
+Builds geographical movements,  by weighting a flow dataset according to a distance criterion.
 }
 \details{
--- Metric is 'continous" for distance as euclidian, maximum, manhattan, etc.\cr
-See \link{flowdist} for computing neighbourhood ordinal distance matrix.
+The involved metric can be continous or not.\cr
 
-select ="dmin" for reducing flow dataset to values that are up or equal to the dmin distance parameter ;\cr
-select ="dmax" for reducing flow dataset to values that are less or equal to the dmax distance.
+(1) Metric is 'continous" for distance as euclidian, maximum, manhattan, etc.\cr
+See \link{flowdist} \cr
+- Metric is 'ordinal" for computing neighbourhood ordinal distance matrix.
+-- Select ="dmin" for reducing flow dataset to flow values that are up or equal to the dmin distance parameter  (Fij>=dmin);\cr
+-- select ="dmax" for reducing flow dataset to values that are less or equal to the dmax distance parameter(Fij=<dmin).\cr \cr
 
--- Metric is 'ordinal' for neighbourhood ordinal distance so-called k contiguity.\cr
-See \link{flowcontig} for computing continuous distance matrix
+- Metric is 'ordinal' for computing neighbourhood ordinal distance with k contiguity.\cr
+See \link{flowcontig} for computing ordinal distance matrix \cr
 }
 \examples{
 library(cartograflow)
+library(sf)
+library(dplyr)
 data(flowdata)
-bkg<- system.file("shape/MGP_TER.shp", package="cartograflow",
-                  lib.loc = NULL, mustWork = TRUE)
-tab<-flowjointure(flows,bkg,"EPT_NUM")
+map <- st_read(system.file("shape/MGP_TER.shp", package = "cartograflow"))
 
-#Example for reducing a flow matrice with a distance matrice, in long format (i,j, distance)
-##1/2: Computes the matrice distances
-tab.distance<-flowdist(tab, dist.method = "euclidian",result = "dist")
-##2/2: Reduce the flow matrice
-tab.flow<-flowreduct(tab,tab.distance, metric = "continous",
-                     select = "dmax", #maximum distance travelled criterion
-                     d = 8567) #maximum distance value
+tab <- flowjointure(
+  geom = "area", bkg = map, DF.flow = flows, origin = "i", destination = "j",
+  id = "EPT_NUM", x = "X", y = "Y"
+)
+
+# Example for reducing a flow matrice with a distance matrice, in long format (i,j, distance)
+## 1/2: Computes the matrice distances
+tab.distance <- flowdist(tab, dist.method = "euclidian", result = "dist")
+tab.distance <- tab.distance \%>\% select(i, j, distance)
+## 2/2: Reduce the flow matrice
+tab.flow <- flowreduct(flows, tab.distance,
+  metric = "continous",
+  d.criteria = "dmax", d = 8567
+)
 }

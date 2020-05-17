@@ -4,24 +4,18 @@
 \alias{flowgini}
 \title{Analysis of flow concentration (Gini coefficient)}
 \usage{
-flowgini(tab, origin, dest, valflow, format, fdc, code, lorenz.plot)
+flowgini(ODpts, origin, destination, valflow, lorenz.plot)
 }
 \arguments{
-\item{tab}{dataset is a matrice or long format}
+\item{ODpts}{the input  dataset with : nodes code, flow values and XY coordinates}
 
-\item{origin}{origin place to be used with the long format}
+\item{origin}{ID origin place, in long format}
 
-\item{dest}{destination place to be used with the list format}
+\item{destination}{ID destination place, long format}
 
-\item{valflow}{to be used with the list format}
+\item{valflow}{flow value between origin and destination places}
 
-\item{format}{is a variable that identify the data : matrice or long format}
-
-\item{fdc}{is the map background file, ie. a shapefile.}
-
-\item{code}{is the map background IDs code}
-
-\item{lorenz.plot}{allows to plot the Lorenz curve associate to the gini coefficient}
+\item{lorenz.plot}{to plot or the Lorenz curve. See Details}
 }
 \value{
 plot Lorenz curve for the cumulated flow and links : flowgini(...,gini.plot = TRUE),warning : the function must be not assign a variable
@@ -30,24 +24,22 @@ value of the Gini's coefficent and the table : table<-flowgini(...,missing(gini.
 }
 \description{
 Calculates Gini coefficient, plot Lorenz curve and
-threshold the matrice according to a global concentration criterion for mapping flow intensity or flow density).\cr
+threshold the matrice according to a global concentration criterion
+for mapping flow intensity or flow density.\cr
 To be use before \link{flowanalysis}
 }
 \details{
-flowgini(...,lorenz.plot = TRUE) for ploting Lorenz curve from cumulated flows and links.
+flowgini(...,lorenz.plot = TRUE) for ploting Lorenz curve  associate to the gini coefficient, from cumulated flows and links.
 }
 \examples{
 library(cartograflow)
 data(flowdata)
-bkg<- system.file("shape/MGP_TER.shp", package="cartograflow",
-                  lib.loc = NULL, mustWork = TRUE)
-#Computes Gini's coefficent
-tab_gini<-flowgini(flows,format="L",origin="i",dest="j",valflow="Fij",
-          bkg,code="EPT_NUM",lorenz.plot = FALSE)
-#Plot Lorenz curve
-flowgini(tab_gini,format="L",origin="i",dest="j",valflow="ydata",
-          bkg,code="EPT_NUM",lorenz.plot = TRUE)
-#See \\link{flowanalysis} for viewing the tab_gini table
+# Computes Gini's coefficent
+tabgini <- flowgini(ODpts = flows, origin = "i", destination = "j", 
+                     valflow = "Fij", lorenz.plot = FALSE)
+# Plot Lorenz curve
+flowgini(ODpts = flows, origin = "i", dest = "j", valflow = "Fij", lorenz.plot = TRUE)
+# See \link{flowanalysis} for viewing the tab_gini table
 }
 \references{
 Bahoken Françoise, 2016,« La cartographie d’une sélection globale de flux, entre ‘significativité’ et ‘densité’ »,

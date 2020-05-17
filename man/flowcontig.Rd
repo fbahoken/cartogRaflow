@@ -2,38 +2,49 @@
 % Please edit documentation in R/flowcontig.R
 \name{flowcontig}
 \alias{flowcontig}
-\title{Computes an ordinal distance matrices based on geographical background}
+\title{Builds an ordinal distance matrices from a spatial features background}
 \usage{
-flowcontig(fdc, code, ordre)
+flowcontig(bkg, code, k, algo)
 }
 \arguments{
-\item{fdc}{is the map background file (ie. a shapefile of polygons)}
+\item{bkg}{a layer of areal spatial features (eg. the map background)}
 
-\item{code}{identifiant}
+\item{code}{spatial areal features code}
 
-\item{ordre}{number of borders to cross between origin and destination place. See details.}
+\item{k}{order of adjacency or contiguity between two areal spatial features}
+
+\item{algo}{algorithm to use for ordinal distance calculation. Default is "Dijkstra's"  algorithm. See Details.}
 }
 \value{
-a (k) contiguity matrice with the (k) contiguity measures
+a contiguity matrice with the k orders of adjacency
 }
 \description{
-From a geographical background, compute an ordinal distance matrice based on a k-contiguity.
-The result is a neighbourhood graph that can be used for filtering flow values beor flow mapping (\link{flowmap})
+From a layer of areal spatial features, compute an ordinal distance matrice
+based on a k order criterion of adjacency or contiguity between origin and destination places . \cr
+The result is a neighbourhood graph that can be used for filtering flow values before flow mapping (\link{flowmap})
 }
 \details{
-Contiguity is in terms of the (k=1,2,4) number of spatial boundaries to be crossed between
-a place of origin and a place of destination
--\code{ordre=1 is when the flow have to cross only 1 boundary}\cr
--\code{ordre=2 is when the origin-destinations places are distant from 2 borders}\cr
--\code{ordre=4 is when the origin-destinations places are distant from 4 borders}
+The (k=1,2,...,k) order of adjacency or contiguity, of an areal spatial features
+background, is the number of spatial boundaries to be crossed between
+a couple of origin-destination (ODs) places. The k number can be assimilated to a shortest path between two pair of nodes
+Argument `k` is to enter the number k of the contiguity matrix to be constructed ;
+-k{ordre=1 : ODs places are adjacent, ie the flow have to cross only 1 boundary.}\cr
+-k{ordre=2 : ODs places are distant from 2 borders}\cr
+-k{ordre=k : ODs places are distant from k borders}\cr
+The function returns also the (k) number of the layer
 }
 \examples{
 library(cartograflow)
+library(sf)
 data(flowdata)
-bkg<- system.file("shape/MGP_TER.shp", package="cartograflow",
-                   lib.loc = NULL, mustWork = TRUE)
-graph_ckij_1<-flowcontig(bkg,"EPT_NUM",ordre =1)
+map <- st_read(system.file("shape/MGP_TER.shp", package = "cartograflow"))
+graph_ckij_1 <- flowcontig(bkg = map, code = "EPT_NUM", k = 1, algo = "automatic")
 \donttest{
-flowmap(graph_ckij_1,format="L",bkg,"EPT_NUM",
-        filter = TRUE, taille = 0.5)}
+flowmap(
+  tab = graph_ckij_1,
+  fij = "ordre", origin.f = "i", destination.f = "j",
+  bkg = map, code = "EPT_NUM", nodes.X = "X", nodes.Y = "Y",
+  filter = FALSE
+)
+}
 }
