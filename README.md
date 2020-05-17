@@ -17,10 +17,16 @@ To upgrade to the development version of cartograflow:<br/>
 
 # Follow-up of updates
 
+[17 mai] 
+- Package being updated on the cran
+- compatibiliy with `sf` seems ok for all functions
+- `flowmap()` resulting plot allow overlays with other spatial features
+
 [1.0.1] (under development) updating functions to `sf` and solves overlay problems with `cartography`. <br/>
 Makes especially `flowmap()` more flexible.
 
 [1.0.0] `cartograflow` initial CRAN version
+
 
 # List of functions
 
