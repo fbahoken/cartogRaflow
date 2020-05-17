@@ -2,10 +2,10 @@
 #' @name cartograflow
 #' @rdname cartograflow
 #' @description
-#' This package is designed to create the so-called flowmaps, by filtering origin-destination (OD) matrix.
-#' It is based on different functions that are mainly used to prepare the flow dataset.
-#' The spatial objects processing are those of {sp} or {sf} and
-#' the mapping elements are often those of {Cartography} except particular cases.
+#' This package contains functions to prepare and filter origin-destination matrix
+#' for thematic flow mapping purposes. The spatial objects processing are those of {sf}.\cr
+#' This comes after Bahoken, Francoise (2016) Contribution à la cartographie d'une matrice de flux, 
+#' Phd in Geography, Sorbonne Paris Cité, Paris 7.
 #' @details
 #' To learn more about cartograflow, see the vignette cartograflow.html
 #'
@@ -19,8 +19,3 @@
 #'  }
 #' @docType package
 NULL
-
-
-
-
-
