@@ -17,14 +17,14 @@ To upgrade to the development version :<br/>
 
 # Follow-up of updates
 
-_**Work in progress**_ : 
-Computing flows margins indicators (on i,j) - for places-based flow analysis<br/>
-Computing major, dominant... flows analysis - for places-based flow analysis<br/>
+_**Work in progress**_ : <br/>
+Computing flows margins indicators (on i,j) - for places-based flow analysis. <br/>
+Computing major, dominant and variants - for local bilateral flow filtering. <br/>
 
 [22 mai] Addition possibilities of  `flowtype()` computations possibilities for bilateral flows : "biasym","bimin", "bimax","birange", "bidisym". Change name of bisold to "bibal".
 
 [17 mai] Package being updated on the CRAN. Compatibiliy with `sf` seems ok for all functions.
-- `flowmap()` resulting plot allow overlays with other spatial features
+`flowmap()` resulting plot allow overlays with other spatial features
 
 [1.0.1] (under development) updating functions to `sf` and solves overlay problems with `cartography`. <br/>
 Makes especially `flowmap()` more flexible.
@@ -32,11 +32,12 @@ Makes especially `flowmap()` more flexible.
 [1.0.0] `cartograflow` initial CRAN version
 
 # Available vignettes <br/>
-See in : (/cartograflow/vignettes/) <br/>
-- _cartograflow_general.html_ (CRAN version) <br/>
-- _cartograflow_concentration.html_ <br/>
-- _cartograflow_distance.html_ <br/>
-- _cartograflow_ordinal_distance.hmtl_ <br/>
+[\Vignette : rmd and html](https://github.com/fbahoken/cartogRaflow/blob/master/vignettes/) <br/>
+
+[Vignette : cartograflow general - CRAN version](https://github.com/fbahoken/cartogRaflow/blob/master/vignettes/cartograflow_general.html) <br/>
+[subVignette : cartograflow concentration](https://github.com/fbahoken/cartogRaflow/blob/master/vignettes/cartograflow_concentration.html) <br/>
+[subVignette : cartograflow distance](https://github.com/fbahoken/cartogRaflow/blob/master/vignettes/cartograflow_distance.html)<br/>
+[subVignette : cartograflow ordinal distance](https://github.com/fbahoken/cartogRaflow/tree/master/vignettes/cartograflow_ordinal_distance.hmtl) <br/>
 
 # List of functions
 
@@ -62,15 +63,15 @@ _Work in progress_
 
 #### 2.1. Concentration
 
--`flowgini()` performs a concentration analysis of a flow dataset - To be use before `flowanalysis()`
+`flowgini()` performs a concentration analysis of a flow dataset - To be use before `flowanalysis()`
 Computes _Gini coefficient_ and plot _Lorenz curve_
 
--`flowanalysis()` for computing a flow filter based on _a double criterion for selecting flows_ before mapping.
+`flowanalysis()` for computing a flow filter based on _a double criterion for selecting flows_ before mapping.
 
-See vignette _cartograflow_concentration.html_
+See : [subVignette : cartograflow concentration](https://github.com/fbahoken/cartogRaflow/blob/master/vignettes/cartograflow_concentration.html) <br/>
 
 #### 2.2. Distance travelled<br/>
-See vignette _cartograflow_distance.html_<br/>
+See : [subVignette : cartograflow distance](https://github.com/fbahoken/cartogRaflow/blob/master/vignettes/cartograflow_distance.html)<br/>
 
 You have two ways to consider the distance travelled by flows :
 -- if you have a matrice distance, go directly to `flowreduct()` at §2.2.3 ;<br/>
@@ -80,18 +81,19 @@ You have two ways to consider the distance travelled by flows :
 
 **2.2.1. Compute continuous distances matrices**<br/>
 -`flowjointure()` performs an attribute spatial join - by origin (i) and by destination (j) - between a flow dataset and a spatial shape in order to transfert the origin-destination coordinates (Xi, Yi, Xj, Yj) of the base map to the flow matrice.<br/>
--`flowdist()` Computes a _continous distance_ matrice choosing metric ("rectilinear", "euclidian", "manhattan") before using  `flowreduct()` to filter the flow dataset.
+`flowdist()` Computes a _continous distance_ matrice choosing metric ("rectilinear", "euclidian", "manhattan") before using  `flowreduct()` to filter the flow dataset.
 
 **2.2.2. Compute ordinal distances matrices** <br/>
-See vignette _cartograflow_ordinal_distance.html_
+See : [subVignette : cartograflow ordinal distance](https://github.com/fbahoken/cartogRaflow/tree/master/vignettes/cartograflow_ordinal_distance.hmtl) <br/>
 
--`flowcontig()` is to compute an _ordinal distance_  matrice based on a k-contiguity matrice.
+`flowcontig()` is to compute an _ordinal distance_  matrice based on a k-contiguity matrice.
 
 **2.2.3. Reducting a flow matrice by an external matrice** <br/>
--`flowreduct()` is to perform the reduction of the flow dataset according to another matrice.
+`flowreduct()` is to perform the reduction of the flow dataset according to another matrice.<br/>
+See : [subVignette : cartograflow distance](https://github.com/fbahoken/cartogRaflow/blob/master/vignettes/cartograflow_distance.html)<br/>
 
 ## 3. Flow mapping <br/>
-- `flowmap()` is to plot flows as segments or arrows. Arguments are:<br/>
+`flowmap()` is to plot flows as segments or arrows. Arguments are:<br/>
  `filter` is to filter or not flow's information or features <br/>
  `threshold` is used to set the filtering level of the flows when filter="True" <br/>
  `taille` is the value of the width of the flow feature <br/>
