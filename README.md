@@ -21,6 +21,10 @@ _**Work in progress**_ : <br/>
 Computing flows margins indicators (on i,j) - for places-based flow analysis. <br/>
 Computing major, dominant and variants - for local bilateral flow filtering. <br/>
 
+[03 juin] `cartograflow` CRAN Update to 1.0.2  
+Suppression of the dependencies in the namespace files gdata and rgdal.
+Updated `flowtype()` 
+
 [22 mai] Addition possibilities of  `flowtype()` computations possibilities for bilateral flows : "biasym","bimin", "bimax","birange", "bidisym". Change name of bisold to "bibal".
 
 [17 mai] Package being updated on the CRAN. Compatibiliy with `sf` seems ok for all functions.
