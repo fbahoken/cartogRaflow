@@ -35,9 +35,18 @@ You can use long "L" or matrix "M" [n*n] flow dataset formats.
 
 -- `flowstructmat()` fixes an unpreviously codes shift in the flow dataset "M" format. If necessary this function is to be used with `flowjointure` and `flowtabmat`.
 
-#### 1.2. Flow computing
+#### 1.2. Flow types computing
 
--- `flowtype()` is to compute volumn and balance flow from observed flows - respectively to compute symetric and skewmetric matrix from an asymmetric one. 
+-- `flowtype()` is to compute several types of flow from an asymmetric matrix: 
+x= `flux` for remaining initial flow (Fij) <br/>
+x= `transpose` for reverse flow value (Fji) <br/>
+x= `bivolum` for bilateral volum, as gross flow (FSij)<br/>
+x= `bibal` for bilateral balance, as net flow (FBij) <br/>
+x= `biasym` for asymetry of bilateral flow (FAij) <br/>
+x= `bimin` for minimum of bilateral flow (minFij) <br/>
+x= `bimax` for maximum of bilateral flow (maxFij) <br/>
+x= `birange` for bilateral flow range (rangeFij) <br/>
+x= `bidisym` for bilateral disymetry as (FDij) <br/>
 
 #### 1.3. Flow reduction
 
@@ -186,24 +195,46 @@ colnames(CODE)<-c("CODGEO")
 
 ### 2. Flow computing
 
-*Compute bilateral flows : volum, balance and asymetry*
+*Compute bilateral flows types : eg. volum, balance, bilateral maximum and all types*
 
 ```{r data_computing, warning=FALSE, echo=TRUE}
 
 # Compute bilateral volum : FSij
-matflow_vol<-flowtype(matflow, format="M", "bivolum")
+matflow_vol<-flowtype(matflow,
+                      format="M",
+                      "bivolum")
 
-tabflow_vol<-flowtype(tabflow, format="L", "bivolum")
+tabflow_vol<-flowtype(tabflow,
+                      origin="i",
+                      destination="j",
+                      fij="Fij",
+                      format="L",
+                     "bivolum")
 
 # Compute bilateral balance : FSij
-tabflow_net<-flowtype(tabflow, format="L", "bisold")
+tabflow_net<-flowtype(tabflow,
+                      format="L",
+                      origin="i",
+                      destination="j",
+                      fij="Fij",
+                      "bibal")
 
-# Compute all types of bilateral flows, in one 6 columns "L"format matrix
-tabflow_all<-flowtype(tabflow, format="L", x="all")
+# Compute bilateral maximum : 
+tabflow_max<-flowtype(tabflow,
+                      format="L",
+                      origin="i",
+                      destination="j",
+                      fij="Fij",
+                      "bimax")
+
+# Compute all types of bilateral flows, in one 11 columns "L" format matrix
+tabflow_all<-flowtype(tabflow, 
+                      format="L",
+                      origin="i",
+                      destination="j",
+                      fij="Fij",
+                      x="alltypes")
 head(tabflow_all) 
- 
-# Compute flow asymetry
-#tabflow_all$FAsy<-(tabflow_all$FDij / tabflow_all$FDij)*100
 
 ```
 
