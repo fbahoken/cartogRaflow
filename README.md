@@ -58,7 +58,16 @@ Makes especially `flowmap()` more flexible.
 
 Check if the matrix is close and square. See `flowcarre()` if not.<br/>
 
--`flowtype()` is to compute the main types of bilateral flows from an asymmetric flow dataset (matrice or long format). The result is x = "flux" for remaining initial flow _(Fij)_ or "transpose" for reverse flow value _(Fji)_ or "bivolum" for bilateral volum as gross flow _(FSij)_=(Fij+Fji) or "bibal" for bilateral balance or net flow _(FBij)_=(Fij-Fji) or "biasym" for asymetry of bilateral flow _(FSij)_=(FBij/FSij) or "bimin" for _(minFij)_=(Fij, Fji) or "bimax" for _(maxFij(Fij, Fji))_ or "birange" for bilateral _rangeFij_=(maxFij - minFij) or "bidisym" for bilateral disymetry as _(FDij)_=(FSij/rangeFij). 
+-`flowtype()` is to compute the main types of bilateral flows from an asymmetric flow dataset (matrice or long format).<br/>
+x = "flux" for remaining initial flow _(Fij)_ <br/>
+or x ="transpose" for reverse flow value _(Fji)_ <br/>
+or x ="bivolum" for bilateral volum as gross flow _(FSij)_=(Fij+Fji) <br/>
+or x ="bibal" for bilateral balance as net flow _(FBij)_=(Fij-Fji) <br/>
+or x ="biasym" for asymetry of bilateral flow _(FSij)_=(FBij/FSij) <br/>
+or x ="bimin" for _(minFij)_=(Fij, Fji) <br/> 
+or x ="bimax" for _(maxFij(Fij, Fji))_ <br/>
+or x ="birange" for bilateral _rangeFij_=(maxFij - minFij) <br/>
+or x ="bidisym" for bilateral disymetry as _(FDij)_=(FSij/rangeFij). <br/>
 
 #### 1.3. Computing flows margins indicators (on i,j) 
 _Work in progress_
