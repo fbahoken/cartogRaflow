@@ -127,6 +127,8 @@ library(dplyr)
 library(cartograflow)
 library(cartography)
 
+knitr::opts_chunk$set(fig.width=6, fig.height=6)
+
 ```
 
 ### 1. Load datasets
@@ -255,7 +257,6 @@ map <- st_read(system.file("shape/MGP_TER.shp", package = "cartograflow"))
 # Add and overlay spatial background 
 par(bg = "NA")
 
-knitr::opts_chunk$set(fig.width=6, fig.height=6)
 par(mar=c(0,0,1,0))
 extent <- c(2800000, 1340000, 6400000, 4800000)
 resolution<-150
@@ -304,7 +305,6 @@ map <- st_read(system.file("shape/MGP_TER.shp", package = "cartograflow"))
 # Add and overlay spatial background 
 par(bg = "NA")
 
-knitr::opts_chunk$set(fig.width=6, fig.height=6)
 par(mar=c(0,0,1,0))
 extent <- c(2800000, 1340000, 6400000, 4800000)
 resolution<-150
@@ -343,7 +343,7 @@ legendPropLines(pos="topleft",
                 values.rnd = 0
                 )
 
-#Map cosmetic
+# Map cosmetic
 
 layoutLayer(title = "Commuters up to above-average in Greater Paris",
            coltitle ="black",
