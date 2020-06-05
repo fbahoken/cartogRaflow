@@ -4,7 +4,7 @@
 [![](https://www.r-pkg.org/badges/version/cartograflow)](https://cran.r-project.org/package=cartograflow)
 [![](https://cranlogs.r-pkg.org/badges/cartograflow?color=brightgreen)](https://cran.r-project.org/package=cartograflow)
 
-This package is designed to filter origin-destination matrices for flow mapping purposes. It is based on different functions that are mainly used to prepare the flow dataset relatively to geography in order to reduce the flowmap graphic complexity.
+This package is designed to filter origin-destination matrices for flow mapping purposes. It is based on different functions that are mainly used to prepare the flow dataset.
 
 # Installation
 
@@ -21,8 +21,8 @@ _**Work in progress**_ : <br/>
 Coding of `flowplace()` for "M" format
 Towards flow filtering for local point of view (major, dominant...). <br/>
 
-[05 juin] towards the addition of a new function (development version only)<br/>
-`flowplace()` (currently available for "L" format of matrix only), is to compute flows margins indicators (on i,j) for places-based flow analysis. 
+[05 juin] `flowplace()`
+`flowplace()` (currently available for "L" format of matrix), is to compute flows margins indicators (on i,j) for places-based flow analysis. 
 
 [03 juin] `cartograflow` CRAN Update to 1.0.3  
 Suppression of the dependencies in the namespace files gdata and rgdal.
