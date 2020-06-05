@@ -4,7 +4,7 @@
 [![](https://www.r-pkg.org/badges/version/cartograflow)](https://cran.r-project.org/package=cartograflow)
 [![](https://cranlogs.r-pkg.org/badges/cartograflow?color=brightgreen)](https://cran.r-project.org/package=cartograflow)
 
-This package is designed to filter origin-destination matrices for flow mapping purposes. It is based on different functions that are mainly used to prepare the flow dataset (links) relatively to geography (spatial shapes of nodes or areas) in order to reduce the flowmap graphic complexity.
+This package is designed to filter origin-destination matrices for flow mapping purposes. It is based on different functions that are mainly used to prepare the flow dataset relatively to geography in order to reduce the flowmap graphic complexity.
 
 # Installation
 
@@ -18,20 +18,15 @@ To upgrade to the development version :<br/>
 # Follow-up of updates
 
 _**Work in progress**_ : <br/>
-Computing flows margins indicators (on i,j) - for places-based flow analysis. <br/>
-Computing major, dominant and variants - for local bilateral flow filtering. <br/>
+Coding of `flowplace()` for "M" format
+Towards flow filtering for local point of view (major, dominant...). <br/>
 
-[03 juin] `cartograflow` CRAN Update to 1.0.2  
+[05 juin] towards the addition of a new function (development version only)<br/>
+`flowplace()` (currently available for "L" format of matrix only), is to compute flows margins indicators (on i,j) for places-based flow analysis. 
+
+[03 juin] `cartograflow` CRAN Update to 1.0.3  
 Suppression of the dependencies in the namespace files gdata and rgdal.
 Updated `flowtype()` 
-
-[22 mai] Addition possibilities of  `flowtype()` computations possibilities for bilateral flows : "biasym","bimin", "bimax","birange", "bidisym". Change name of bisold to "bibal".
-
-[17 mai] Package being updated on the CRAN. Compatibiliy with `sf` seems ok for all functions.
-`flowmap()` resulting plot allow overlays with other spatial features
-
-[1.0.1] (under development) updating functions to `sf` and solves overlay problems with `cartography`. <br/>
-Makes especially `flowmap()` more flexible.
 
 [1.0.0] `cartograflow` initial CRAN version
 
@@ -60,17 +55,27 @@ Check if the matrix is close and square. See `flowcarre()` if not.<br/>
 
 -`flowtype()` is to compute the main types of bilateral flows from an asymmetric flow dataset (matrice or long format).<br/>
 x = "flux" for remaining initial flow _(Fij)_ <br/>
-or x ="transpose" for reverse flow value _(Fji)_ <br/>
-or x ="bivolum" for bilateral volum as gross flow _(FSij)_=(Fij+Fji) <br/>
-or x ="bibal" for bilateral balance as net flow _(FBij)_=(Fij-Fji) <br/>
-or x ="biasym" for asymetry of bilateral flow _(FSij)_=(FBij/FSij) <br/>
-or x ="bimin" for _(minFij)_=(Fij, Fji) <br/> 
-or x ="bimax" for _(maxFij(Fij, Fji))_ <br/>
-or x ="birange" for bilateral _rangeFij_=(maxFij - minFij) <br/>
-or x ="bidisym" for bilateral disymetry as _(FDij)_=(FSij/rangeFij). <br/>
+or x = "transpose" for reverse flow value _(Fji)_ <br/>
+or x = "bivolum" for bilateral volum as gross flow _(FSij)_=(Fij+Fji) <br/>
+or x = "bibal" for bilateral balance as net flow _(FBij)_=(Fij-Fji) <br/>
+or x = "biasym" for asymetry of bilateral flow _(FSij)_=(FBij/FSij) <br/>
+or x = "bimin" for _(minFij)_=(Fij, Fji) <br/> 
+or x = "bimax" for _(maxFij(Fij, Fji))_ <br/>
+or x = "birange" for bilateral _rangeFij_=(maxFij - minFij) <br/>
+or x = "bidisym" for bilateral disymetry as _(FDij)_=(rangeFij/FSij).
 
 #### 1.3. Computing flows margins indicators (on i,j) 
-_Work in progress_
+`flowplace()`is to compute flow indicators from the margins of the matrix, e.g. on the flow's places of origin and/or destination.
+
+x = "ini" for the number of incoming links (in-degree)<br/>
+or x = "outi" for the number of outcoming links (out-degree)<br/>
+or x = "degi" for the total number of links _ini_=(ini + outi)<br/>
+or x = "Oi" for the total flows emitted by (i) place <br/>
+or x = "bali" for the total flows received by (j) place <br/>
+or x = "voli" for the total flow volume by place <br/>
+or x = "bali" for the net balance by place <br/>
+or x = "asyi" for the asymetry of flow by place <br/>
+or x = "allflowplaces" for computing all the above indicators.
 
 ## 2. Flow analysis
 
