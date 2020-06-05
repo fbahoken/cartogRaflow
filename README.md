@@ -18,11 +18,11 @@ To upgrade to the development version :<br/>
 # Follow-up of updates
 
 _**Work in progress**_ : <br/>
-Coding of `flowplace()` for "M" format
+Coding of `flowplace()` for "M" format.<br/>
 Towards flow filtering for local point of view (major, dominant...). <br/>
 
 [05 juin] `flowplace()`
-`flowplace()` (currently available for "L" format of matrix), is to compute flows margins indicators (on i,j) for places-based flow analysis. 
+`flowplace()` (currently available for "L" format of matrix),<br/> is to compute flows margins indicators (on i,j) for places-based flow analysis. 
 
 [03 juin] `cartograflow` CRAN Update to 1.0.3  
 Suppression of the dependencies in the namespace files gdata and rgdal.
