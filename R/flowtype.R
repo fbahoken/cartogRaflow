@@ -13,7 +13,7 @@
 #' - x = "transpose" for the reverse flow value: (Fji) =t(Fij)\cr
 #' - x = "bivolum" for the bilateral volum or gross flow: FSij=(Fij+Fji)\cr
 #' - x = "bibal" for the bilateral balance or net flow: FBij=(Fij-Fji) \cr
-#' - x = "biasym" for asymetry of bilateral flow: FSij=(FBij/FSij)\cr
+#' - x = "biasym" for asymetry of bilateral flow: FAij=(FBij/FSij)\cr
 #' - x = "bimin" for the minimum of bilateral flow: minFij=(Fij, Fji)\cr
 #'- x = "bimax" for the maximum of bilateral flow: Fij(Fij, Fji)\cr
 #'- x = "birange" for the amplitude of bilateral flows: rangeFij=(maxFij - minFij)\cr
