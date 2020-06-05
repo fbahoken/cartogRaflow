@@ -1,4 +1,4 @@
-#' @title Compute flowdata types (volum, balance)
+#' @title Compute several flowdata types (volum, balance, ...)
 #' @description Compute gross (volumn) and net (balance) flows from initial asymetric flow values
 #' @param tab is the input flow dataset
 #' @param origin the place of origin code
@@ -9,15 +9,16 @@
 #' @details The matrice must be squared (if not, see \link{flowcarre}).
 #' This function compute for all pairs or origin-destination places (i,j)
 #' involved in an asymetric flow matrix (Fij<> Fji) several matrix :\cr
-#' - x = "flux" for remaining initial flow (Fij)\cr
-#' - x = "transpose" for reverse flow value (Fji)\cr
-#' - x = "bivolum" for bilateral volum as gross flow FSij=(Fij+Fji)\cr
-#' - x = "bibal" for bilateral balance or net flow FBij=(Fij-Fji) \cr
-#' - x = "biasym" for asymetry of bilateral flow FSij=(FBij/FSij)\cr
-#' - x = "bimin" for minFij=(Fij, Fji)\cr
-#'- x = "bimax" for maxFij(Fij, Fji)\cr
-#'- x = "birange" for bilateral rangeFij=(maxFij - minFij)\cr
-#'- x = "bidisym" bilateral disymetry as FDij=(FSij/rangeFij) 
+#' - x = "flux" for the initial flow: (Fij)\cr
+#' - x = "transpose" for the reverse flow value: (Fji) =t(Fij)\cr
+#' - x = "bivolum" for the bilateral volum or gross flow: FSij=(Fij+Fji)\cr
+#' - x = "bibal" for the bilateral balance or net flow: FBij=(Fij-Fji) \cr
+#' - x = "biasym" for asymetry of bilateral flow: FSij=(FBij/FSij)\cr
+#' - x = "bimin" for the minimum of bilateral flow: minFij=(Fij, Fji)\cr
+#'- x = "bimax" for the maximum of bilateral flow: Fij(Fij, Fji)\cr
+#'- x = "birange" for the amplitude of bilateral flows: rangeFij=(maxFij - minFij)\cr
+#'- x = "bidisym" for the bilateral disymetry: FDij=(FSij/rangeFij)
+#'- x = "alltypes" for computing all the available types of flows
 #' @import dplyr
 #' @importFrom rlang .data
 #' @examples
