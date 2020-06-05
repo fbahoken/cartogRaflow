@@ -17,7 +17,7 @@
 #' - x = "bimin" for the minimum of bilateral flow: minFij=(Fij, Fji)\cr
 #'- x = "bimax" for the maximum of bilateral flow: Fij(Fij, Fji)\cr
 #'- x = "birange" for the amplitude of bilateral flows: rangeFij=(maxFij - minFij)\cr
-#'- x = "bidisym" for the bilateral disymetry: FDij=(FSij/rangeFij)
+#'- x = "bidisym" for the bilateral disymetry: FDij=(rangeFij/FSij)
 #'- x = "alltypes" for computing all the available types of flows
 #' @import dplyr
 #' @importFrom rlang .data
