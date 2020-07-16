@@ -1,5 +1,5 @@
 #' @title Compute several flowdata types (volum, balance, ...)
-#' @description Compute gross (volumn) and net (balance) flows from initial asymetric flow values
+#' @description Compute gross (volumn), net (balance) and other flowtypes from an initial asymetric matrix
 #' @param tab is the input flow dataset
 #' @param origin the place of origin code
 #' @param destination the place of destination code
