@@ -21,6 +21,9 @@ _**Work in progress**_ : <br/>
 Coding of `flowplace()` for "M" format.<br/>
 Towards flow filtering for local point of view (major, dominant...). <br/>
 
+[16 juillet] `flowlowup()`
+`flowlowup()` (currently available for "L" format of matrix),<br/> is to extracts the upper or the lower triangular part of a matrix.
+
 [05 juin] `flowplace()`
 `flowplace()` (currently available for "L" format of matrix),<br/> is to compute flows margins indicators (on i,j) for places-based flow analysis. 
 
@@ -64,7 +67,7 @@ or x = "bimax" for _(maxFij(Fij, Fji))_ <br/>
 or x = "birange" for bilateral _rangeFij_=(maxFij - minFij) <br/>
 or x = "bidisym" for bilateral disymetry as _(FDij)_=(rangeFij/FSij).
 
-#### 1.3. Computing flows margins indicators (on i,j) 
+#### 1.3. Computing flows margins indicators (on i or on j) 
 `flowplace()`is to compute flow indicators from the margins of the matrix, e.g. on the flow's places of origin and/or destination.
 
 x = "ini" for the number of incoming links (in-degree)<br/>
@@ -76,6 +79,12 @@ or x = "voli" for the total flow volume by place <br/>
 or x = "bali" for the net balance by place <br/>
 or x = "asyi" for the asymetry of flow by place <br/>
 or x = "allflowplaces" for computing all the above indicators.
+
+#### 1.4. Extracting the lower / upper part of a matrix
+`flowlowup()` is to extracts the upper or the lower triangular part of a matrix - preferably for symmetrical matrixes.
+
+x = "up"  for the part above the main diagonal <br/>
+or x = "low" for the part below the main diagonal.
 
 ## 2. Flow analysis
 
