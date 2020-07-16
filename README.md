@@ -18,7 +18,7 @@ To upgrade to the development version :<br/>
 # Follow-up of updates
 
 _**Work in progress**_ : <br/>
-Coding of `flowplace()` for "M" format.<br/>
+Coding of `flowplace()` and `flowlowup()` for "M" format.<br/>
 Towards flow filtering for local point of view (major, dominant...). <br/>
 
 [16 juillet] `flowlowup()`
