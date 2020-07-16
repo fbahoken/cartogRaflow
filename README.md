@@ -8,12 +8,14 @@ This package is designed to filter origin-destination matrices for flow mapping 
 
 # Installation
 
-Installing cartograflow package from CRAN as follows:<br/>
+Installing cartograflow CRAN version:<br/>
 `install.packages("cartograflow")`
 
 To upgrade to the development version :<br/>
+See Follow up updates <br/>
 `install.packages("devtools")`<br/>
-`devtools::install_github("fbahoken/cartograflow")`
+`library("devtools")`<br/>
+`remotes::install_github(url = "https://github.com/fbahoken/cartogRaflow")`
 
 # Follow-up of updates
 
