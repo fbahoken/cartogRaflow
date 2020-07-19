@@ -69,14 +69,15 @@ or x = "bimax" for _(maxFij(Fij, Fji))_ <br/>
 or x = "birange" for bilateral _rangeFij_=(maxFij - minFij) <br/>
 or x = "bidisym" for bilateral disymetry as _(FDij)_=(rangeFij/FSij).
 
-#### 1.3. Computing flows margins indicators (on i or on j) 
+#### 1.3. Computing flows places oriented indicators (on i or on j) 
 `flowplace()`is to compute flow indicators from the margins of the matrix, e.g. on the flow's places of origin and/or destination.
 
 x = "ini" for the number of incoming links (in-degree)<br/>
 or x = "outi" for the number of outcoming links (out-degree)<br/>
 or x = "degi" for the total number of links _ini_=(ini + outi)<br/>
+or x = "intra" for the total intra zonal interaction (if main diagonal is not empty)<br/>
 or x = "Oi" for the total flows emitted by (i) place <br/>
-or x = "bali" for the total flows received by (j) place <br/>
+or x = "Dj" for the total flows received by (j) place <br/>
 or x = "voli" for the total flow volume by place <br/>
 or x = "bali" for the net balance by place <br/>
 or x = "asyi" for the asymetry of flow by place <br/>
