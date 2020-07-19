@@ -1,6 +1,10 @@
-#' @title Extracts the upper or lower sub-matrix
+#' @title Extracts the triangular sub-matrix of flows
 #' @description Extracts the upper or lower triangular part of a matrix
 #' @param tab is the input flow dataset
+#' @param fij the flow value between origin and destination places
+#' @param origin the place of origin code
+#' @param destination the place of destination code
+#' @param lowup for selecting lower or upper triangular sub-portion of the original matrix. See Details.
 #' @param format specify the flow dataset format, "M " for square matrix [n*n] or "L" for long [i,j,data]
 #' @param x enter the Enter the triangular part to be extracted: "low", "up". See Details.
 #' @details 
@@ -14,49 +18,40 @@
 #' library(cartograflow)
 #' data(flowdata)
 #' 
-#' Extract the upper part of the matrix : Long format
-#' tab_up <- flowlowup(tab, format="L", lowup="up")
+#' ###Extract the upper part of the matrix : Long format
+#' tab_up <- flowlowup(flows, format="L", lowup="up")
+#' tab_low<-flowlowup(flows, format="L", lowup="low")
 #' 
 #' @export
 
 flowlowup <- function(tab,origin=NULL,destination=NULL,fij=NULL,lowup, format, x) {
   
+  if (format == "L"){
+    
+                    tab_up<-flowtabmat(tab,matlist = "M")
+                    temp_up<-lower.tri(tab_up, diag = FALSE)
+                    
+                    tab_low<-flowtabmat(tab,matlist = "M")
+                    temp_low<-upper.tri(tab_low,diag=FALSE)
+                    
+                    nbi<-dim(tab_up)[1]
+                    nbj<-dim(tab_up)[2]
+                    
+                    for (i in 1:nbi){
+                      for (j in 1:nbj){
+                        if (temp_up[i,j] == TRUE){tab_up[i,j]<-0 }
+                        if (temp_low[i,j] == TRUE){tab_low[i,j]<-0 }
+                      }}
+                    
+                    tab_low<-flowtabmat(tab_low,matlist = "L")
+                    tab_up<-flowtabmat(tab_up,matlist = "L")
+                    }
   
-  if (format == "L") {
+  if (lowup == "low"){return(tab_low)}
     
-    tab_up<-flowtabmat(tab,matlist = "M")
-    temp_up<-lower.tri(tab_up, diag = FALSE)
-    
-    tab_low<-flowtabmat(tab,matlist = "M")
-    temp_low<-upper.tri(tab_low,diag=FALSE)
-    
-    nbi<-dim(tab_up)[1]
-    nbj<-dim(tab_up)[2]
-    
-    for (i in 1:nbi){
-      for (j in 1:nbj){
-        if (temp_up[i,j] == TRUE){tab_up[i,j]<-0 }
-        if (temp_low[i,j] == TRUE){tab_low[i,j]<-0 }
-      }}
-    
-    tab_low<-flowtabmat(tab_low,matlist = "L")
-    tab_up<-flowtabmat(tab_up,matlist = "L")
-    
-  }
+  if (lowup == "up"){return(tab_up)}
   
-  if (lowup == "low") {
-       return(tab_low)
-  }
-    
-  if
-  (lowup == "up") {
-    return(tab_up)
-  }
-  
-  if (missing(lowup)) {
-    return(tab_up)
-  
-  }
+  if (missing(lowup)){return(tab_up)}
 }
 
 

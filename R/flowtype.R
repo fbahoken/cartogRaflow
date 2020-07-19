@@ -1,24 +1,33 @@
-#' @title Compute several flowdata types (volum, balance, ...)
-#' @description Compute gross (volumn), net (balance) and other flowtypes from an initial asymetric matrix
+#' @title Compute bilateral several flow types
+#' @description Compute bilateral flow type: volumn (gross), balance (net), asymetry, min/max ... from an initial asymetric matrix
 #' @param tab is the input flow dataset
 #' @param origin the place of origin code
 #' @param destination the place of destination code
 #' @param fij the flow value between origin and destination places
 #' @param format specify the flow dataset format, "M " for square matrix [n*n] or L for long [i,j,data]
 #' @param x enter the flow indicator type : "alltypes", "flux", "transpose", "bivolum", "bibal","biasym","bimin", "bimax","birange" and "bidisym"
+#' @param lowup for extracting the lower or upper triangular sub-portion of the bilateral volum matrix. See Details.
+#' @param net for extracting the "positive" or the "negative" flow values of the bilateral balance) matrix
 #' @details The matrice must be squared (if not, see \link{flowcarre}).
 #' This function compute for all pairs or origin-destination places (i,j)
 #' involved in an asymetric flow matrix (Fij<> Fji) several matrix :\cr
+#' Param x:
 #' - x = "flux" for the initial flow: (Fij)\cr
 #' - x = "transpose" for the reverse flow value: (Fji) =t(Fij)\cr
 #' - x = "bivolum" for the bilateral volum or gross flow: FSij=(Fij+Fji)\cr
 #' - x = "bibal" for the bilateral balance or net flow: FBij=(Fij-Fji) \cr
 #' - x = "biasym" for asymetry of bilateral flow: FAij=(FBij/FSij)\cr
 #' - x = "bimin" for the minimum of bilateral flow: minFij=(Fij, Fji)\cr
-#'- x = "bimax" for the maximum of bilateral flow: Fij(Fij, Fji)\cr
-#'- x = "birange" for the amplitude of bilateral flows: rangeFij=(maxFij - minFij)\cr
-#'- x = "bidisym" for the bilateral disymetry: FDij=(rangeFij/FSij)
-#'- x = "alltypes" for computing all the available types of flows
+#' - x = "bimax" for the maximum of bilateral flow: Fij(Fij, Fji)\cr
+#' - x = "birange" for the amplitude of bilateral flows: rangeFij=(maxFij - minFij)\cr
+#' - x = "bidisym" for the bilateral disymetry: FDij=(rangeFij/FSij)
+#' - x = "alltypes" for computing all the available types of flows \cr
+#' Param lowup is for reducing the matrix:\cr
+#' - lowup ="up" for triangular part above the main diagonal \cr
+#' - lowup = "low" for triangular part below the main diagonal\cr
+#' Param net is for extracting positive or negative flow values of the bilateral balance (bibalà matrix:\cr 
+#' - net ="negative" values\cr
+#' - net ="positive" values\cr
 #' @import dplyr
 #' @importFrom rlang .data
 #' @examples
@@ -29,7 +38,7 @@
 #'   lib.loc = NULL, mustWork = TRUE
 #' )
 #'
-#' ## 1a:Computes flowtypes: Matrice format
+#' ## 1a:Computes flowtypes: Matrix format
 #' matflow <- flowtabmat(flows, matlist = "M")
 #' m <- flowtype(matflow, format = "M", x = "flux")
 #' m <- flowtype(matflow, format = "M", x = "transpose")
@@ -37,14 +46,17 @@
 #' m <- flowtype(matflow, format = "M", x = "bibal")
 #'
 #' ## 1b:Computes flowtypes: Long format
-#' list <- flowtabmat(tabflow, matlist = "L")
-#' l_all <- flowtype(list,origin ="i",destination="j",fij="Fij", format = "L", x = "alltypes")
-#' l_sold <- flowtype(list, origin ="i",destination="j",fij="Fij",format = "L", x = "bibal")
+#' types_all <- flowtype(flows,origin ="i",destination="j",fij="Fij", format = "L",
+#' x = "alltypes")
+#' bivol<- flowtype(flows,origin ="i",destination="j",fij="Fij",format = "L",
+#' x = "bivolum",lowup="up")
+#' bibal_net<- flowtype(flows,origin ="i",destination="j",fij="Fij",format = "L",
+#' x = "bibal", net="negative")
 #' \donttest{
-#' # 2:flowmapping: example of bibal
-#' flowmap(l_sold,
+#' # 2:flowmapping: example of bibal_net
+#' flowmap(bibal_net,
 #'   format = "L", bkg, code = "EPT_NUM",
-#'   filter = TRUE, threshold = 20, taille = 5
+#'   filter = TRUE, threshold = 20, taille = 5, a.head = 1,
 #' )
 #' }
 #' @references
@@ -53,7 +65,7 @@
 #' number 116, URL : https://mappemonde-archive.mgm.fr/num44/articles/art14404.html
 #' @export
 
-flowtype <- function(tab,origin=NULL,destination=NULL,fij=NULL,format, x) {
+flowtype <- function(tab,origin=NULL,destination=NULL,fij=NULL,format, lowup, net,x) {
   
   if (format == "M") {
     
@@ -128,15 +140,51 @@ flowtype <- function(tab,origin=NULL,destination=NULL,fij=NULL,format, x) {
             }
         
             if (x == "bivolum") {
-              tabflow <- tabflow %>% select(.data$i,.data$j,.data$FSij)
-              return(tabflow)
+                    flow_gross <- tabflow %>% select(.data$i,.data$j,.data$FSij)
+                    
+                    tab_up<-flowtabmat(flow_gross,matlist = "M")
+                    temp_up<-lower.tri(tab_up, diag = FALSE)
+                    
+                    tab_low<-flowtabmat(flow_gross,matlist = "M")
+                    temp_low<-upper.tri(tab_low,diag=FALSE)
+                    
+                    nbi<-dim(tab_up)[1]
+                    nbj<-dim(tab_up)[2]
+                    
+                    for (i in 1:nbi){
+                      for (j in 1:nbj){
+                        if (temp_up[i,j] == TRUE){tab_up[i,j]<-0 }
+                        if (temp_low[i,j] == TRUE){tab_low[i,j]<-0 }
+                      }}
+                    
+                    tabflow_low<-cartograflow::flowtabmat(tab_low,matlist = "L")
+                    tabflow_up<-cartograflow::flowtabmat(tab_up,matlist = "L")
+                    
+                    if(missing(lowup)){return(flow_gross)}
+                    
+                    if (lowup == "up"){
+                      return(tabflow_up)}
+                    
+                    if (lowup == "low"){
+                      return(tabflow_low)}    
             }
-        
+                    
+    
             if (x == "bibal") {
-              tabflow <- tabflow %>% select(.data$i,.data$j,.data$FBij)
-              return(tabflow)
-            }
-            
+              tabflow_net <- tabflow %>% select(.data$i,.data$j,.data$FBij)
+             
+                  if (missing(net)){return(tabflow_net)}
+      
+                  if (net == "negative"){
+                  tabflow_net <- tabflow_net %>% filter(.data$FBij<0)
+                  return(tabflow_net)}
+      
+                  if (net == "positive") {
+                  tabflow_net <- tabflow_net %>% filter(.data$FBij>=0)
+                  return(tabflow_net)}
+            }  
+    
+    
             if (x == "biasym") {
               tabflow <- tabflow %>% select(.data$i,.data$j,.data$FAij)
               return(tabflow)
