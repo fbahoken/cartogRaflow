@@ -20,17 +20,17 @@ See Follow up updates <br/>
 # Follow-up of updates
 
 _**Work in progress**_ : <br/>
-Coding of `flowplace()` and `flowlowup()` for "M" format.<br/>
+Coding of `flowplaces()` and `flowlowup()` for "M" format.<br/>
 Towards flow filtering for local point of view (major, dominant...). <br/>
 
 [20/07/2020] `cartograflow` CRAN Update to 1.0.3 <br/>
-Updated functions : `flowtypes()`<br/>
+Updated functions : `flowtype()`<br/>
 New function : `flowplace()`, `flowlowup()`
 
 [16/07/2020] `flowlowup()`
 `flowlowup()` (currently available for "L" format of matrix),<br/> is to extracts the upper or the lower triangular part of a matrix.
 
-[05/06/2020] `flowplace()`<br/>
+[05/06/2020] `flowplaces()`<br/>
 `flowplace()` (currently available for "L" format of matrix),<br/> is to compute flows margins indicators (on i,j) for places-based flow analysis. 
 
 [02/06/2020] `cartograflow` CRAN Update to 1.0.2  <br/>
@@ -82,7 +82,7 @@ net = "positive" for extracting the positive flow values <br/>
 net = "negative" for extracting the negative flow values.
 
 #### 1.3. Computing flows places oriented indicators (on i or on j) 
-`flowplace()`is to compute flow indicators from the margins of the matrix, e.g. on the flow's places of origin and/or destination.
+`flowplaces()`is to compute flow indicators from the margins of the matrix, e.g. on the flow's places of origin and/or destination.
 
 x = "ini" for the number of incoming links (in-degree)<br/>
 or x = "outi" for the number of outcoming links (out-degree)<br/>
@@ -160,10 +160,8 @@ See : [subVignette : cartograflow distance](https://github.com/fbahoken/cartogRa
  `add` is to allow to overlay flow features on external spatial features background <br/>
 
 ---
-References : this comes after Bahoken, Françoise (2016), _Contribution à la cartographie d'une matrice de flux_, Thèse en Géographie - Siences des territoires, URL : https://halshs.archives-ouvertes.fr/tel-01273776. 
----<br/>
-Acknowledgements: Sylvain Blondeau, for technical support.
+References : this comes after Bahoken, Françoise (2016), _Contribution à la cartographie d'une matrice de flux_, Thèse en Géographie - Siences des territoires, URL : https://halshs.archives-ouvertes.fr/tel-01273776. <br/>
 
----<br/>
+---
 See also: [Flowmapper - Tribute to Tobler(TTT)](https://gitlab.huma-num.fr/nlambert/flowmapper) - Work in progress <br/>
              
