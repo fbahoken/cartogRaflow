@@ -163,5 +163,5 @@ See : [subVignette : cartograflow distance](https://github.com/fbahoken/cartogRa
 References : this comes after Bahoken, Françoise (2016), _Contribution à la cartographie d'une matrice de flux_, Thèse en Géographie - Siences des territoires, URL : https://halshs.archives-ouvertes.fr/tel-01273776. <br/>
 
 ---
-See also: [Flowmapper - Tribute to Tobler(TTT)](https://gitlab.huma-num.fr/nlambert/flowmapper) - Work in progress <br/>
+See also: [Tribute to Tobler(TTT)/Flowmapper](https://github.com/tributetotobler/ttt) - Work in progress <br/>
              
