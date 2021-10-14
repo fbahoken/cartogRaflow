@@ -42,7 +42,7 @@ Updated `flowtype()`
 # Available vignettes <br/>
 [\Vignette : rmd and html](https://github.com/fbahoken/cartogRaflow/blob/master/vignettes/) <br/>
 
-[Vignette : cartograflow general - CRAN version 1.0.3](https://github.com/fbahoken/cartogRaflow/tree/master/vignettes/cartograflow_general.html) <br/>
+[Vignette : cartograflow general - CRAN version 1.0.3](https://fbahoken.github.io/cartogRaflow/vignettes/cartograflow_general.html) <br/>
 [subVignette : cartograflow concentration - v. 1.0.2](https://github.com/fbahoken/cartogRaflow/tree/master/vignettes/cartograflow_concentration.html) <br/>
 [subVignette : cartograflow distance - v. 1.0.2](https://github.com/fbahoken/cartogRaflow/tree/master/vignettes/cartograflow_distance.html)<br/>
 [subVignette : cartograflow ordinal distance - v. 1.0.2](https://github.com/fbahoken/cartogRaflow/tree/master/vignettes/cartograflow_ordinal_distance.hmtl) <br/>
